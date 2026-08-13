@@ -72,18 +72,6 @@ Built as a **force-multiplier for ASHA/ANM workers** — helping them register a
 
 **Design principles:** Secure & scalable (cloud-ready) · Grounded & reliable (RAG with trusted sources) · Voice-first & multilingual · Healthcare-focused (safe, responsible, impact-driven) · Low-end device ready (optimized for rural smartphones)
 
-## 📂 Repo Structure
-
-```
-/frontend          → Next.js + React app (voice UI, chat, maps)
-/backend           → Python (AI/RAG services) + Node.js (API layer)
-/rag-pipeline       → Document ingestion, embeddings, FAISS retrieval, BioMistral 7B integration
-/triage-engine      → Rule-based decision tree logic
-/data               → Scheme documents, WHO/ICMR guidelines, PHC dataset
-/integrations       → ABDM verification, SMS/notification service
-/docs               → Problem statement, architecture notes, pitch deck
-```
-
 ## 🔒 Safety & Guardrails
 
 - **No diagnosis, no prescriptions** — the system never names a disease or medicine
@@ -97,10 +85,13 @@ Built as a **force-multiplier for ASHA/ANM workers** — helping them register a
 
 | Name | Role |
 |---|---|
-| Kamalesh | *(role)* |
-| | |
-| | |
+| Kamaleshwaran B | *Teamleader* |
+| Vishnuvardhan B |
+| Kevin Cris F |
+| John Ezra P |
+| Sri Harini |
+| Poojasri AB |
 
 ## 📄 License
 
-*(add license here)*
+*Apache 2.0*
