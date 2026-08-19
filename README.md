@@ -86,11 +86,11 @@ Built as a **force-multiplier for ASHA/ANM workers** — helping them register a
 | Name | Role |
 |---|---|
 | Kamaleshwaran B | *Teamleader* |
-| Vishnuvardhan B |
-| Kevin Cris F |
-| John Ezra P |
-| Sri Harini |
-| Poojasri AB |
+| Vishnuvardhan B | *FRONTEND and  BACKEND* |
+| Kevin Cris F | *DATABASE* |
+| John Ezra P | *RAG* |
+| Sri Harini | *PPT Presentation* |
+| Poojasri AB | *Model and API Integration* |
 
 ## 📄 License
 
