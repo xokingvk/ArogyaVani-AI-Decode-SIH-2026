@@ -159,3 +159,85 @@ export async function sendVoiceQuery(audioBlob: Blob): Promise<VoiceQueryRespons
 // base64ToAudioBlob stays canonical in audioUtils but can be imported here too.
 
 export { base64ToAudioBlob } from '../features/voice/utils/audioUtils';
+
+// ── uploadSchemeDocument ───────────────────────────────────────────────────
+
+import type { DocumentEligibilityResponse } from '../features/schemes/types/schemeTypes';
+
+export type SchemeDocumentUploadResult =
+  | DocumentEligibilityResponse
+  | { success: false; error: string };
+
+/**
+ * Uploads an identity/scheme document to POST /scheme-document.
+ * The backend extracts a UserProfile and returns structured eligibility results.
+ * Does NOT store the document — processed only for scheme discovery.
+ */
+export async function uploadSchemeDocument(
+  file: File,
+  languageCode?: string,
+): Promise<SchemeDocumentUploadResult> {
+  const formData = new FormData();
+  formData.append('file', file, file.name);
+  if (languageCode) {
+    formData.append('language_code', languageCode);
+  }
+
+  const baseUrl = getApiBaseUrl();
+  const url = `${baseUrl}/scheme-document`;
+
+  if (import.meta.env.DEV) {
+    console.log('[voiceService] uploadSchemeDocument →', url, {
+      fileName: file.name,
+      fileSize: file.size,
+      fileType: file.type,
+    });
+  }
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 120_000);
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      body: formData,
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    let data: Record<string, unknown>;
+    try {
+      data = await response.json();
+    } catch {
+      return {
+        success: false,
+        error: response.ok
+          ? 'Unexpected response format from document processing server.'
+          : `Server error (${response.status}). Please try again.`,
+      };
+    }
+
+    if (!response.ok || !data || data['success'] === false) {
+      return {
+        success: false,
+        error: (data?.['error'] as string) ?? `Document processing failed (${response.status}).`,
+      };
+    }
+
+    return data as unknown as DocumentEligibilityResponse;
+  } catch (error: unknown) {
+    clearTimeout(timeoutId);
+    if (error instanceof Error && (error.name === 'AbortError' || controller.signal.aborted)) {
+      return {
+        success: false,
+        error: 'Request timed out. Document processing is taking too long. Please try again.',
+      };
+    }
+    return {
+      success: false,
+      error: 'Unable to connect to the document processing server. Please check your network.',
+    };
+  }
+}
+

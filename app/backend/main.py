@@ -113,7 +113,7 @@ async def voice_query(
             detected_language = "en-IN"
 
         # Step 2: Run ArogyaVani intent routing & TTS generation
-        english_text, response_text, audio_base64 = process_arogyavani_pipeline(
+        english_text, response_text, audio_base64, mode, schemes, sources = process_arogyavani_pipeline(
             user_text=user_transcript,
             detected_language=detected_language,
         )
@@ -126,6 +126,9 @@ async def voice_query(
                 "language_code": detected_language,
                 "response_text": response_text,
                 "audio_base64": audio_base64,
+                "mode": mode,
+                "schemes": schemes,
+                "sources": sources,
             },
         )
 
@@ -146,6 +149,125 @@ async def voice_query(
                 os.remove(temp_audio_path)
             except OSError as e:
                 logger.warning(f"Could not remove temporary audio file {temp_audio_path}: {e}")
+
+
+@app.post("/scheme-document")
+async def scheme_document(
+    file: UploadFile = File(...),
+):
+    """Document-based scheme eligibility endpoint:
+    1. Receives uploaded document (image/PDF).
+    2. Extracts structured UserProfile via Gemini/pypdf (without storing file).
+    3. Evaluates eligibility rules across curated government health schemes.
+    4. Retrieves grounded evidence sources from the 8-PDF FAISS knowledge base.
+    5. Returns structured response with profile, eligibility results, and verified sources.
+    """
+    if not file:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "success": False,
+                "error": "No document file provided. Please upload an image or PDF.",
+            },
+        )
+
+    try:
+        file_bytes = await file.read()
+        if not file_bytes or len(file_bytes) == 0:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={
+                    "success": False,
+                    "error": "The uploaded document is empty. Please choose a valid file.",
+                },
+            )
+
+        # 10 MB maximum limit
+        if len(file_bytes) > 10 * 1024 * 1024:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={
+                    "success": False,
+                    "error": "File exceeds the 10 MB size limit. Please upload a smaller file.",
+                },
+            )
+
+        filename = file.filename or "document.jpg"
+        content_type = file.content_type
+
+        logger.info(f"Processing document upload ({len(file_bytes)} bytes, filename: {filename})")
+
+        # Step 1: Extract structured UserProfile
+        from services.document_service import extract_profile_from_document
+        from services.eligibility_service import evaluate_scheme_eligibility
+        from services.rag_service import get_rag_service
+
+        profile, confidence, missing_fields = extract_profile_from_document(
+            file_bytes=file_bytes,
+            filename=filename,
+            mime_type=content_type,
+        )
+
+        # Step 2: Evaluate scheme eligibility against known criteria
+        schemes = evaluate_scheme_eligibility(profile)
+
+        # Step 3: Grounded evidence sources via existing FAISS RAG
+        rag_service = get_rag_service()
+        # Privacy-preserving RAG retrieval query without full citizen name
+        rag_query_parts = ["government health schemes eligibility benefits"]
+        if profile.get("age"):
+            rag_query_parts.append(f"age {profile['age']}")
+        if profile.get("state"):
+            rag_query_parts.append(f"state {profile['state']}")
+        if profile.get("pregnancy_status"):
+            rag_query_parts.append("maternity pregnancy")
+        if profile.get("child_age"):
+            rag_query_parts.append(f"child age {profile['child_age']}")
+
+        rag_query = " ".join(rag_query_parts)
+        retrieved_chunks = rag_service.retrieve(rag_query, top_k=3)
+
+        seen_sources = set()
+        sources = []
+        for r in retrieved_chunks:
+            key = (r.source, r.page)
+            if key not in seen_sources:
+                sources.append({
+                    "source": r.source,
+                    "page": r.page,
+                    "score": round(r.score, 4),
+                })
+                seen_sources.add(key)
+
+        summary = (
+            "Based on the available information in your document, we evaluated potentially "
+            "relevant government health schemes. Please review the details below before applying."
+        )
+
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={
+                "success": True,
+                "profile": profile,
+                "confidence": confidence,
+                "missing_fields": missing_fields,
+                "summary": summary,
+                "schemes": schemes,
+                "sources": sources,
+            },
+        )
+
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.exception(f"Error while processing document: {exc}")
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={
+                "success": False,
+                "error": "Unable to extract information from this document. Please try a clearer image or supported PDF.",
+            },
+        )
 
 
 if __name__ == "__main__":

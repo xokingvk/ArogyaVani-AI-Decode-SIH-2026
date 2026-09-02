@@ -18,7 +18,7 @@
  *   - Rendering any UI
  */
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { VoiceState } from '../types/voiceTypes';
+import { VoiceState, VoiceQuerySuccessResponse } from '../types/voiceTypes';
 import {
   RECORDER_TIMESLICE_MS,
   VOICE_ERROR_MESSAGES,
@@ -49,12 +49,21 @@ function mapErrorToMessage(err: { name?: string; message?: string }): string {
   return VOICE_ERROR_MESSAGES[err.name] ?? err.message ?? DEFAULT_VOICE_ERROR;
 }
 
-export function useVoiceRecorder(): UseVoiceRecorderReturn {
+export interface UseVoiceRecorderOptions {
+  onResult?: (result: VoiceQuerySuccessResponse) => void;
+}
+
+export function useVoiceRecorder(options?: UseVoiceRecorderOptions): UseVoiceRecorderReturn {
   const [voiceState, setVoiceState]         = useState<VoiceState>('idle');
   const [transcription, setTranscription]   = useState('');
   const [aiAnswer, setAiAnswer]             = useState('');
   const [isSpeakingTts, setIsSpeakingTts]   = useState(false);
   const [errorMessage, setErrorMessage]     = useState('');
+  const onResultRef                         = useRef(options?.onResult);
+
+  useEffect(() => {
+    onResultRef.current = options?.onResult;
+  }, [options?.onResult]);
 
   // Internal refs — not exposed to UI
   const mediaRecorderRef   = useRef<MediaRecorder | null>(null);
@@ -190,6 +199,10 @@ export function useVoiceRecorder(): UseVoiceRecorderReturn {
             setTranscription(result.transcript);
             setAiAnswer(result.response_text);
             setVoiceState('response');
+
+            if (onResultRef.current) {
+              onResultRef.current(result);
+            }
 
             if (result.audio_base64) {
               // Decode and play via audioUtils — hook only tracks playback state

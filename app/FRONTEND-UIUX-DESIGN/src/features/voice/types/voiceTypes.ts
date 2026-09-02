@@ -14,12 +14,28 @@ export type VoiceState = 'idle' | 'listening' | 'processing' | 'response';
 
 // ── Backend API Response Shapes ────────────────────────────────────────────
 
+export interface SchemeMatch {
+  schemeId: string;
+  schemeName: string;
+  relevanceScore?: number;
+  reason?: string;
+}
+
+export interface SchemeSourceDoc {
+  source: string;
+  page: number;
+  score?: number;
+}
+
 export interface VoiceQuerySuccessResponse {
   success: true;
   transcript: string;
   language_code: string;
   response_text: string;
   audio_base64: string;
+  mode?: 'scheme_rag' | 'general';
+  schemes?: SchemeMatch[];
+  sources?: SchemeSourceDoc[];
 }
 
 export interface VoiceQueryErrorResponse {

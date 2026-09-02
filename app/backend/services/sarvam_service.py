@@ -1,7 +1,10 @@
 import os
+import re
 import logging
+from typing import Any
 from sarvamai import SarvamAI
 from services.gemini_service import ask_gemini
+from services.rag_service import get_rag_service
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +38,44 @@ SUPPORTED_LANGUAGES = {
     "en-IN",
 }
 
+SCHEME_KEYWORDS = [
+    "scheme",
+    "yojana",
+    "ayushman",
+    "pmjay",
+    "pm-jay",
+    "pmmvy",
+    "jsy",
+    "jssk",
+    "pmsma",
+    "rbsk",
+    "pmjjby",
+    "pmgkay",
+    "pmay",
+    "pmayg",
+    "indradhanush",
+    "health card",
+    "ration card",
+    "health insurance",
+    "maternity benefit",
+    "pregnant women scheme",
+    "child scheme",
+    "children scheme",
+    "free delivery",
+    "cashless delivery",
+    "government healthcare scheme",
+    "government scheme",
+    "government health",
+    "government assistance",
+    "bima yojana",
+    "ab-pmjay",
+    "eligibility for",
+    "eligible for",
+    "documents needed for",
+    "how to apply",
+    "how to access",
+]
+
 HEALTHCARE_KEYWORDS = [
     "health",
     "healthcare",
@@ -47,18 +88,13 @@ HEALTHCARE_KEYWORDS = [
     "cold",
     "fever",
     "cough",
-    "scheme",
-    "ayushman",
-    "pmjay",
+    "headache",
+    "stomach",
+    "dizzy",
+    "pain",
     "phc",
     "health facility",
     "healthcare facility",
-    "government health",
-    "healthcare scheme",
-    "eligibility",
-    "health card",
-    "ration card",
-    "health insurance",
 ]
 
 LOCATION_KEYWORDS = [
@@ -145,10 +181,11 @@ def contains_keyword(text: str, keywords: list[str]) -> bool:
 
 def detect_intent(english_text: str) -> str:
     """Detect the user intent following the strict ArogyaVani routing hierarchy:
-    1. medical_advice (highest priority)
+    1. medical_advice (highest safety priority)
     2. location
-    3. healthcare
-    4. out_of_scope
+    3. scheme (routes to grounded FAISS RAG)
+    4. healthcare (routes to general Gemini health flow)
+    5. out_of_scope
     """
     if contains_keyword(english_text, MEDICAL_ADVICE_KEYWORDS):
         return "medical_advice"
@@ -156,10 +193,79 @@ def detect_intent(english_text: str) -> str:
     if contains_keyword(english_text, LOCATION_KEYWORDS):
         return "location"
 
+    if contains_keyword(english_text, SCHEME_KEYWORDS):
+        return "scheme"
+
     if contains_keyword(english_text, HEALTHCARE_KEYWORDS):
         return "healthcare"
 
     return "out_of_scope"
+
+
+# ── Clean text helpers for Display and Natural TTS ──────────────────────────
+
+
+def clean_for_speech(text: str) -> str:
+    """Strips Markdown symbols, raw URLs, and formatting artifacts for clean,
+    natural-sounding Text-To-Speech (Sarvam Bulbul TTS).
+    Never speaks 'asterisk asterisk', 'hash', 'bullet', or raw URL characters.
+    """
+    if not text:
+        return ""
+
+    t = text
+
+    # 1. Markdown links: [Title](url) -> Title (FIRST, before URL stripping)
+    t = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", t)
+
+    # 2. Strip remaining naked URLs (https://..., http://..., www....)
+    t = re.sub(r"https?://\S+|www\.\S+", "", t)
+
+    # 3. Headings: ### Heading -> Heading.
+    t = re.sub(r"^#{1,6}\s*(.+)$", r"\1.", t, flags=re.MULTILINE)
+
+    # 4. Bold / Italic / Strike / Code markers
+    t = re.sub(r"\*\*([^*]+)\*\*", r"\1", t)
+    t = re.sub(r"\*([^*]+)\*", r"\1", t)
+    t = re.sub(r"__([^_]+)__", r"\1", t)
+    t = re.sub(r"_([^_]+)_", r"\1", t)
+    t = re.sub(r"~~([^~]+)~~", r"\1", t)
+    t = re.sub(r"`([^`]+)`", r"\1", t)
+
+    # 5. Bullet markers (- item, * item, + item, • item)
+    t = re.sub(r"^\s*[-*+•]\s+", "", t, flags=re.MULTILINE)
+
+    # 6. Numbered lists (1. item -> item)
+    t = re.sub(r"^\s*\d+\.\s+", "", t, flags=re.MULTILINE)
+
+    # 7. Clean punctuation & excessive whitespace
+    t = re.sub(r"\.{2,}", ".", t)
+    t = re.sub(r"\s+", " ", t)
+
+    return t.strip()
+
+
+def clean_for_display(text: str) -> str:
+    """Prepares text for clean UI display:
+    - Converts markdown links [Title](url) -> Title
+    - Strips naked URLs to prevent uncurated links
+    - Preserves headings and bullets for visual structure
+    """
+    if not text:
+        return ""
+
+    t = text
+    # 1. Convert [Title](url) -> Title
+    t = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", t)
+    # 2. Strip naked URLs
+    t = re.sub(r"https?://\S+|www\.\S+", "", t)
+    # 3. Clean whitespace while preserving linebreaks
+    t = re.sub(r"[ \t]+", " ", t)
+
+    return t.strip()
+
+
+# ── Translation & Speech Pipeline ───────────────────────────────────────────
 
 
 def translate_to_english(text: str, language_code: str) -> str:
@@ -210,9 +316,14 @@ def transcribe_audio(audio_file_path: str) -> tuple[str, str]:
 
 def generate_tts_base64(text: str, language_code: str) -> str:
     """Generate audio via Sarvam Bulbul v3 with speaker 'priya' and return Base64 WAV data."""
+    # Ensure TTS input is clean of markdown artifacts
+    speech_text = clean_for_speech(text)
+    if not speech_text:
+        speech_text = "I am ready to assist you."
+
     client = get_sarvam_client()
     tts_response = client.text_to_speech.convert(
-        text=text,
+        text=speech_text,
         language_code=language_code,
         model=TTS_MODEL,
         speaker=TTS_SPEAKER,
@@ -224,13 +335,22 @@ def generate_tts_base64(text: str, language_code: str) -> str:
     return tts_response.audios[0]
 
 
-def process_arogyavani_pipeline(user_text: str, detected_language: str) -> tuple[str, str, str]:
-    """Full ArogyaVani intelligence pipeline:
+def process_arogyavani_pipeline(
+    user_text: str,
+    detected_language: str,
+) -> tuple[str, str, str, str, list[dict[str, Any]], list[dict[str, Any]]]:
+    """Full ArogyaVani intelligence pipeline with RAG & General Routing:
     1. Translate to English for routing
-    2. Route to medical safety / location / healthcare (Gemini) / out_of_scope
-    3. Translate response back to user language
-    4. Generate Bulbul v3 TTS audio
-    Returns: (english_text, final_response_text, audio_base64)
+    2. Route to:
+       - medical_advice -> Safety disclaimer (General mode)
+       - location -> Location prompt (General mode)
+       - scheme -> FAISS RAG Retrieval + Grounded Gemini (Scheme RAG mode)
+       - healthcare -> Gemini 3.5 Flash-Lite (General mode)
+       - out_of_scope -> Scope boundary (General mode)
+    3. Format and clean text for display (response_text) and speech (TTS)
+    4. Translate response back to user language if needed
+    5. Generate Bulbul v3 TTS audio with clean speech text
+    Returns: (english_text, final_response_text, audio_base64, mode, schemes, sources)
     """
     logger.info(f"User query: '{user_text}' in language: '{detected_language}'")
 
@@ -242,23 +362,39 @@ def process_arogyavani_pipeline(user_text: str, detected_language: str) -> tuple
     intent = detect_intent(english_text)
     logger.info(f"Detected intent: '{intent}'")
 
+    mode = "general"
+    schemes: list[dict[str, Any]] = []
+    sources: list[dict[str, Any]] = []
+
     # Step 3: Intent routing
     if intent == "medical_advice":
-        response_text = MEDICAL_SAFETY_RESPONSE
+        raw_response_text = MEDICAL_SAFETY_RESPONSE
     elif intent == "location":
-        response_text = LOCATION_RESPONSE
+        raw_response_text = LOCATION_RESPONSE
+    elif intent == "scheme":
+        mode = "scheme_rag"
+        rag_service = get_rag_service()
+        rag_res = rag_service.answer(english_text, language_code=detected_language)
+        raw_response_text = rag_res["answer"]
+        schemes = rag_res.get("schemes", [])
+        sources = rag_res.get("sources", [])
     elif intent == "healthcare":
-        response_text = ask_gemini(english_text)
+        raw_response_text = ask_gemini(english_text)
     else:
-        response_text = OUT_OF_SCOPE_RESPONSE
+        raw_response_text = OUT_OF_SCOPE_RESPONSE
 
-    logger.info(f"ArogyaVani English response: '{response_text}'")
+    # Step 4: Clean text for UI display
+    display_response_text = clean_for_display(raw_response_text)
 
-    # Step 4: Translate back to detected language
-    final_response = translate_from_english(response_text, detected_language)
-    logger.info(f"Final translated response: '{final_response}'")
+    # Step 5: Translate back to detected language if needed and not already translated
+    if detected_language != "en-IN" and mode != "scheme_rag":
+        final_response = translate_from_english(display_response_text, detected_language)
+    else:
+        final_response = display_response_text
 
-    # Step 5: Bulbul TTS
+    logger.info(f"ArogyaVani final response: '{final_response}', mode: '{mode}'")
+
+    # Step 6: Bulbul TTS with clean speech text
     audio_base64 = generate_tts_base64(final_response, detected_language)
 
-    return english_text, final_response, audio_base64
+    return english_text, final_response, audio_base64, mode, schemes, sources
