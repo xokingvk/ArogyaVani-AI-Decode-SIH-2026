@@ -4,10 +4,10 @@
  *
  * Responsibilities:
  *   - Building FormData with the audio Blob
- *   - Resolving the correct API base URL (localhost or LAN Wi-Fi)
+ *   - Resolving the correct API base URL prioritizing VITE_API_BASE_URL
  *   - POST /voice-query
  *   - Parsing and validating the backend JSON response
- *   - Mapping HTTP / network errors to predictable error shapes
+ *   - Handling timeouts (Render cold start) and mapping network/HTTP errors
  *
  * NOT responsible for:
  *   - React state
@@ -27,18 +27,22 @@ import type { VoiceQueryResponse } from '../features/voice/types/voiceTypes';
 
 // ── API base URL resolution ────────────────────────────────────────────────
 
-function getApiBaseUrl(): string {
-  const hostname =
-    typeof window !== 'undefined' ? window.location.hostname : 'localhost';
+export function getApiBaseUrl(): string {
+  const envUrl = import.meta.env.VITE_API_BASE_URL?.trim();
 
-  // When the app is opened via LAN IP (e.g. phone on Wi-Fi at 10.x.x.x),
-  // route API calls to the same host to avoid CORS / same-origin issues.
-  if (hostname && hostname !== 'localhost' && hostname !== '127.0.0.1') {
-    return `http://${hostname}:8000`;
-  }
+  const apiBaseUrl =
+    envUrl && envUrl.length > 0
+      ? envUrl.replace(/\/+$/, '')
+      : 'http://localhost:8000';
 
-  const envUrl = import.meta.env.VITE_API_BASE_URL;
-  return envUrl ? envUrl.replace(/\/+$/, '') : 'http://localhost:8000';
+  return apiBaseUrl;
+}
+
+// Development environment logging
+if (import.meta.env.DEV) {
+  console.log('[voiceService] MODE:', import.meta.env.MODE);
+  console.log('[voiceService] VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
+  console.log('[voiceService] RESOLVED API BASE URL:', getApiBaseUrl());
 }
 
 // ── Extension helper ───────────────────────────────────────────────────────
@@ -53,6 +57,9 @@ function extensionForMime(mimeType: string): string {
 
 // ── sendVoiceQuery ─────────────────────────────────────────────────────────
 
+/** Default timeout of 90 seconds to handle free-tier Render spin-up / cold starts */
+const REQUEST_TIMEOUT_MS = 90000;
+
 /**
  * Sends a recorded audio Blob to POST /voice-query and returns a typed response.
  * Does not set Content-Type manually — browser sets the correct multipart boundary.
@@ -62,9 +69,11 @@ export async function sendVoiceQuery(audioBlob: Blob): Promise<VoiceQueryRespons
   const formData  = new FormData();
   formData.append('audio', audioBlob, `voice_recording.${extension}`);
 
-  const url = `${getApiBaseUrl()}/voice-query`;
+  const baseUrl = getApiBaseUrl();
+  const url = `${baseUrl}/voice-query`;
 
   if (import.meta.env.DEV) {
+    console.log('[voiceService] FINAL REQUEST URL:', url);
     console.log('[voiceService] POST', url, {
       blobSize: audioBlob.size,
       blobType: audioBlob.type,
@@ -72,8 +81,19 @@ export async function sendVoiceQuery(audioBlob: Blob): Promise<VoiceQueryRespons
     });
   }
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, REQUEST_TIMEOUT_MS);
+
   try {
-    const response = await fetch(url, { method: 'POST', body: formData });
+    const response = await fetch(url, {
+      method: 'POST',
+      body: formData,
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
 
     if (import.meta.env.DEV) {
       console.log('[voiceService] Response:', response.status, response.statusText);
@@ -82,11 +102,14 @@ export async function sendVoiceQuery(audioBlob: Blob): Promise<VoiceQueryRespons
     let data: Record<string, unknown>;
     try {
       data = await response.json();
-    } catch {
+    } catch (parseError) {
+      if (import.meta.env.DEV) {
+        console.error('[voiceService] JSON parsing failed:', parseError);
+      }
       return {
         success: false,
         error: response.ok
-          ? 'Received an unexpected response from the healthcare server.'
+          ? 'Received an unexpected response format from the healthcare server.'
           : `Healthcare server error (${response.status}). Please try again later.`,
       };
     }
@@ -108,7 +131,23 @@ export async function sendVoiceQuery(audioBlob: Blob): Promise<VoiceQueryRespons
     }
 
     return data as unknown as VoiceQueryResponse;
-  } catch {
+  } catch (error: unknown) {
+    clearTimeout(timeoutId);
+
+    if (error instanceof Error && (error.name === 'AbortError' || controller.signal.aborted)) {
+      if (import.meta.env.DEV) {
+        console.error('[voiceService] Request timed out after', REQUEST_TIMEOUT_MS, 'ms');
+      }
+      return {
+        success: false,
+        error: 'Request timed out. The healthcare server might be waking up or taking longer than expected. Please try again.',
+      };
+    }
+
+    if (import.meta.env.DEV) {
+      console.error('[voiceService] Network / Fetch error:', error);
+    }
+
     return {
       success: false,
       error: 'Unable to connect to the healthcare server. Please check your network connection.',
