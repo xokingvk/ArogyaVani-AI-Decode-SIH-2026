@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-navy: #16324F;
+    --color-teal: #0D9488;
+    --color-emerald: #10B981;
+    --color-error: #B33A3A;
+  }
+
+  body {
+    font-family: 'Outfit', 'Inter', 'Noto Sans Devanagari', 'Noto Sans Tamil', system-ui, -apple-system, sans-serif;
+    background-color: #F8FAFC;
+    color: #1E293B;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Smooth transitions */
+  * {
+    border-color: #E2E8F0;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-teal-emerald {
+    background: linear-gradient(135deg, #0D9488 0%, #10B981 100%);
+  }
+
+  .text-gradient-navy {
+    background: linear-gradient(135deg, #16324F 0%, #243B53 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
