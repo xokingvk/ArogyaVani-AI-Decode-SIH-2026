@@ -44,7 +44,7 @@ export const SchemeDetailsScreen: React.FC<SchemeDetailsScreenProps> = ({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
       transition={{ duration: 0.28 }}
-      className="w-full bg-[#F8FAFC] min-h-full py-3 px-4 pb-28 space-y-4"
+      className="w-full bg-[#F8FAFC] min-h-full py-3 px-4 pb-4 space-y-4"
     >
       {/* ── Top Navigation Bar ────────────────────────────────────────────── */}
       <div className="flex items-center justify-between">

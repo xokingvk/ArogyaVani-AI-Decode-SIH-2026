@@ -79,6 +79,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setCurrentUser(null);
   };
 
+  const refreshProfile = async (): Promise<void> => {
+    try {
+      const session = await getCurrentSession();
+      if (session?.user) {
+        const profile = await getUserProfile(session.user.id);
+        setCurrentUser(profile);
+      } else {
+        const profile = await getUserProfile('demo');
+        if (profile) {
+          setCurrentUser(profile);
+        }
+      }
+    } catch (err) {
+      console.error('Error refreshing user profile:', err);
+    }
+  };
+
   const value = useMemo(
     () => ({
       currentUser,
@@ -87,6 +104,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       loginUser,
       signupUser,
       logoutUser,
+      refreshProfile,
     }),
     [currentUser, isAuthLoading]
   );

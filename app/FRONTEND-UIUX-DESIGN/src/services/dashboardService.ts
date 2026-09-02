@@ -1,19 +1,22 @@
 import { DashboardStatsData } from '../types/dashboardTypes';
+import { UserProfile } from '../types/authTypes';
 
 // =====================================================
 // DASHBOARD SERVICE
-// TODO Phase 2: replace mock data with real Supabase query, one per dataSourceKey
+// Reads live ai_question_count from the authenticated user profile
 // =====================================================
 
-export const getDashboardStats = async (): Promise<DashboardStatsData> => {
+export const getDashboardStats = async (userProfile?: UserProfile | null): Promise<DashboardStatsData> => {
   // Simulate a small network delay for realistic UX
-  await new Promise((resolve) => setTimeout(resolve, 300));
+  await new Promise((resolve) => setTimeout(resolve, 150));
+
+  const totalQuestions = userProfile?.ai_question_count ?? 0;
 
   return {
-    // TODO Phase 2: replace with → supabase.from('voice_queries').select('count').eq('user_id', uid).gte('created_at', today)
+    // Bound to authenticated user's real ai_question_count (defaults to 0)
     voice_queries_today: {
-      primaryValue: '12',
-      secondaryLabel: 'Queries',
+      primaryValue: String(totalQuestions),
+      secondaryLabel: totalQuestions === 1 ? 'Question answered' : 'Questions answered',
     },
 
     // TODO Phase 2: replace with → supabase.from('scheme_applications').select('status').eq('user_id', uid)

@@ -4,7 +4,7 @@ import logging
 from typing import Any
 from sarvamai import SarvamAI
 from services.gemini_service import ask_gemini
-from services.rag_service import get_rag_service
+from services.rag_service import get_rag_service, is_rag_enabled
 
 logger = logging.getLogger(__name__)
 
@@ -372,12 +372,18 @@ def process_arogyavani_pipeline(
     elif intent == "location":
         raw_response_text = LOCATION_RESPONSE
     elif intent == "scheme":
-        mode = "scheme_rag"
-        rag_service = get_rag_service()
-        rag_res = rag_service.answer(english_text, language_code=detected_language)
-        raw_response_text = rag_res["answer"]
-        schemes = rag_res.get("schemes", [])
-        sources = rag_res.get("sources", [])
+        if is_rag_enabled():
+            mode = "scheme_rag"
+            rag_service = get_rag_service()
+            rag_res = rag_service.answer(english_text, language_code=detected_language)
+            raw_response_text = rag_res["answer"]
+            schemes = rag_res.get("schemes", [])
+            sources = rag_res.get("sources", [])
+        else:
+            mode = "general"
+            raw_response_text = ask_gemini(english_text)
+            schemes = []
+            sources = []
     elif intent == "healthcare":
         raw_response_text = ask_gemini(english_text)
     else:

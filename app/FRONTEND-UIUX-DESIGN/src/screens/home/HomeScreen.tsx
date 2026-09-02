@@ -122,7 +122,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
   ];
 
   return (
-    <div className="w-full flex flex-col min-h-full bg-slate-50 pb-6">
+    <div className="w-full flex flex-col min-h-full bg-slate-50 pb-8">
 
       {/* ── GREETING ───────────────────────────────────────────────── */}
       <div className="px-5 pt-5 pb-3">
@@ -164,7 +164,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
           {t('home.quickActions')}
         </p>
-        <div className="grid grid-cols-2 gap-3 items-stretch">
+        <div className="grid grid-cols-1 min-[340px]:grid-cols-2 gap-3 items-stretch">
           {quickActions.map((action, i) => (
             <motion.button
               key={action.id}
@@ -172,7 +172,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
               type="button"
               aria-label={action.label}
               onClick={action.onClick}
-              className="text-left rounded-2xl p-3.5 sm:p-4 border cursor-pointer focus:outline-none active:scale-95 transition-transform flex flex-col justify-between h-full min-h-[128px] sm:min-h-[132px]"
+              className="text-left rounded-2xl p-3.5 sm:p-4 border cursor-pointer focus:outline-none active:scale-95 transition-transform flex flex-col justify-between h-full min-h-[120px] sm:min-h-[132px] max-w-full overflow-hidden"
               style={{
                 background: `linear-gradient(135deg, ${action.gradientFrom}, ${action.gradientTo})`,
                 borderColor: action.border,
@@ -217,8 +217,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
 
       {/* 1. Check Symptoms */}
       {activeModal === 'symptoms' && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <div className="w-full max-w-md bg-white rounded-3xl p-5 shadow-xl border border-slate-100 relative">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xs">
+          <div className="w-full max-w-md bg-white rounded-3xl rounded-b-2xl sm:rounded-3xl p-4 sm:p-5 shadow-xl border border-slate-100 relative max-h-[85vh] overflow-y-auto">
             <button
               type="button"
               onClick={() => setActiveModal(null)}

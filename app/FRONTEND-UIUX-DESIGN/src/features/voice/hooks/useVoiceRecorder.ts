@@ -31,6 +31,7 @@ import {
   stopAudioElement,
 } from '../utils/audioUtils';
 import { sendVoiceQuery } from '../../../services/voiceService';
+import { incrementAIQuestionCount } from '../../../services/authService';
 
 export interface UseVoiceRecorderReturn {
   voiceState: VoiceState;
@@ -202,6 +203,16 @@ export function useVoiceRecorder(options?: UseVoiceRecorderOptions): UseVoiceRec
 
             if (onResultRef.current) {
               onResultRef.current(result);
+            }
+
+            // Atomically increment AI question count for normal/general health queries only
+            // (Do NOT increment for mode === 'scheme_rag' or document processing)
+            if (result.mode !== 'scheme_rag') {
+              incrementAIQuestionCount().catch((err) => {
+                if (import.meta.env.DEV) {
+                  console.warn('[useVoiceRecorder] Could not increment AI question count:', err);
+                }
+              });
             }
 
             if (result.audio_base64) {

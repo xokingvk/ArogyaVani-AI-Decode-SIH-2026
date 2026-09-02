@@ -138,20 +138,39 @@ export const AppRouter: React.FC = () => {
   return (
     <AndroidFrameWrapper>
       <ProtectedRouteWrapper onRedirectToLogin={() => setCurrentRoute('/login')}>
-        <div className="h-full w-full bg-slate-50 overflow-hidden relative flex flex-col">
-          
-          {/* Fixed Top Header (Shared across all 4 tabs) */}
+        {/*
+         * Outer shell: flex column filling the full available height.
+         * overflow-hidden on the outer prevents the shell itself from scrolling.
+         * The <main> below handles the actual page scroll.
+         */}
+        <div className="h-full w-full bg-slate-50 flex flex-col max-w-full relative">
+
+          {/* Shared Top Header */}
           <TopHeaderBar
             onNotificationsClick={() => setIsNotificationsOpen(true)}
             onAvatarClick={() => setCurrentRoute('/profile')}
           />
 
-          {/* Scrollable Page Content Area between Top and Bottom Bars */}
-          <main className="flex-1 overflow-y-auto bg-white pt-0 pb-0 w-full relative flex flex-col overscroll-y-contain">
+          {/*
+           * Primary Authoritative Scrollable Page Content.
+           * WebkitOverflowScrolling: 'touch' + touchAction: 'pan-y' enables immediate
+           * fluid swipe gestures on Android Chrome and Capacitor WebView.
+           * paddingBottom: var(--safe-bottom-space) guarantees the last card is
+           * at least 24px above the fixed bottom navigation bar at all times.
+           */}
+          <main
+            id="main-scroll-container"
+            className="flex-1 min-h-0 overflow-y-auto w-full max-w-full relative overscroll-y-contain bg-white"
+            style={{
+              paddingBottom: 'var(--safe-bottom-space)',
+              WebkitOverflowScrolling: 'touch',
+              touchAction: 'pan-y',
+            }}
+          >
             {renderTabScreen()}
           </main>
 
-          {/* Fixed Bottom Navigation (Home | Schemes | History | More) */}
+          {/* Fixed Bottom Navigation */}
           <BottomNavigationBar
             activeTab={activeTab}
             onTabChange={handleTabChange}

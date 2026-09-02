@@ -22,7 +22,7 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
 
   useEffect(() => {
     let isMounted = true;
-    getDashboardStats().then((data) => {
+    getDashboardStats(currentUser).then((data) => {
       if (isMounted) {
         setStats(data);
         setIsLoading(false);
@@ -31,7 +31,7 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [currentUser]);
 
   const cardDefs = stats
     ? [

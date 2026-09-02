@@ -6,13 +6,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Optional
 
-import faiss
-import numpy as np
 from google import genai
 from google.genai import types
-from sentence_transformers import SentenceTransformer
 
 logger = logging.getLogger(__name__)
+
+def is_rag_enabled() -> bool:
+    """Returns whether the local RAG stack (SentenceTransformer + PyTorch + FAISS) is enabled."""
+    return os.getenv("ENABLE_RAG", "false").strip().lower() in ("true", "1", "yes")
 
 INDEX_PATH = Path(__file__).parent.parent / "rag_artifacts" / "scheme.index"
 CHUNKS_PATH = Path(__file__).parent.parent / "rag_artifacts" / "chunks.json"
@@ -80,14 +81,18 @@ class RAGService:
     def __init__(self, index_path: Path = INDEX_PATH, chunks_path: Path = CHUNKS_PATH):
         self.index_path = index_path
         self.chunks_path = chunks_path
-        self.embedding_model: Optional[SentenceTransformer] = None
-        self.index: Optional[faiss.IndexFlatIP] = None
+        self.embedding_model: Any = None
+        self.index: Any = None
         self.chunks: list[Chunk] = []
         self._is_ready = False
 
     def initialize(self) -> None:
         """Loads the embedding model, FAISS index, and chunks metadata."""
         if self._is_ready:
+            return
+
+        if not is_rag_enabled():
+            logger.info("ENABLE_RAG=false. Skipping SentenceTransformer and FAISS initialization.")
             return
 
         if not self.index_path.exists():
@@ -101,6 +106,9 @@ class RAGService:
                 f"Chunks metadata file not found at {self.chunks_path}. "
                 "Please ensure backend/rag_artifacts/chunks.json exists."
             )
+
+        import faiss
+        from sentence_transformers import SentenceTransformer
 
         logger.info(f"Loading SentenceTransformer embedding model: {EMBEDDING_MODEL_NAME}")
         self.embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
@@ -134,11 +142,17 @@ class RAGService:
 
     def retrieve(self, query: str, top_k: int = DEFAULT_TOP_K) -> list[RetrievalResult]:
         """Performs cosine semantic search against the FAISS index."""
+        if not is_rag_enabled():
+            logger.info("ENABLE_RAG=false. Returning empty retrieval results.")
+            return []
+
         if not self.is_ready:
             self.initialize()
 
-        assert self.embedding_model is not None
-        assert self.index is not None
+        if self.embedding_model is None or self.index is None:
+            return []
+
+        import numpy as np
 
         query_emb = self.embedding_model.encode(
             [query],
@@ -225,10 +239,28 @@ class RAGService:
 
     def answer(self, query: str, language_code: str = "en-IN", top_k: int = DEFAULT_TOP_K) -> dict[str, Any]:
         """Full grounded RAG pipeline:
-        1. Retrieval from FAISS (initializes on demand)
+        1. Retrieval from FAISS (initializes on demand when ENABLE_RAG=true)
         2. Strict grounded synthesis with Gemini 3.5 Flash-Lite
         3. Extraction of source metadata and structured scheme IDs
         """
+        if not is_rag_enabled():
+            logger.info("ENABLE_RAG=false. Answering scheme query via Gemini without local RAG stack.")
+            from services.gemini_service import ask_gemini
+            try:
+                gemini_ans = ask_gemini(query)
+                return {
+                    "answer": gemini_ans,
+                    "schemes": [],
+                    "sources": [],
+                }
+            except Exception as e:
+                logger.error(f"Error generating Gemini answer in disabled RAG mode: {e}")
+                return {
+                    "answer": "I can assist you with general healthcare inquiries and government schemes.",
+                    "schemes": [],
+                    "sources": [],
+                }
+
         if not self.is_ready:
             try:
                 self.initialize()
@@ -313,8 +345,9 @@ def get_rag_service() -> RAGService:
     global _rag_service_instance
     if _rag_service_instance is None:
         _rag_service_instance = RAGService()
-        try:
-            _rag_service_instance.initialize()
-        except Exception as e:
-            logger.warning(f"RAGService immediate init deferred: {e}")
+        if is_rag_enabled():
+            try:
+                _rag_service_instance.initialize()
+            except Exception as e:
+                logger.warning(f"RAGService immediate init deferred: {e}")
     return _rag_service_instance

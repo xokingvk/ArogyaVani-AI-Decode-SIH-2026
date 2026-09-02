@@ -4,7 +4,15 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <!--
+    viewport-fit=cover enables env(safe-area-inset-*) in Capacitor WebView.
+    maximum-scale=1.0 prevents pinch-zoom from breaking the app layout.
+    user-scalable=no is acceptable for this healthcare app to preserve native-feel.
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="description" content="ArogyaVani AI - Your Rural Health Voice Assistant" />
   <meta name="theme-color" content="#16324F" />
   <title>ArogyaVani AI | Rural Health Voice Assistant</title>

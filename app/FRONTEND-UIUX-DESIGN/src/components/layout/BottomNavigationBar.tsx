@@ -41,10 +41,12 @@ export const BottomNavigationBar: React.FC<BottomNavigationBarProps> = ({
 
   return (
     <nav
-      className="relative z-30 bg-white border-t border-slate-200 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] shrink-0 w-full"
+      id="bottom-navigation-bar"
+      className="fixed sm:absolute bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] w-full"
+      style={{ paddingBottom: 'var(--sab, 0px)' }}
       aria-label="Bottom navigation"
     >
-      <div className="flex items-stretch justify-around max-w-lg mx-auto">
+      <div className="flex items-stretch justify-around max-w-lg mx-auto h-[var(--bottom-nav-height,60px)]">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
           return (
@@ -55,7 +57,7 @@ export const BottomNavigationBar: React.FC<BottomNavigationBarProps> = ({
               onClick={() => onTabChange(tab.id)}
               aria-label={tab.label}
               aria-current={isActive ? 'page' : undefined}
-              className={`flex flex-col items-center justify-center flex-1 py-2.5 gap-1 transition-colors cursor-pointer focus:outline-none relative ${
+              className={`flex flex-col items-center justify-center flex-1 py-1 gap-1 transition-colors cursor-pointer focus:outline-none relative h-full ${
                 isActive ? 'text-[#0D9488]' : 'text-slate-400 hover:text-slate-600'
               }`}
             >
@@ -67,7 +69,7 @@ export const BottomNavigationBar: React.FC<BottomNavigationBarProps> = ({
                 {tab.icon}
               </span>
               <span
-                className={`font-semibold text-center truncate max-w-full px-0.5 ${
+                className={`font-semibold text-center leading-tight max-w-full px-0.5 ${
                   isTamil
                     ? 'text-[9.5px] leading-tight tracking-tight'
                     : 'text-[10px] sm:text-[10.5px] tracking-wide'

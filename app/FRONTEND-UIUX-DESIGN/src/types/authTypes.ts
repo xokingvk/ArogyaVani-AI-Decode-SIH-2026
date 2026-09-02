@@ -4,6 +4,7 @@ export interface UserProfile {
   village_district?: string;
   preferred_language?: string;
   created_at?: string;
+  ai_question_count?: number;
 }
 
 export interface AuthResult {
@@ -20,5 +21,7 @@ export interface AuthContextType {
   loginUser: (username: string, password: string) => Promise<AuthResult>;
   signupUser: (username: string, password: string, villageDistrict: string) => Promise<AuthResult>;
   logoutUser: () => Promise<void>;
+  refreshProfile: () => Promise<void>;
 }
+
 

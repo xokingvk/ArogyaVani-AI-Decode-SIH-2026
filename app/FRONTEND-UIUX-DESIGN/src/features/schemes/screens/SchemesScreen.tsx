@@ -249,7 +249,7 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
   }
 
   return (
-    <div className="w-full bg-[#F8FAFC] min-h-full py-3 px-4 pb-28 space-y-3.5">
+    <div className="w-full bg-[#F8FAFC] min-h-full py-3 px-3 sm:px-4 pb-4 space-y-3.5 max-w-full">
       {/* ── 1. Hero Header ─────────────────────────────────────────────── */}
       <SchemeHero />
 

@@ -9,3 +9,7 @@ services:
         sync: false
       - key: SARVAM_API_KEY
         sync: false
+      - key: ENABLE_RAG
+        value: "false"
+      - key: ENABLE_DOCUMENT_ELIGIBILITY
+        value: "false"

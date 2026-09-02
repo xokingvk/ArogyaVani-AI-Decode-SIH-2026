@@ -22,6 +22,7 @@ const INITIAL_DEMO_USERS: Record<string, { password: string; profile: UserProfil
       village_district: 'Sundarpur, Varanasi',
       preferred_language: 'hi',
       created_at: new Date().toISOString(),
+      ai_question_count: 0,
     },
   },
   anitha: {
@@ -32,6 +33,7 @@ const INITIAL_DEMO_USERS: Record<string, { password: string; profile: UserProfil
       village_district: 'Melur, Madurai',
       preferred_language: 'ta',
       created_at: new Date().toISOString(),
+      ai_question_count: 0,
     },
   },
   doctor_arun: {
@@ -42,6 +44,7 @@ const INITIAL_DEMO_USERS: Record<string, { password: string; profile: UserProfil
       village_district: 'Anand District',
       preferred_language: 'en',
       created_at: new Date().toISOString(),
+      ai_question_count: 0,
     },
   },
 };
@@ -373,3 +376,39 @@ export const subscribeToAuthState = (
     unsubscribe: () => {},
   };
 };
+
+/**
+ * Atomically increments the AI question count for the currently authenticated Supabase user.
+ * Invokes the atomic postgres RPC function `increment_ai_question_count()`.
+ * In offline/demo mode, increments the mock user counter in localStorage.
+ */
+export const incrementAIQuestionCount = async (): Promise<number | null> => {
+  if (!isSupabaseConfigured) {
+    const savedUserJson = localStorage.getItem(LOCAL_STORAGE_SESSION_KEY);
+    if (savedUserJson) {
+      try {
+        const user = JSON.parse(savedUserJson) as UserProfile;
+        const newCount = (user.ai_question_count || 0) + 1;
+        user.ai_question_count = newCount;
+        localStorage.setItem(LOCAL_STORAGE_SESSION_KEY, JSON.stringify(user));
+        return newCount;
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  try {
+    const { data, error } = await supabase.rpc('increment_ai_question_count');
+    if (error) {
+      console.error('Error incrementing AI question count via RPC:', error);
+      return null;
+    }
+    return typeof data === 'number' ? data : null;
+  } catch (err) {
+    console.error('Failed to invoke increment_ai_question_count RPC:', err);
+    return null;
+  }
+};
+

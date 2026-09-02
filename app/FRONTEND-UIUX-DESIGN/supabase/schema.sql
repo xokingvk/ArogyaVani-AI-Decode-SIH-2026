@@ -19,6 +19,7 @@ CREATE TABLE public.user_profiles (
   username text UNIQUE NOT NULL,
   village_district text,
   preferred_language text DEFAULT 'en',
+  ai_question_count integer NOT NULL DEFAULT 0,
   created_at timestamptz DEFAULT now()
 );
 
@@ -35,7 +36,33 @@ CREATE POLICY "Users can update own profile" ON public.user_profiles
 CREATE POLICY "Users can insert own profile on signup" ON public.user_profiles
   FOR INSERT WITH CHECK (auth.uid() = id);
 
--- Step 6: Auto-populate profile on new user signup
+-- Step 6: Atomic database-side increment function for normal Home AI questions
+CREATE OR REPLACE FUNCTION public.increment_ai_question_count()
+RETURNS integer
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  new_count integer;
+BEGIN
+  IF auth.uid() IS NULL THEN
+    RAISE EXCEPTION 'Not authenticated';
+  END IF;
+
+  UPDATE public.user_profiles
+  SET ai_question_count = coalesce(ai_question_count, 0) + 1
+  WHERE id = auth.uid()
+  RETURNING ai_question_count INTO new_count;
+
+  RETURN new_count;
+END;
+$$;
+
+REVOKE ALL ON FUNCTION public.increment_ai_question_count() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.increment_ai_question_count() TO authenticated;
+
+-- Step 7: Auto-populate profile on new user signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS trigger AS $$
 DECLARE
@@ -51,12 +78,13 @@ BEGIN
     'Rural Health Center'
   );
 
-  INSERT INTO public.user_profiles (id, username, village_district, preferred_language)
+  INSERT INTO public.user_profiles (id, username, village_district, preferred_language, ai_question_count)
   VALUES (
     new.id,
     lower(raw_username),
     raw_village_district,
-    coalesce(new.raw_user_meta_data->>'preferred_language', 'en')
+    coalesce(new.raw_user_meta_data->>'preferred_language', 'en'),
+    0
   )
   ON CONFLICT (id) DO UPDATE
     SET username = excluded.username,
@@ -70,5 +98,6 @@ CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
--- Step 7: Index for fast username lookups
+-- Step 8: Index for fast username lookups
 CREATE INDEX IF NOT EXISTS idx_user_profiles_username ON public.user_profiles (username);
+

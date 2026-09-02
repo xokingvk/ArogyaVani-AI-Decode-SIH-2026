@@ -8,6 +8,29 @@
     --color-teal: #0D9488;
     --color-emerald: #10B981;
     --color-error: #B33A3A;
+    /* Bottom navigation bar dimensions */
+    --bottom-nav-height: 60px;
+    /* Safe-area inset fallbacks (populated by Capacitor / browser) */
+    --sat: env(safe-area-inset-top, 0px);
+    --sar: env(safe-area-inset-right, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+    --sal: env(safe-area-inset-left, 0px);
+    /* Authoritative bottom clearance for scrollable content above fixed bottom nav */
+    --safe-bottom-space: calc(var(--bottom-nav-height) + var(--sab) + 24px);
+  }
+
+  /* ── Prevent horizontal overflow globally ── */
+  html {
+    box-sizing: border-box;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
   }
 
   body {
@@ -15,15 +38,38 @@
     background-color: #F8FAFC;
     color: #1E293B;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    width: 100%;
+    min-height: 100%;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
   }
 
-  /* Smooth transitions */
+  #root {
+    width: 100%;
+    min-height: 100%;
+    min-height: 100dvh;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ── Images never overflow their container ── */
+  img,
+  video,
+  svg {
+    max-width: 100%;
+    display: block;
+  }
+
+  /* ── Smooth border transitions ── */
   * {
     border-color: #E2E8F0;
   }
 }
 
 @layer utilities {
+  /* ── Brand gradients ── */
   .bg-gradient-teal-emerald {
     background: linear-gradient(135deg, #0D9488 0%, #10B981 100%);
   }
@@ -33,5 +79,54 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+
+  /* ── Safe-area-aware utilities ── */
+  .pb-safe {
+    padding-bottom: var(--sab);
+  }
+
+  .pt-safe {
+    padding-top: var(--sat);
+  }
+
+  /* ── Full-height utilities using dynamic viewport units ── */
+  .h-dvh {
+    height: 100dvh;
+  }
+
+  .min-h-dvh {
+    min-height: 100dvh;
+  }
+
+  /* ── Hide scrollbar while preserving scroll functionality ── */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ── Touch-friendly tap targets (min 44px) ── */
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* ── Native Touch Scrolling ── */
+  .touch-scroll-y {
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
 }
+
+/* ── Primary App Scroller Rules ── */
+#main-scroll-container {
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
 

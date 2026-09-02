@@ -24,17 +24,41 @@ export const AndroidFrameWrapper: React.FC<AndroidFrameWrapperProps> = ({ childr
   }, []);
 
   return (
-    <div className="min-h-screen min-h-[100dvh] w-full bg-slate-900 flex items-center justify-center sm:py-4 sm:px-4 font-sans select-none antialiased">
-      {/* Outer Mobile Device Frame Container */}
-      <div className="w-full sm:max-w-[420px] h-[100dvh] sm:h-[860px] sm:max-h-[95vh] bg-white sm:rounded-[44px] shadow-2xl shadow-black/80 flex flex-col overflow-hidden relative border-0 sm:border-[10px] sm:border-slate-800 ring-1 ring-white/10">
-        
-        {/* Android Top Camera Punch Hole (Desktop Viewport Only) */}
-        <div className="hidden sm:block absolute top-2 left-1/2 -translate-x-1/2 z-50 w-24 h-4 bg-slate-800 rounded-full flex items-center justify-center">
+    /*
+     * On actual mobile (< sm breakpoint) we render a transparent, full-
+     * viewport shell — no fake status bar, no device frame.
+     *
+     * On desktop / tablet (≥ sm) we render the familiar phone-frame mockup
+     * centered on a dark background so developers can preview the app.
+     */
+    <div
+      className={[
+        /* Mobile: clean full-screen shell */
+        'w-full h-dvh min-h-dvh flex flex-col bg-slate-50',
+        /* Desktop: dark stage + centred phone frame */
+        'sm:min-h-screen sm:bg-slate-900 sm:items-center sm:justify-center sm:py-6 sm:px-4',
+        'font-sans antialiased',
+      ].join(' ')}
+    >
+      {/* ── Phone device frame (desktop preview only) ── */}
+      <div
+        className={[
+          /* Mobile: fill entire viewport without restricting touch flow */
+          'w-full flex-1 flex flex-col min-h-0 relative',
+          /* Desktop: constrained phone shape with contained overflow */
+          'sm:w-[390px] sm:max-w-[420px] sm:h-[844px] sm:max-h-[95vh]',
+          'sm:rounded-[44px] sm:shadow-2xl sm:shadow-black/80',
+          'sm:border-[10px] sm:border-slate-800 sm:ring-1 sm:ring-white/10 sm:overflow-hidden',
+          'bg-white',
+        ].join(' ')}
+      >
+        {/* Camera punch-hole — desktop only */}
+        <div className="hidden sm:flex absolute top-2 left-1/2 -translate-x-1/2 z-50 w-24 h-4 bg-slate-800 rounded-full items-center justify-center">
           <div className="w-2.5 h-2.5 rounded-full bg-slate-950 border border-slate-700/50" />
         </div>
 
-        {/* Android Native Status Bar */}
-        <div className="w-full h-7 bg-white text-slate-800 px-5 flex items-center justify-between text-[11px] font-bold z-40 select-none shrink-0 border-b border-slate-100/50 pt-1">
+        {/* Simulated Android status bar — desktop preview only */}
+        <div className="hidden sm:flex w-full h-7 bg-white text-slate-800 px-5 items-center justify-between text-[11px] font-bold z-40 select-none shrink-0 border-b border-slate-100/50 pt-1">
           <div className="flex items-center gap-1.5 text-slate-700">
             <span>{currentTime}</span>
           </div>
@@ -46,13 +70,13 @@ export const AndroidFrameWrapper: React.FC<AndroidFrameWrapperProps> = ({ childr
           </div>
         </div>
 
-        {/* Mobile Viewport Content Area */}
-        <div className="flex-1 w-full relative flex flex-col overflow-hidden bg-slate-50">
+        {/* Content area */}
+        <div className="flex-1 w-full relative flex flex-col min-h-0 bg-slate-50">
           {children}
         </div>
 
-        {/* Android Bottom Gesture Navigation Pill Bar */}
-        <div className="w-full h-4 bg-white flex items-center justify-center shrink-0 z-40 pb-1">
+        {/* Gesture navigation pill — desktop only */}
+        <div className="hidden sm:flex w-full h-4 bg-white items-center justify-center shrink-0 z-40 pb-1">
           <div className="w-32 h-1 bg-slate-300 rounded-full" />
         </div>
       </div>

@@ -49,7 +49,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
     : 'Active';
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col select-none">
+    <div className="flex-1 min-h-0 overflow-y-auto w-full bg-slate-50 flex flex-col select-none pb-8">
       {/* Top Bar */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-20 px-4 py-3 sm:px-6 shadow-xs">
         <div className="max-w-3xl mx-auto flex items-center justify-between">

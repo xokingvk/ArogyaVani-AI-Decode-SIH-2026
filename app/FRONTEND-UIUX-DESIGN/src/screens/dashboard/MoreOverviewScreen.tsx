@@ -63,7 +63,7 @@ export const MoreOverviewScreen: React.FC<MoreOverviewScreenProps> = ({
   };
 
   return (
-    <div className="w-full bg-[#F5F6FA] min-h-full py-4 px-4 pb-24">
+    <div className="w-full bg-[#F5F6FA] min-h-full py-4 px-4 pb-4">
       <div className="max-w-lg mx-auto space-y-3.5">
 
         {/* ── User Card ────────────────────────────────────────────────────── */}

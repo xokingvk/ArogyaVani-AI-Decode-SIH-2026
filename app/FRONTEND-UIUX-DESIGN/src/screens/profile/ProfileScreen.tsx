@@ -38,7 +38,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   };
 
   return (
-    <div className="min-h-full bg-slate-50 flex flex-col select-none pb-24">
+    <div className="flex-1 min-h-0 overflow-y-auto w-full bg-slate-50 flex flex-col select-none pb-8">
       {/* Contextual Top Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-20 px-4 py-3 shadow-xs">
         <div className="max-w-lg mx-auto flex items-center justify-between">

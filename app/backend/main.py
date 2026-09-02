@@ -151,6 +151,16 @@ async def voice_query(
                 logger.warning(f"Could not remove temporary audio file {temp_audio_path}: {e}")
 
 
+def is_rag_enabled() -> bool:
+    """Returns whether the local RAG stack (SentenceTransformer + PyTorch + FAISS) is enabled."""
+    return os.getenv("ENABLE_RAG", "false").strip().lower() in ("true", "1", "yes")
+
+
+def is_doc_eligibility_enabled() -> bool:
+    """Returns whether the document extraction & scheme eligibility flow is enabled."""
+    return os.getenv("ENABLE_DOCUMENT_ELIGIBILITY", "false").strip().lower() in ("true", "1", "yes")
+
+
 from pydantic import BaseModel
 
 class SchemeEligibilityRequest(BaseModel):
@@ -163,25 +173,37 @@ def build_eligibility_response(
 ) -> dict[str, Any]:
     """Evaluates eligibility rules and retrieves targeted RAG sources for candidate schemes."""
     from services.eligibility_service import evaluate_scheme_eligibility
-    from services.rag_service import get_rag_service
 
     # Step 1: Rule-based eligibility evaluation
     schemes = evaluate_scheme_eligibility(profile)
 
-    # Step 2: Retrieve scheme-specific RAG sources for candidate schemes
-    rag_service = get_rag_service()
-    candidate_schemes = [
-        s for s in schemes if s.get("status") in ["potentially_eligible", "relevant"]
-    ]
-
-    seen_sources = set()
+    # Step 2: Retrieve scheme-specific RAG sources for candidate schemes (only if ENABLE_RAG is true)
     sources = []
+    if is_rag_enabled():
+        from services.rag_service import get_rag_service
+        rag_service = get_rag_service()
+        candidate_schemes = [
+            s for s in schemes if s.get("status") in ["potentially_eligible", "relevant"]
+        ]
 
-    # If candidate schemes exist, retrieve evidence directly targeted to those schemes
-    if candidate_schemes:
-        for s in candidate_schemes[:4]:
-            query = f"{s['schemeName']} government scheme eligibility criteria guidelines"
-            chunks = rag_service.retrieve(query, top_k=2)
+        seen_sources = set()
+        # If candidate schemes exist, retrieve evidence directly targeted to those schemes
+        if candidate_schemes:
+            for s in candidate_schemes[:4]:
+                query = f"{s['schemeName']} government scheme eligibility criteria guidelines"
+                chunks = rag_service.retrieve(query, top_k=2)
+                for r in chunks:
+                    key = (r.source, r.page)
+                    if key not in seen_sources:
+                        sources.append({
+                            "source": r.source,
+                            "page": r.page,
+                            "score": round(r.score, 4),
+                        })
+                        seen_sources.add(key)
+        else:
+            # Fallback general query
+            chunks = rag_service.retrieve("government health schemes eligibility guidelines", top_k=3)
             for r in chunks:
                 key = (r.source, r.page)
                 if key not in seen_sources:
@@ -191,18 +213,6 @@ def build_eligibility_response(
                         "score": round(r.score, 4),
                     })
                     seen_sources.add(key)
-    else:
-        # Fallback general query
-        chunks = rag_service.retrieve("government health schemes eligibility guidelines", top_k=3)
-        for r in chunks:
-            key = (r.source, r.page)
-            if key not in seen_sources:
-                sources.append({
-                    "source": r.source,
-                    "page": r.page,
-                    "score": round(r.score, 4),
-                })
-                seen_sources.add(key)
 
     # Step 3: Compute missing fields from profile
     standard_keys = [
@@ -250,6 +260,16 @@ async def scheme_document(
     4. Retrieves targeted evidence sources from the 8-PDF FAISS knowledge base.
     5. Returns structured response with profile, eligibility results, and verified sources.
     """
+    if not is_doc_eligibility_enabled():
+        return JSONResponse(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            content={
+                "success": False,
+                "error": "Document scheme verification is temporarily unavailable in prototype mode. Please check back soon.",
+                "temporary_unavailable": True,
+            },
+        )
+
     if not file:
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -345,6 +365,16 @@ async def scheme_eligibility(payload: SchemeEligibilityRequest):
     Recalculates eligibility statuses, missing fields, and RAG sources
     when the user edits or confirms their profile.
     """
+    if not is_doc_eligibility_enabled():
+        return JSONResponse(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            content={
+                "success": False,
+                "error": "Scheme eligibility evaluation is temporarily unavailable in prototype mode. Please check back soon.",
+                "temporary_unavailable": True,
+            },
+        )
+
     try:
         if not payload.profile or not isinstance(payload.profile, dict):
             return JSONResponse(

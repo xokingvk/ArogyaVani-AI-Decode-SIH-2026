@@ -92,7 +92,7 @@ export const VoiceAssistantCard: React.FC<VoiceAssistantCardProps> = ({
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: 0.12, ease: 'easeOut' }}
-      className="mx-4 rounded-3xl overflow-hidden relative border border-white/10"
+      className="mx-3 sm:mx-4 rounded-3xl overflow-hidden relative border border-white/10"
       style={{
         background:
           'radial-gradient(circle at 50% 28%, rgba(13,148,136,0.22) 0%, transparent 62%), linear-gradient(155deg, #102A56 0%, #164B72 50%, #087F7A 100%)',

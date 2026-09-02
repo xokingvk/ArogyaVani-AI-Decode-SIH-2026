@@ -103,7 +103,7 @@ export const SignupScreen: React.FC<SignupScreenProps> = ({
 
   return (
     <main
-      className="min-h-screen w-full bg-[#F8FAFC] flex flex-col items-center justify-center px-4 py-8 md:py-12 select-none"
+      className="flex-1 min-h-0 overflow-y-auto w-full bg-[#F8FAFC] flex flex-col items-center justify-center px-4 py-8 md:py-12 select-none"
       id="signup-screen-container"
     >
       <div className="w-full max-w-sm sm:max-w-md flex flex-col items-center">
