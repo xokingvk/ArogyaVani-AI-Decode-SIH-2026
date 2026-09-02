@@ -35,7 +35,7 @@ import { SchemeRecommendationList } from '../components/SchemeRecommendationList
 import { SchemeDetailsScreen } from './SchemeDetailsScreen';
 import { useVoiceRecorder } from '../../voice/hooks/useVoiceRecorder';
 import { VoiceQuerySuccessResponse } from '../../voice/types/voiceTypes';
-import { uploadSchemeDocument } from '../../../services/voiceService';
+import { uploadSchemeDocument, evaluateSchemeEligibility } from '../../../services/voiceService';
 
 export interface SchemesScreenProps {
   initialSelectedSchemeId?: string;
@@ -159,32 +159,75 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
   }, []);
 
   const handleConfirmProfile = useCallback(
-    (edited: EditableProfile) => {
-      if (!documentResponse) return;
+    async (edited: EditableProfile) => {
+      // Parse and strictly validate numeric inputs
+      let parsedAge: number | null = null;
+      if (edited.age && edited.age.trim()) {
+        const a = parseInt(edited.age.trim(), 10);
+        if (!isNaN(a) && a >= 0 && a <= 125) {
+          parsedAge = a;
+        }
+      }
+
+      let parsedIncome: number | null = null;
+      if (edited.annual_income && edited.annual_income.trim()) {
+        const inc = parseFloat(edited.annual_income.trim().replace(/,/g, ''));
+        if (!isNaN(inc) && inc >= 0) {
+          parsedIncome = inc;
+        }
+      }
+
+      let parsedChildAge: number | null = null;
+      if (edited.child_age && edited.child_age.trim()) {
+        const ca = parseFloat(edited.child_age.trim());
+        if (!isNaN(ca) && ca >= 0 && ca <= 18) {
+          parsedChildAge = ca;
+        }
+      }
 
       const updatedProfile: UserProfile = {
-        name: edited.name || null,
-        date_of_birth: edited.date_of_birth || null,
-        age: edited.age ? parseInt(edited.age, 10) || null : null,
-        gender: edited.gender || null,
-        state: edited.state || null,
-        district: edited.district || null,
-        category: edited.category || null,
-        annual_income: edited.annual_income ? parseFloat(edited.annual_income) || null : null,
-        occupation: edited.occupation || null,
+        name: edited.name ? edited.name.trim() : null,
+        date_of_birth: edited.date_of_birth ? edited.date_of_birth.trim() : null,
+        age: parsedAge,
+        gender: edited.gender ? edited.gender.trim() : null,
+        state: edited.state ? edited.state.trim() : null,
+        district: edited.district ? edited.district.trim() : null,
+        category: edited.category ? edited.category.trim() : null,
+        annual_income: parsedIncome,
+        occupation: edited.occupation ? edited.occupation.trim() : null,
         pregnancy_status:
           edited.pregnancy_status === 'yes'
             ? true
             : edited.pregnancy_status === 'no'
             ? false
             : null,
-        child_age: edited.child_age ? parseFloat(edited.child_age) || null : null,
+        child_age: parsedChildAge,
       };
 
-      setDocumentResponse({
-        ...documentResponse,
-        profile: updatedProfile,
-      });
+      setPreviewProfile(updatedProfile);
+
+      // Recalculate eligibility with backend
+      try {
+        const recalcRes = await evaluateSchemeEligibility(updatedProfile);
+        if (recalcRes.success) {
+          setDocumentResponse(recalcRes);
+          setPreviewMissingFields(recalcRes.missing_fields || []);
+        } else if (documentResponse) {
+          // Fallback if network issue occurs during edit
+          setDocumentResponse({
+            ...documentResponse,
+            profile: updatedProfile,
+          });
+        }
+      } catch {
+        if (documentResponse) {
+          setDocumentResponse({
+            ...documentResponse,
+            profile: updatedProfile,
+          });
+        }
+      }
+
       setIsReviewingProfile(false);
     },
     [documentResponse]

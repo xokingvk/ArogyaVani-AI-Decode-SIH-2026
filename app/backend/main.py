@@ -1,7 +1,7 @@
 import logging
 import os
 import tempfile
-from typing import Optional
+from typing import Optional, Any
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, HTTPException, UploadFile, status
@@ -151,6 +151,94 @@ async def voice_query(
                 logger.warning(f"Could not remove temporary audio file {temp_audio_path}: {e}")
 
 
+from pydantic import BaseModel
+
+class SchemeEligibilityRequest(BaseModel):
+    profile: dict[str, Any]
+
+
+def build_eligibility_response(
+    profile: dict[str, Any],
+    confidence: Optional[dict[str, str]] = None,
+) -> dict[str, Any]:
+    """Evaluates eligibility rules and retrieves targeted RAG sources for candidate schemes."""
+    from services.eligibility_service import evaluate_scheme_eligibility
+    from services.rag_service import get_rag_service
+
+    # Step 1: Rule-based eligibility evaluation
+    schemes = evaluate_scheme_eligibility(profile)
+
+    # Step 2: Retrieve scheme-specific RAG sources for candidate schemes
+    rag_service = get_rag_service()
+    candidate_schemes = [
+        s for s in schemes if s.get("status") in ["potentially_eligible", "relevant"]
+    ]
+
+    seen_sources = set()
+    sources = []
+
+    # If candidate schemes exist, retrieve evidence directly targeted to those schemes
+    if candidate_schemes:
+        for s in candidate_schemes[:4]:
+            query = f"{s['schemeName']} government scheme eligibility criteria guidelines"
+            chunks = rag_service.retrieve(query, top_k=2)
+            for r in chunks:
+                key = (r.source, r.page)
+                if key not in seen_sources:
+                    sources.append({
+                        "source": r.source,
+                        "page": r.page,
+                        "score": round(r.score, 4),
+                    })
+                    seen_sources.add(key)
+    else:
+        # Fallback general query
+        chunks = rag_service.retrieve("government health schemes eligibility guidelines", top_k=3)
+        for r in chunks:
+            key = (r.source, r.page)
+            if key not in seen_sources:
+                sources.append({
+                    "source": r.source,
+                    "page": r.page,
+                    "score": round(r.score, 4),
+                })
+                seen_sources.add(key)
+
+    # Step 3: Compute missing fields from profile
+    standard_keys = [
+        "name",
+        "date_of_birth",
+        "age",
+        "gender",
+        "state",
+        "district",
+        "category",
+        "annual_income",
+        "occupation",
+        "pregnancy_status",
+        "child_age",
+    ]
+    missing_fields = [k for k in standard_keys if profile.get(k) is None]
+
+    if confidence is None:
+        confidence = {k: "high" for k in standard_keys if profile.get(k) is not None}
+
+    summary = (
+        "Based on the available information in your profile, we evaluated potentially "
+        "relevant government health schemes. Please review the details below before applying."
+    )
+
+    return {
+        "success": True,
+        "profile": profile,
+        "confidence": confidence,
+        "missing_fields": missing_fields,
+        "summary": summary,
+        "schemes": schemes,
+        "sources": sources,
+    }
+
+
 @app.post("/scheme-document")
 async def scheme_document(
     file: UploadFile = File(...),
@@ -159,7 +247,7 @@ async def scheme_document(
     1. Receives uploaded document (image/PDF).
     2. Extracts structured UserProfile via Gemini/pypdf (without storing file).
     3. Evaluates eligibility rules across curated government health schemes.
-    4. Retrieves grounded evidence sources from the 8-PDF FAISS knowledge base.
+    4. Retrieves targeted evidence sources from the 8-PDF FAISS knowledge base.
     5. Returns structured response with profile, eligibility results, and verified sources.
     """
     if not file:
@@ -192,69 +280,50 @@ async def scheme_document(
                 },
             )
 
-        filename = file.filename or "document.jpg"
-        content_type = file.content_type
+        ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".pdf"}
+        ALLOWED_MIME_TYPES = {"image/jpeg", "image/png", "image/webp", "application/pdf"}
 
-        logger.info(f"Processing document upload ({len(file_bytes)} bytes, filename: {filename})")
+        filename = file.filename or "document.jpg"
+        content_type = (file.content_type or "").lower().strip()
+        ext = ("." + filename.rsplit(".", 1)[-1].lower()) if "." in filename else ""
+
+        # Validate extension
+        if ext not in ALLOWED_EXTENSIONS:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={
+                    "success": False,
+                    "error": "Unsupported file format. Please upload a JPG, PNG, WEBP, or PDF document.",
+                },
+            )
+
+        # Validate MIME type when provided
+        if content_type and content_type != "application/octet-stream" and content_type not in ALLOWED_MIME_TYPES:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={
+                    "success": False,
+                    "error": "Unsupported MIME type. Please upload a valid image or PDF document.",
+                },
+            )
+
+        logger.info(f"Processing document upload ({len(file_bytes)} bytes, type: {content_type})")
+
+        from services.document_service import extract_profile_from_document
 
         # Step 1: Extract structured UserProfile
-        from services.document_service import extract_profile_from_document
-        from services.eligibility_service import evaluate_scheme_eligibility
-        from services.rag_service import get_rag_service
-
-        profile, confidence, missing_fields = extract_profile_from_document(
+        profile, confidence, _ = extract_profile_from_document(
             file_bytes=file_bytes,
             filename=filename,
             mime_type=content_type,
         )
 
-        # Step 2: Evaluate scheme eligibility against known criteria
-        schemes = evaluate_scheme_eligibility(profile)
-
-        # Step 3: Grounded evidence sources via existing FAISS RAG
-        rag_service = get_rag_service()
-        # Privacy-preserving RAG retrieval query without full citizen name
-        rag_query_parts = ["government health schemes eligibility benefits"]
-        if profile.get("age"):
-            rag_query_parts.append(f"age {profile['age']}")
-        if profile.get("state"):
-            rag_query_parts.append(f"state {profile['state']}")
-        if profile.get("pregnancy_status"):
-            rag_query_parts.append("maternity pregnancy")
-        if profile.get("child_age"):
-            rag_query_parts.append(f"child age {profile['child_age']}")
-
-        rag_query = " ".join(rag_query_parts)
-        retrieved_chunks = rag_service.retrieve(rag_query, top_k=3)
-
-        seen_sources = set()
-        sources = []
-        for r in retrieved_chunks:
-            key = (r.source, r.page)
-            if key not in seen_sources:
-                sources.append({
-                    "source": r.source,
-                    "page": r.page,
-                    "score": round(r.score, 4),
-                })
-                seen_sources.add(key)
-
-        summary = (
-            "Based on the available information in your document, we evaluated potentially "
-            "relevant government health schemes. Please review the details below before applying."
-        )
+        # Step 2: Build eligibility evaluation and targeted sources
+        response_payload = build_eligibility_response(profile, confidence)
 
         return JSONResponse(
             status_code=status.HTTP_200_OK,
-            content={
-                "success": True,
-                "profile": profile,
-                "confidence": confidence,
-                "missing_fields": missing_fields,
-                "summary": summary,
-                "schemes": schemes,
-                "sources": sources,
-            },
+            content=response_payload,
         )
 
     except HTTPException:
@@ -266,6 +335,42 @@ async def scheme_document(
             content={
                 "success": False,
                 "error": "Unable to extract information from this document. Please try a clearer image or supported PDF.",
+            },
+        )
+
+
+@app.post("/scheme-eligibility")
+async def scheme_eligibility(payload: SchemeEligibilityRequest):
+    """Profile-based scheme eligibility recalculation endpoint:
+    Recalculates eligibility statuses, missing fields, and RAG sources
+    when the user edits or confirms their profile.
+    """
+    try:
+        if not payload.profile or not isinstance(payload.profile, dict):
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={
+                    "success": False,
+                    "error": "Invalid profile payload.",
+                },
+            )
+
+        response_payload = build_eligibility_response(payload.profile)
+
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content=response_payload,
+        )
+
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.exception(f"Error while recalculating eligibility: {exc}")
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={
+                "success": False,
+                "error": "Unable to evaluate scheme eligibility. Please try again.",
             },
         )
 

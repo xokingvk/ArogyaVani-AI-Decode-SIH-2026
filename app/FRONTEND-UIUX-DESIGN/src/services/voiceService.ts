@@ -241,3 +241,64 @@ export async function uploadSchemeDocument(
   }
 }
 
+/**
+ * Recalculates scheme eligibility and targeted RAG sources based on an edited profile.
+ * Calls POST /scheme-eligibility.
+ */
+export async function evaluateSchemeEligibility(
+  profile: import('../features/schemes/types/schemeTypes').UserProfile,
+): Promise<SchemeDocumentUploadResult> {
+  const baseUrl = getApiBaseUrl();
+  const url = `${baseUrl}/scheme-eligibility`;
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 60_000);
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ profile }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    let data: Record<string, unknown>;
+    try {
+      data = await response.json();
+    } catch {
+      return {
+        success: false,
+        error: response.ok
+          ? 'Unexpected response format from eligibility calculation server.'
+          : `Server error (${response.status}). Please try again.`,
+      };
+    }
+
+    if (!response.ok || !data || data['success'] === false) {
+      return {
+        success: false,
+        error: (data?.['error'] as string) ?? `Eligibility evaluation failed (${response.status}).`,
+      };
+    }
+
+    return data as unknown as DocumentEligibilityResponse;
+  } catch (error: unknown) {
+    clearTimeout(timeoutId);
+    if (error instanceof Error && (error.name === 'AbortError' || controller.signal.aborted)) {
+      return {
+        success: false,
+        error: 'Request timed out while evaluating eligibility. Please try again.',
+      };
+    }
+    return {
+      success: false,
+      error: 'Unable to connect to the eligibility server. Please check your network.',
+    };
+  }
+}
+
+
