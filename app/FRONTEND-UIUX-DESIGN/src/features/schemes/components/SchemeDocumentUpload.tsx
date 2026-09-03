@@ -3,6 +3,7 @@
  * Handles document (JPG/PNG/PDF) selection, validation, and upload trigger.
  * States: idle → selected → uploading → processing → success | error
  * Privacy: processes only for scheme discovery, never stores original document.
+ * Fully localized with i18n.
  */
 import React, { useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -16,6 +17,7 @@ import {
   AlertCircle,
   CheckCircle2,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { DocumentUploadState } from '../types/schemeTypes';
 
 // ── Configuration ─────────────────────────────────────────────────────────
@@ -23,16 +25,16 @@ const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
 const ACCEPTED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
 const ACCEPTED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.pdf'];
 
-function validateFile(file: File): string | null {
+function validateFile(file: File, t: (key: string, options?: any) => string): string | null {
   if (!ACCEPTED_MIME_TYPES.includes(file.type)) {
-    return `Unsupported file type (${file.type}). Please upload a JPG, PNG, or PDF.`;
+    return t('schemes.documentUpload.errUnsupported', { type: file.type });
   }
   if (file.size === 0) {
-    return 'The selected file appears to be empty. Please choose another file.';
+    return t('schemes.documentUpload.errEmpty');
   }
   if (file.size > MAX_FILE_SIZE_BYTES) {
     const sizeMB = (file.size / (1024 * 1024)).toFixed(1);
-    return `File is too large (${sizeMB} MB). Maximum allowed size is 10 MB.`;
+    return t('schemes.documentUpload.errTooLarge', { size: sizeMB });
   }
   return null;
 }
@@ -62,6 +64,7 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
   onUpload,
   onClear,
 }) => {
+  const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
@@ -71,7 +74,7 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
       const file = e.target.files?.[0];
       if (!file) return;
 
-      const err = validateFile(file);
+      const err = validateFile(file, t);
       if (err) {
         setValidationError(err);
         setSelectedFile(null);
@@ -83,7 +86,7 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
       setSelectedFile(file);
       onFileSelected(file);
     },
-    [onFileSelected],
+    [onFileSelected, t],
   );
 
   const handleClear = useCallback(() => {
@@ -113,9 +116,9 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
             <Upload className="w-4 h-4 text-violet-600" />
           </div>
           <div>
-            <p className="text-xs font-extrabold text-slate-900">Upload Document Details</p>
+            <p className="text-xs font-extrabold text-slate-900">{t('schemes.documentUpload.headerTitle')}</p>
             <p className="text-[10.5px] text-slate-500">
-              Upload a document to find relevant government schemes
+              {t('schemes.documentUpload.headerSubtitle')}
             </p>
           </div>
         </div>
@@ -129,7 +132,7 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
           type="file"
           accept={ACCEPTED_EXTENSIONS.join(',')}
           className="sr-only"
-          aria-label="Upload identity or scheme document"
+          aria-label={t('schemes.documentUpload.tapToSelect')}
           onChange={handleFileChange}
           disabled={isLoading}
         />
@@ -145,17 +148,17 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={isLoading}
-              className="w-full flex flex-col items-center justify-center gap-2 p-5 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 hover:border-violet-400 hover:bg-violet-50/40 transition-all text-center group"
+              className="w-full flex flex-col items-center justify-center gap-2 p-5 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 hover:border-violet-400 hover:bg-violet-50/40 transition-all text-center group cursor-pointer"
             >
               <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 group-hover:border-violet-300 flex items-center justify-center transition-colors shadow-sm">
                 <Upload className="w-5 h-5 text-slate-500 group-hover:text-violet-600 transition-colors" />
               </div>
               <div>
                 <p className="text-xs font-bold text-slate-700 group-hover:text-violet-800">
-                  Tap to select a document
+                  {t('schemes.documentUpload.tapToSelect')}
                 </p>
                 <p className="text-[10.5px] text-slate-500 mt-0.5">
-                  JPG, PNG, PDF · Max 10 MB
+                  {t('schemes.documentUpload.formatsInfo')}
                 </p>
               </div>
             </motion.button>
@@ -180,8 +183,8 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Remove selected file"
-                className="p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-200 transition-colors"
+                aria-label={t('common.remove')}
+                className="p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-200 transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -200,12 +203,12 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
               <Loader2 className="w-5 h-5 text-violet-600 animate-spin shrink-0" />
               <div>
                 <p className="text-xs font-bold text-violet-900">
-                  {uploadState === 'uploading' ? 'Uploading document…' : 'Extracting information…'}
+                  {uploadState === 'uploading' ? t('schemes.documentUpload.uploadingTitle') : t('schemes.documentUpload.extractingTitle')}
                 </p>
                 <p className="text-[10.5px] text-violet-700">
                   {uploadState === 'processing'
-                    ? 'Identifying relevant government schemes'
-                    : 'Please wait a moment'}
+                    ? t('schemes.documentUpload.identifyingSubtitle')
+                    : t('schemes.documentUpload.pleaseWaitSubtitle')}
                 </p>
               </div>
             </motion.div>
@@ -222,16 +225,16 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
             >
               <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
               <div className="flex-1">
-                <p className="text-xs font-bold text-emerald-900">Document processed</p>
+                <p className="text-xs font-bold text-emerald-900">{t('schemes.documentUpload.processedTitle')}</p>
                 <p className="text-[10.5px] text-emerald-700">
-                  Review the extracted information below
+                  {t('schemes.documentUpload.processedSubtitle')}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Clear results and upload another document"
-                className="p-1 text-emerald-500 hover:text-emerald-700 rounded-lg hover:bg-emerald-100 transition-colors"
+                aria-label={t('common.close')}
+                className="p-1 text-emerald-500 hover:text-emerald-700 rounded-lg hover:bg-emerald-100 transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -251,14 +254,14 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
             >
               <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
               <div>
-                <p className="font-bold">Upload error</p>
+                <p className="font-bold">{t('schemes.errorState')}</p>
                 <p className="mt-0.5 font-normal">{validationError ?? errorMessage}</p>
               </div>
               <button
                 type="button"
                 onClick={handleClear}
-                aria-label="Dismiss error"
-                className="ml-auto text-red-400 hover:text-red-600"
+                aria-label={t('common.close')}
+                className="ml-auto text-red-400 hover:text-red-600 cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -274,10 +277,10 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
             type="button"
             onClick={() => onUpload(selectedFile)}
             disabled={isLoading}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold transition-colors disabled:opacity-60 shadow-sm"
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold transition-colors disabled:opacity-60 shadow-sm cursor-pointer"
           >
             <Upload className="w-3.5 h-3.5" />
-            Find Relevant Schemes
+            {t('schemes.documentUpload.processDocumentBtn')}
           </motion.button>
         )}
 
@@ -285,8 +288,7 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
         <div className="flex items-start gap-1.5 text-[10.5px] text-slate-500">
           <ShieldCheck className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
           <span>
-            Your document is processed only to identify relevant schemes.
-            It is not stored or shared.
+            {t('schemes.documentUpload.privacyNotice')}
           </span>
         </div>
       </div>

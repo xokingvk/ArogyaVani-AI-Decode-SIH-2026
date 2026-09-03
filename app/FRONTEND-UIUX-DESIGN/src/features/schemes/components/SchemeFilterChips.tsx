@@ -1,9 +1,11 @@
 /**
  * SchemeFilterChips Component
  * Horizontally scrollable category filter chips with smooth touch UX.
+ * Fully localized with i18n.
  */
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { SCHEME_CATEGORIES } from '../constants/schemeConstants';
 import { SchemeCategory } from '../types/schemeTypes';
 
@@ -12,10 +14,23 @@ export interface SchemeFilterChipsProps {
   onSelectCategory: (category: SchemeCategory) => void;
 }
 
+const CATEGORY_I18N_KEYS: Record<string, string> = {
+  all: 'schemes.categories.all',
+  'women-maternity': 'schemes.categories.womenMaternity',
+  children: 'schemes.categories.children',
+  insurance: 'schemes.categories.insurance',
+  'family-health': 'schemes.categories.familyHealth',
+  preventive: 'schemes.categories.preventive',
+  'state-schemes': 'schemes.categories.stateSchemes',
+  other: 'schemes.categories.other',
+};
+
 export const SchemeFilterChips: React.FC<SchemeFilterChipsProps> = ({
   selectedCategory,
   onSelectCategory,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -26,6 +41,9 @@ export const SchemeFilterChips: React.FC<SchemeFilterChipsProps> = ({
     >
       {SCHEME_CATEGORIES.map((cat) => {
         const isSelected = selectedCategory === cat.id;
+        const i18nKey = CATEGORY_I18N_KEYS[cat.id];
+        const label = i18nKey ? t(i18nKey) : cat.label;
+
         return (
           <button
             key={cat.id}
@@ -38,7 +56,7 @@ export const SchemeFilterChips: React.FC<SchemeFilterChipsProps> = ({
                 : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
-            {cat.label}
+            {label}
           </button>
         );
       })}

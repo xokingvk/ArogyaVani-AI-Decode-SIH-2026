@@ -1,6 +1,7 @@
 /**
  * SchemeHero Component
  * Compact, dignified government healthcare hero header.
+ * Fully localized.
  */
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -31,15 +32,15 @@ export const SchemeHero: React.FC = () => {
           <div className="min-w-0">
             <div className="flex items-center gap-1.5 flex-wrap">
               <h1 className={`font-black text-white tracking-tight leading-tight ${isTamil || isTelugu ? 'text-base' : 'text-lg'}`}>
-                {t('schemes.pageTitle') || 'Government Health Schemes'}
+                {t('schemes.pageTitle')}
               </h1>
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-[10px] font-bold text-teal-200">
                 <ShieldCheck className="w-3 h-3 text-teal-300" />
-                <span>Verified</span>
+                <span>{t('common.verified')}</span>
               </span>
             </div>
             <p className="text-xs text-slate-200/85 mt-1 leading-snug">
-              Find government healthcare schemes, maternity benefits, free rations, and insurance support.
+              {t('schemes.heroSubtitle')}
             </p>
           </div>
         </div>

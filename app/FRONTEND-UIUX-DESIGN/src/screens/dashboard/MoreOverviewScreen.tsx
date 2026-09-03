@@ -80,8 +80,9 @@ export const MoreOverviewScreen: React.FC<MoreOverviewScreenProps> = ({
           </div>
           <button
             type="button"
+            aria-label={t('more.settingsAndProfile')}
             onClick={onNavigateToSettings}
-            className="p-2 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-100"
+            className="p-2 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-100 cursor-pointer"
           >
             <Settings className="w-5 h-5" />
           </button>
@@ -188,35 +189,35 @@ export const MoreOverviewScreen: React.FC<MoreOverviewScreenProps> = ({
                   <FileText className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-base text-slate-900">ABHA Health Records</h3>
-                  <p className="text-xs text-slate-500">Linked to Ayushman Bharat Digital ID</p>
+                  <h3 className="font-extrabold text-base text-slate-900">{t('more.modals.recordsTitle')}</h3>
+                  <p className="text-xs text-slate-500">{t('more.modals.recordsSubtitle')}</p>
                 </div>
               </div>
-              <button type="button" onClick={() => setActiveModal(null)} className="p-1 text-slate-400">
+              <button type="button" aria-label={t('common.close')} onClick={() => setActiveModal(null)} className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="bg-gradient-to-r from-[#16324F] to-[#0D9488] rounded-2xl p-4 text-white space-y-1 shadow-sm">
-              <p className="text-[10px] uppercase font-bold text-teal-200">ABHA Health ID Number</p>
+              <p className="text-[10px] uppercase font-bold text-teal-200">{t('more.modals.abhaIdTitle')}</p>
               <p className="font-mono text-base font-black tracking-wider">91-8834-0912-7723</p>
-              <p className="text-xs text-slate-200">Sriharini Devi • Kanchipuram</p>
+              <p className="text-xs text-slate-200">{currentUser?.username || 'Sriharini Devi'} • {currentUser?.village_district || 'Kanchipuram'}</p>
             </div>
 
             <div className="space-y-2 text-xs">
               <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-slate-800">Child Immunization Record</p>
-                  <p className="text-[11px] text-slate-500">Updated 12 Aug 2024 by ASHA</p>
+                  <p className="font-bold text-slate-800">{t('more.modals.childRecordTitle')}</p>
+                  <p className="text-[11px] text-slate-500">{t('more.modals.childRecordSub')}</p>
                 </div>
-                <span className="text-teal-700 font-bold text-[11px] bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200">Verified</span>
+                <span className="text-teal-700 font-bold text-[11px] bg-teal-50 px-2 py-0.5 rounded-full border border-teal-200">{t('common.verified')}</span>
               </div>
               <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-slate-800">Ayushman Bharat Coverage Card</p>
-                  <p className="text-[11px] text-slate-500">Active • ₹5,00,000 Balance</p>
+                  <p className="font-bold text-slate-800">{t('more.modals.pmjayCardTitle')}</p>
+                  <p className="text-[11px] text-slate-500">{t('more.modals.pmjayCardSub')}</p>
                 </div>
-                <span className="text-emerald-700 font-bold text-[11px] bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">Active</span>
+                <span className="text-emerald-700 font-bold text-[11px] bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">{t('common.active')}</span>
               </div>
             </div>
           </div>
@@ -233,11 +234,11 @@ export const MoreOverviewScreen: React.FC<MoreOverviewScreenProps> = ({
                   <Users className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-base text-slate-900">Family & ASHA Connect</h3>
-                  <p className="text-xs text-slate-500">Linked household members</p>
+                  <h3 className="font-extrabold text-base text-slate-900">{t('more.modals.familyTitle')}</h3>
+                  <p className="text-xs text-slate-500">{t('more.modals.familySubtitle')}</p>
                 </div>
               </div>
-              <button type="button" onClick={() => setActiveModal(null)} className="p-1 text-slate-400">
+              <button type="button" aria-label={t('common.close')} onClick={() => setActiveModal(null)} className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -245,17 +246,17 @@ export const MoreOverviewScreen: React.FC<MoreOverviewScreenProps> = ({
             <div className="space-y-2 text-xs">
               <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-slate-800">Smt. Lakshmi Devi (ASHA Worker)</p>
-                  <p className="text-[11px] text-slate-500">Assigned PHC Health Buddy</p>
+                  <p className="font-bold text-slate-800">{t('more.modals.ashaWorkerTitle')}</p>
+                  <p className="text-[11px] text-slate-500">{t('more.modals.ashaWorkerSub')}</p>
                 </div>
-                <button type="button" onClick={() => alert('Calling ASHA worker: +91 98401 XXXXX')} className="px-3 py-1 bg-indigo-600 text-white rounded-xl font-bold">Call</button>
+                <button type="button" onClick={() => alert('Calling ASHA worker: +91 98401 XXXXX')} className="px-3 py-1 bg-indigo-600 text-white rounded-xl font-bold cursor-pointer">{t('common.call')}</button>
               </div>
               <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-slate-800">Ramesh Kumar (Husband)</p>
-                  <p className="text-[11px] text-slate-500">Ration Card ID: TN-9941</p>
+                  <p className="font-bold text-slate-800">{t('more.modals.husbandTitle')}</p>
+                  <p className="text-[11px] text-slate-500">{t('more.modals.husbandSub')}</p>
                 </div>
-                <span className="text-slate-500 font-medium">Linked</span>
+                <span className="text-slate-500 font-medium">{t('common.linked')}</span>
               </div>
             </div>
           </div>
@@ -272,21 +273,21 @@ export const MoreOverviewScreen: React.FC<MoreOverviewScreenProps> = ({
                   <HelpCircle className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-base text-slate-900">Healthcare Worker Guide</h3>
-                  <p className="text-xs text-slate-500">Voice-first rural AI usage</p>
+                  <h3 className="font-extrabold text-base text-slate-900">{t('more.modals.guideTitle')}</h3>
+                  <p className="text-xs text-slate-500">{t('more.modals.guideSubtitle')}</p>
                 </div>
               </div>
-              <button type="button" onClick={() => setActiveModal(null)} className="p-1 text-slate-400">
+              <button type="button" aria-label={t('common.close')} onClick={() => setActiveModal(null)} className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="space-y-2 text-xs text-slate-600 leading-relaxed">
-              <p className="font-bold text-slate-800">How to use ArogyaVani AI in rural areas:</p>
+              <p className="font-bold text-slate-800">{t('more.modals.howToUseTitle')}</p>
               <ol className="list-decimal pl-4 space-y-1">
-                <li>Tap <strong>Speak Now</strong> on the Home screen and speak naturally in your mother tongue (Tamil, Hindi, Telugu, English).</li>
-                <li>The AI will transcribe your voice query and provide audio + visual medical advice.</li>
-                <li>In emergency situations, tap the red <strong>SOS</strong> button on the History tab to immediately contact your nearest ASHA worker.</li>
+                <li>{t('more.modals.step1')}</li>
+                <li>{t('more.modals.step2')}</li>
+                <li>{t('more.modals.step3')}</li>
               </ol>
             </div>
           </div>
@@ -300,12 +301,12 @@ export const MoreOverviewScreen: React.FC<MoreOverviewScreenProps> = ({
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0D9488] to-[#6366F1] flex items-center justify-center text-white mx-auto shadow-md">
               <Info className="w-8 h-8" />
             </div>
-            <h3 className="font-black text-lg text-slate-900">ArogyaVani AI v1.0.0</h3>
+            <h3 className="font-black text-lg text-slate-900">{t('more.modals.aboutTitle')}</h3>
             <p className="text-xs text-slate-500 leading-relaxed">
-              A native voice-first rural healthcare assistant designed for community health workers, families, and rural populations across India.
+              {t('more.modals.aboutDesc')}
             </p>
-            <button type="button" onClick={() => setActiveModal(null)} className="w-full py-2.5 bg-slate-900 text-white font-bold text-xs rounded-2xl">
-              Close
+            <button type="button" onClick={() => setActiveModal(null)} className="w-full py-2.5 bg-slate-900 text-white font-bold text-xs rounded-2xl cursor-pointer">
+              {t('common.close')}
             </button>
           </div>
         </div>

@@ -7,6 +7,7 @@
  *  3. Not Currently Applicable
  *  4. Missing information checklist
  *  5. Grounded source document citations
+ * Fully localized with i18n.
  */
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -19,6 +20,7 @@ import {
   HelpCircle,
   Ban,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { DocumentEligibilityResponse, Scheme } from '../types/schemeTypes';
 import { GOVERNMENT_SCHEMES_DATA } from '../data/schemes';
 import { EligibilityResultCard } from './EligibilityResultCard';
@@ -30,18 +32,21 @@ interface ProfileSummaryRowProps {
   value: string | null;
 }
 
-const ProfileSummaryRow: React.FC<ProfileSummaryRowProps> = ({ label, value }) => (
-  <div className="flex items-center justify-between gap-2 py-1.5 border-b border-slate-100 last:border-0">
-    <span className="text-[10.5px] text-slate-500 font-semibold">{label}</span>
-    <span
-      className={`text-xs font-semibold ${
-        value ? 'text-slate-900' : 'text-slate-400 italic'
-      }`}
-    >
-      {value || 'Not found'}
-    </span>
-  </div>
-);
+const ProfileSummaryRow: React.FC<ProfileSummaryRowProps> = ({ label, value }) => {
+  const { t } = useTranslation();
+  return (
+    <div className="flex items-center justify-between gap-2 py-1.5 border-b border-slate-100 last:border-0">
+      <span className="text-[10.5px] text-slate-500 font-semibold">{label}</span>
+      <span
+        className={`text-xs font-semibold ${
+          value ? 'text-slate-900' : 'text-slate-400 italic'
+        }`}
+      >
+        {value || t('common.notFound')}
+      </span>
+    </div>
+  );
+};
 
 // ── Main Component ─────────────────────────────────────────────────────────
 
@@ -56,13 +61,14 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
   onClear,
   onViewSchemeDetails,
 }) => {
+  const { t } = useTranslation();
   const { profile, summary, schemes, sources, missing_fields } = data;
 
   // Find curated Scheme data by schemeId for each result
   const getSchemeData = (schemeId: string): Scheme | undefined =>
     GOVERNMENT_SCHEMES_DATA.find((s) => s.id.toLowerCase() === schemeId.toLowerCase());
 
-  // 1. Relevant / Potentially eligible schemes (ONLY these appear in main section)
+  // 1. Relevant / Potentially eligible schemes
   const eligibleOrRelevantSchemes = schemes.filter(
     (s) => s.status === 'potentially_eligible' || s.status === 'relevant'
   );
@@ -79,27 +85,18 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
 
   // Profile rows display
   const profileRows: Array<{ label: string; value: string | null }> = [
-    { label: 'Name', value: profile.name },
+    { label: t('schemes.profilePreview.name'), value: profile.name },
     {
-      label: 'Age',
-      value: profile.age !== null ? `${profile.age} years` : profile.date_of_birth || null,
+      label: t('schemes.profilePreview.age'),
+      value: profile.age !== null ? `${profile.age}` : profile.date_of_birth || null,
     },
-    { label: 'Gender', value: profile.gender },
-    { label: 'State', value: profile.state },
-    { label: 'District', value: profile.district },
-    { label: 'Category', value: profile.category },
+    { label: t('schemes.profilePreview.gender'), value: profile.gender },
+    { label: t('schemes.profilePreview.state'), value: profile.state },
+    { label: t('schemes.profilePreview.district'), value: profile.district },
+    { label: t('schemes.profilePreview.category'), value: profile.category },
     {
-      label: 'Annual Income',
+      label: t('schemes.profilePreview.income'),
       value: profile.annual_income !== null ? `₹${profile.annual_income.toLocaleString('en-IN')}` : null,
-    },
-    {
-      label: 'Pregnancy Status',
-      value:
-        profile.pregnancy_status === true
-          ? 'Yes (Active Pregnancy)'
-          : profile.pregnancy_status === false
-          ? 'No'
-          : null,
     },
   ].filter((row) => row.value !== null);
 
@@ -122,18 +119,18 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
               </div>
               <div>
                 <p className="text-xs font-extrabold text-slate-900">
-                  Arogya AI Eligibility Assistant
+                  {t('schemes.eligibilitySummary.headerTitle')}
                 </p>
                 <p className="text-[10.5px] text-slate-500">
-                  Document-grounded scheme discovery
+                  {t('schemes.eligibilitySummary.headerSubtitle')}
                 </p>
               </div>
             </div>
             <button
               type="button"
               onClick={onClear}
-              aria-label="Clear eligibility results"
-              className="p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors"
+              aria-label={t('common.close')}
+              className="p-1 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -148,7 +145,7 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
           {profileRows.length > 0 && (
             <div className="bg-slate-50 rounded-xl border border-slate-200 p-3">
               <p className="text-[10.5px] font-bold text-slate-700 uppercase tracking-wide mb-1.5">
-                Your Information
+                {t('schemes.profilePreview.cardTitle')}
               </p>
               {profileRows.map((row) => (
                 <ProfileSummaryRow key={row.label} label={row.label} value={row.value} />
@@ -163,7 +160,7 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
             <div className="flex items-center justify-between px-1">
               <div className="flex items-center gap-2">
                 <h3 className="text-xs font-extrabold text-slate-900">
-                  Relevant / Potentially Eligible Schemes
+                  {t('schemes.eligibilitySummary.potentiallyEligibleTitle')}
                 </h3>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-teal-100 text-teal-800 font-bold border border-teal-200">
                   {eligibleOrRelevantSchemes.length}
@@ -171,7 +168,7 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
               </div>
             </div>
             <p className="text-[10.5px] text-slate-500 px-1">
-              These schemes match criteria found in your profile. Final eligibility must be verified officially.
+              {t('schemes.eligibilitySummary.verifiedSourcesNotice')}
             </p>
             {eligibleOrRelevantSchemes.map((result, idx) => (
               <EligibilityResultCard
@@ -191,15 +188,12 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
             <div className="flex items-center gap-2 px-1">
               <HelpCircle className="w-3.5 h-3.5 text-amber-500" />
               <h3 className="text-xs font-bold text-slate-800">
-                More Information Needed
+                {t('schemes.eligibilitySummary.moreInfoTitle')}
               </h3>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold border border-amber-200">
                 {needsMoreInfoSchemes.length}
               </span>
             </div>
-            <p className="text-[10.5px] text-slate-500 px-1">
-              Key criteria are missing from your document to assess eligibility for these schemes.
-            </p>
             {needsMoreInfoSchemes.map((result, idx) => (
               <EligibilityResultCard
                 key={result.schemeId}
@@ -218,7 +212,7 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
             <div className="flex items-center gap-2 px-1">
               <Ban className="w-3.5 h-3.5 text-slate-400" />
               <h3 className="text-xs font-bold text-slate-600">
-                Not Currently Applicable
+                {t('schemes.eligibilitySummary.notEligibleTitle')}
               </h3>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-bold border border-slate-200">
                 {notEligibleSchemes.length}
@@ -243,10 +237,7 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
               <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
               <div>
                 <p className="text-xs font-bold text-amber-900">
-                  Unverified Profile Attributes
-                </p>
-                <p className="text-[10.5px] text-amber-800 mt-0.5">
-                  The following could not be verified from your document:
+                  {t('schemes.eligibilitySummary.missingInformation')}
                 </p>
                 <div className="mt-1.5 flex flex-wrap gap-1">
                   {missing_fields.map((field) => (
@@ -268,7 +259,7 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
           <div className="bg-white rounded-2xl border border-slate-200 p-3.5 space-y-2">
             <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-700">
               <BookOpen className="w-3.5 h-3.5 text-teal-600" />
-              <span>Verified Document Sources</span>
+              <span>{t('schemes.details.verifiedSources')}</span>
             </div>
             {sources.map((src, i) => (
               <div
@@ -283,7 +274,7 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
               </div>
             ))}
             <p className="text-[10px] text-slate-400">
-              Informational navigation tool — verify official eligibility guidelines before enrollment.
+              {t('schemes.eligibilitySummary.verifiedSourcesNotice')}
             </p>
           </div>
         )}

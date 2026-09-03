@@ -1,7 +1,7 @@
 /**
  * SchemeVoiceAssistant Component
  * Dedicated voice search & query card for discovering government schemes.
- * UI/UX ready for RAG-powered scheme assistant integration.
+ * Fully localized with i18n.
  */
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -27,7 +27,7 @@ export const SchemeVoiceAssistant: React.FC<SchemeVoiceAssistantProps> = ({
   errorMessage,
   onClearError,
 }) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [inputText, setInputText] = useState<string>('');
   const [infoNotice, setInfoNotice] = useState<string | null>(null);
 
@@ -43,8 +43,7 @@ export const SchemeVoiceAssistant: React.FC<SchemeVoiceAssistantProps> = ({
     } else if (onStartSchemeVoice) {
       onStartSchemeVoice();
     } else {
-      // Presentation placeholder feedback when RAG voice backend is not connected yet
-      setInfoNotice('Scheme Voice Assistant is prepared and ready for RAG voice engine integration.');
+      setInfoNotice(t('schemes.voiceAssistant.readyNotice'));
       setTimeout(() => setInfoNotice(null), 4000);
     }
   };
@@ -57,26 +56,26 @@ export const SchemeVoiceAssistant: React.FC<SchemeVoiceAssistantProps> = ({
       onSubmitSchemeQuestion(inputText.trim());
       setInputText('');
     } else {
-      setInfoNotice(`Searching schemes matching: "${inputText.trim()}"`);
+      setInfoNotice(t('schemes.voiceAssistant.searchingNotice', { query: inputText.trim() }));
       setTimeout(() => setInfoNotice(null), 3500);
     }
   };
 
   // State labels
   const titles: Record<SchemeVoiceState, string> = {
-    idle: 'Ask Arogya about Schemes',
-    listening: 'Listening…',
-    processing: 'Understanding your scheme question…',
-    response: 'Your scheme results are ready',
-    error: 'Could not complete voice query',
+    idle: t('schemes.voiceAssistant.title'),
+    listening: t('schemes.voiceAssistant.listeningTitle'),
+    processing: t('schemes.voiceAssistant.processingTitle'),
+    response: t('schemes.voiceAssistant.responseTitle'),
+    error: t('schemes.voiceAssistant.errorTitle'),
   };
 
   const subtitles: Record<SchemeVoiceState, string> = {
-    idle: 'Ask which government health schemes may be relevant to you.',
-    listening: 'Speak about the health support or scheme you need.',
-    processing: 'Searching trusted government scheme documents…',
-    response: 'Here are the relevant scheme findings below.',
-    error: 'Please try again or type your question below.',
+    idle: t('schemes.voiceAssistant.subtitle'),
+    listening: t('schemes.voiceAssistant.listeningSubtitle'),
+    processing: t('schemes.voiceAssistant.processingSubtitle'),
+    response: t('schemes.voiceAssistant.responseSubtitle'),
+    error: t('schemes.voiceAssistant.errorSubtitle'),
   };
 
   const micBg =
@@ -179,7 +178,7 @@ export const SchemeVoiceAssistant: React.FC<SchemeVoiceAssistantProps> = ({
               <span>{errorMessage}</span>
             </div>
             {onClearError && (
-              <button type="button" onClick={onClearError} className="p-1 text-rose-300 hover:text-white">
+              <button type="button" onClick={onClearError} aria-label={t('common.close')} className="p-1 text-rose-300 hover:text-white cursor-pointer">
                 <X className="w-3.5 h-3.5" />
               </button>
             )}
@@ -198,7 +197,7 @@ export const SchemeVoiceAssistant: React.FC<SchemeVoiceAssistantProps> = ({
               <Sparkles className="w-4 h-4 text-teal-300 shrink-0" />
               <span>{infoNotice}</span>
             </div>
-            <button type="button" onClick={() => setInfoNotice(null)} className="p-1 text-teal-300 hover:text-white">
+            <button type="button" onClick={() => setInfoNotice(null)} aria-label={t('common.close')} className="p-1 text-teal-300 hover:text-white cursor-pointer">
               <X className="w-3.5 h-3.5" />
             </button>
           </motion.div>
@@ -220,7 +219,7 @@ export const SchemeVoiceAssistant: React.FC<SchemeVoiceAssistantProps> = ({
           whileTap={{ scale: 0.97 }}
         >
           <Mic className="w-3.5 h-3.5" />
-          <span>{voiceState === 'listening' ? 'Stop Listening' : '🎙 Ask by Voice'}</span>
+          <span>{voiceState === 'listening' ? t('home.listening') : t('schemes.voiceAssistant.askByVoice')}</span>
         </motion.button>
 
         {/* Fallback Text Input */}
@@ -229,12 +228,12 @@ export const SchemeVoiceAssistant: React.FC<SchemeVoiceAssistantProps> = ({
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            placeholder="Or type your scheme question..."
+            placeholder={t('schemes.voiceAssistant.typePlaceholder')}
             className="flex-1 bg-white/10 border border-white/20 rounded-xl px-3.5 py-2 text-xs text-white placeholder-teal-100/60 focus:outline-none focus:ring-2 focus:ring-teal-400/40"
           />
           <button
             type="submit"
-            aria-label="Submit scheme question"
+            aria-label={t('common.submit')}
             className="p-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white transition-colors cursor-pointer shrink-0"
           >
             <Send className="w-3.5 h-3.5" />

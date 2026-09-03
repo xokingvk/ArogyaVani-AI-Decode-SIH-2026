@@ -59,6 +59,7 @@ export const EmergencySosModal: React.FC<EmergencySosModalProps> = ({ isOpen, on
           <button
             type="button"
             onClick={handleReset}
+            aria-label={t('common.close')}
             className="absolute top-4 right-4 p-2 text-red-200 hover:text-white rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
@@ -91,7 +92,7 @@ export const EmergencySosModal: React.FC<EmergencySosModalProps> = ({ isOpen, on
               </div>
 
               <p className="text-xs font-bold text-red-200 uppercase tracking-widest mb-4">
-                Auto-connecting in {countdown} seconds...
+                {t('emergency.autoConnecting', { count: countdown })}
               </p>
 
               {/* Action buttons */}
@@ -102,14 +103,14 @@ export const EmergencySosModal: React.FC<EmergencySosModalProps> = ({ isOpen, on
                   className="w-full py-3.5 rounded-2xl bg-white text-red-700 font-black text-sm shadow-md hover:bg-red-50 transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <PhoneCall className="w-4 h-4 fill-current" />
-                  <span>Call Emergency Now</span>
+                  <span>{t('emergency.callEmergencyNow')}</span>
                 </button>
                 <button
                   type="button"
                   onClick={handleReset}
                   className="w-full py-2.5 rounded-2xl bg-white/10 text-red-200 font-semibold text-xs hover:bg-white/20 transition-colors cursor-pointer"
                 >
-                  Cancel SOS
+                  {t('emergency.cancelSos')}
                 </button>
               </div>
             </>
@@ -120,20 +121,20 @@ export const EmergencySosModal: React.FC<EmergencySosModalProps> = ({ isOpen, on
                   <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 relative">
                     <PhoneCall className="w-8 h-8 text-white animate-pulse" />
                   </div>
-                  <h3 className="text-lg font-extrabold text-white mb-1">Connecting to ASHA Helpline...</h3>
-                  <p className="text-xs text-red-200 mb-6">Dispatching live GPS location</p>
+                  <h3 className="text-lg font-extrabold text-white mb-1">{t('emergency.connectingAsha')}</h3>
+                  <p className="text-xs text-red-200 mb-6">{t('emergency.dispatchingGps')}</p>
                   <div className="w-full bg-white/10 rounded-2xl p-3 text-left space-y-2 border border-white/10 mb-6">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-red-200">ASHA Worker:</span>
-                      <span className="font-bold text-white">Smt. Lakshmi Devi</span>
+                      <span className="text-red-200">{t('emergency.ashaWorker')}</span>
+                      <span className="font-bold text-white">{t('emergency.ashaName')}</span>
                     </div>
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-red-200">Phone:</span>
+                      <span className="text-red-200">{t('emergency.phone')}</span>
                       <span className="font-bold text-white">+91 98401 XXXXX</span>
                     </div>
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-red-200">PHC Center:</span>
-                      <span className="font-bold text-white">Kanchipuram Main PHC</span>
+                      <span className="text-red-200">{t('emergency.phcCenter')}</span>
+                      <span className="font-bold text-white">{t('emergency.phcName')}</span>
                     </div>
                   </div>
                 </>
@@ -142,15 +143,15 @@ export const EmergencySosModal: React.FC<EmergencySosModalProps> = ({ isOpen, on
                   <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 flex items-center justify-center mb-4">
                     <CheckCircle2 className="w-10 h-10" />
                   </div>
-                  <h3 className="text-lg font-extrabold text-white mb-1">Emergency Dispatch Active!</h3>
-                  <p className="text-xs text-emerald-200 mb-6">ASHA worker & nearest ambulance notified.</p>
+                  <h3 className="text-lg font-extrabold text-white mb-1">{t('emergency.dispatchActive')}</h3>
+                  <p className="text-xs text-emerald-200 mb-6">{t('emergency.dispatchActiveSub')}</p>
                   <div className="w-full bg-emerald-950/60 rounded-2xl p-4 text-left border border-emerald-500/30 mb-6 space-y-2 text-xs">
                     <div className="flex items-center gap-2 text-emerald-300 font-bold">
                       <AlertTriangle className="w-4 h-4 shrink-0" />
-                      <span>Stay Calm & Safe</span>
+                      <span>{t('emergency.stayCalm')}</span>
                     </div>
                     <p className="text-emerald-100/90 leading-relaxed">
-                      Smt. Lakshmi Devi (ASHA) is heading to your registered location. Help is on the way.
+                      {t('emergency.stayCalmDesc')}
                     </p>
                   </div>
                 </>
@@ -161,7 +162,7 @@ export const EmergencySosModal: React.FC<EmergencySosModalProps> = ({ isOpen, on
                 onClick={handleReset}
                 className="w-full py-3 rounded-2xl bg-white/20 text-white font-bold text-xs hover:bg-white/30 transition-colors cursor-pointer"
               >
-                Close Emergency View
+                {t('emergency.closeView')}
               </button>
             </div>
           )}

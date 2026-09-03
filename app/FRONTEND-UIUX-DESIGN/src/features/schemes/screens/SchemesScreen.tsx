@@ -8,9 +8,11 @@
  *  4. Search & Category Filters
  *  5. Grounded RAG & Document Eligibility Result presentations
  *  6. Curated static scheme catalog
+ * Fully localized with i18n.
  */
 import React, { useState, useMemo, useCallback } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {
   Scheme,
   SchemeCategory,
@@ -44,6 +46,7 @@ export interface SchemesScreenProps {
 export const SchemesScreen: React.FC<SchemesScreenProps> = ({
   initialSelectedSchemeId,
 }) => {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<SchemeCategory>('all');
   const [selectedScheme, setSelectedScheme] = useState<Scheme | null>(() => {
@@ -134,7 +137,7 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
 
       if (!result.success) {
         setDocUploadState('error');
-        setDocErrorMessage(result.error || 'Failed to process document. Please try again.');
+        setDocErrorMessage(result.error || t('schemes.documentUpload.errUnsupported', { type: file.type }));
         return;
       }
 
@@ -145,9 +148,9 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
       setIsReviewingProfile(true);
     } catch {
       setDocUploadState('error');
-      setDocErrorMessage('An unexpected error occurred while processing the document.');
+      setDocErrorMessage(t('schemes.errorState'));
     }
-  }, []);
+  }, [t]);
 
   const handleClearDocument = useCallback(() => {
     setDocUploadState('idle');
@@ -213,7 +216,6 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
           setDocumentResponse(recalcRes);
           setPreviewMissingFields(recalcRes.missing_fields || []);
         } else if (documentResponse) {
-          // Fallback if network issue occurs during edit
           setDocumentResponse({
             ...documentResponse,
             profile: updatedProfile,
@@ -269,7 +271,7 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
       <div className="relative flex py-0.5 items-center">
         <div className="flex-grow border-t border-slate-200"></div>
         <span className="flex-shrink mx-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest">
-          OR
+          {t('common.or')}
         </span>
         <div className="flex-grow border-t border-slate-200"></div>
       </div>
@@ -310,7 +312,7 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
       <SchemeSearchBar
         value={searchQuery}
         onChange={(val) => setSearchQuery(val)}
-        placeholder="Search government schemes, benefits, eligibility..."
+        placeholder={t('schemes.searchPlaceholder')}
       />
 
       {/* ── 8. Category Filter Chips ───────────────────────────────────── */}

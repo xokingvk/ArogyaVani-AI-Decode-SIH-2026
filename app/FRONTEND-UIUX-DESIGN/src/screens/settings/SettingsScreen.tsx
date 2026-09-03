@@ -46,7 +46,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
       month: 'short',
       day: 'numeric',
     })
-    : 'Active';
+    : t('common.active');
 
   return (
     <div className="flex-1 min-h-0 overflow-y-auto w-full bg-slate-50 flex flex-col select-none pb-8">
@@ -56,12 +56,13 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
           <button
             type="button"
             onClick={onNavigateBack}
+            aria-label={t('settings.backToDashboard')}
             className="p-2 -ml-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors flex items-center gap-1.5 text-sm font-semibold cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to Dashboard</span>
+            <span>{t('settings.backToDashboard')}</span>
           </button>
-          <h1 className="text-base font-bold text-[#16324F]">Settings & Profile</h1>
+          <h1 className="text-base font-bold text-[#16324F]">{t('settings.settingsTitle')}</h1>
           <div className="w-10" />
         </div>
       </header>
@@ -78,11 +79,11 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-lg font-bold text-slate-900">
-                  {currentUser?.username || 'Healthcare Worker'}
+                  {currentUser?.username || t('settings.healthcareWorker')}
                 </h2>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 text-xs font-semibold border border-teal-200">
                   <CheckCircle2 className="w-3 h-3 text-teal-600" />
-                  Verified
+                  {t('common.verified')}
                 </span>
               </div>
               <p className="text-xs text-slate-500 font-medium">@{currentUser?.username}</p>
@@ -96,7 +97,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
                 )}
                 <div className="flex items-center gap-1 text-slate-400">
                   <Calendar className="w-3.5 h-3.5 shrink-0" />
-                  <span>Joined {formattedDate}</span>
+                  <span>{t('settings.joined', { date: formattedDate })}</span>
                 </div>
               </div>
             </div>
@@ -106,7 +107,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
         {/* 2. Preferences & Language Section */}
         <section className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm space-y-4">
           <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">
-            Language & Speech
+            {t('settings.voiceLangPreferences')}
           </h3>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
@@ -115,8 +116,8 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
                 <Globe className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-slate-800">App & Voice Language</p>
-                <p className="text-xs text-slate-500">Switch dialect for voice recognition and display</p>
+                <p className="text-sm font-semibold text-slate-800">{t('settings.preferredVoiceLanguage')}</p>
+                <p className="text-xs text-slate-500">{t('settings.preferredLangDesc')}</p>
               </div>
             </div>
             <LanguageToggleSelector variant="pills" />
@@ -128,57 +129,58 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
                 <Volume2 className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-slate-800">Audio Feedback</p>
-                <p className="text-xs text-slate-500">Read medical instructions aloud automatically</p>
+                <p className="text-sm font-semibold text-slate-800">{t('more.audioFeedback')}</p>
+                <p className="text-xs text-slate-500">{t('more.audioSub')}</p>
               </div>
             </div>
             <input
               type="checkbox"
               defaultChecked
+              aria-label={t('more.audioFeedback')}
               className="w-5 h-5 text-teal-600 rounded focus:ring-teal-500 border-slate-300 cursor-pointer"
             />
           </div>
         </section>
 
-        {/* 3. Support & Security Section (contains the requested Log Out action) */}
+        {/* 3. Support & Security Section */}
         <section className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm space-y-3">
           <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">
-            Support & Account
+            {t('settings.securitySystem')}
           </h3>
 
           <button
             type="button"
-            className="w-full flex items-center justify-between py-2 text-left hover:bg-slate-50 rounded-lg px-2 -mx-2 transition-colors"
+            className="w-full flex items-center justify-between py-2 text-left hover:bg-slate-50 rounded-lg px-2 -mx-2 transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
                 <HelpCircle className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-slate-800">Healthcare Worker Guide</p>
-                <p className="text-xs text-slate-500">How to record symptoms and use offline voice AI</p>
+                <p className="text-sm font-semibold text-slate-800">{t('more.guide')}</p>
+                <p className="text-xs text-slate-500">{t('more.guideSub')}</p>
               </div>
             </div>
-            <span className="text-xs font-semibold text-slate-400">View</span>
+            <span className="text-xs font-semibold text-slate-400">{t('common.viewDetails')}</span>
           </button>
 
           <button
             type="button"
-            className="w-full flex items-center justify-between py-2 text-left hover:bg-slate-50 rounded-lg px-2 -mx-2 transition-colors border-t border-slate-100"
+            className="w-full flex items-center justify-between py-2 text-left hover:bg-slate-50 rounded-lg px-2 -mx-2 transition-colors border-t border-slate-100 cursor-pointer"
           >
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
                 <Shield className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-slate-800">Privacy & Patient Data Protection</p>
-                <p className="text-xs text-slate-500">HIPAA and ABDM (Ayushman Bharat) compliant</p>
+                <p className="text-sm font-semibold text-slate-800">{t('more.privacyData')}</p>
+                <p className="text-xs text-slate-500">{t('more.privacyDataSub')}</p>
               </div>
             </div>
-            <span className="text-xs font-semibold text-slate-400">Info</span>
+            <span className="text-xs font-semibold text-slate-400">{t('common.verified')}</span>
           </button>
 
-          {/* LOG OUT BUTTON UNDER SUPPORT SECTION */}
+          {/* LOG OUT BUTTON */}
           <div className="pt-4 border-t border-slate-100">
             <button
               id="settings-logout-btn"
@@ -190,12 +192,12 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
               {isLoggingOut ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin text-[#B33A3A]" />
-                  <span>Logging out...</span>
+                  <span>{t('settings.loggingOut')}</span>
                 </>
               ) : (
                 <>
                   <LogOut className="w-4 h-4" />
-                  <span>{t('dashboard.logout')}</span>
+                  <span>{t('settings.logOut')}</span>
                 </>
               )}
             </button>

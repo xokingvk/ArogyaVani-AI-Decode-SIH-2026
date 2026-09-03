@@ -2,6 +2,7 @@
  * SchemeDetailsScreen Component
  * Detailed, comprehensive breakdown of a government scheme.
  * Includes Overview, Eligibility Criteria, Key Benefits, Documents Checklist, Step-by-Step Application, and Official Sources.
+ * Fully localized with i18n.
  */
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -15,6 +16,7 @@ import {
   Clock,
   Landmark,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Scheme } from '../types/schemeTypes';
 import { openExternalUrl, getActionLabel } from '../utils/schemeHelpers';
 import { SchemeSourceList } from '../components/SchemeSourceList';
@@ -28,6 +30,7 @@ export const SchemeDetailsScreen: React.FC<SchemeDetailsScreenProps> = ({
   scheme,
   onBack,
 }) => {
+  const { t } = useTranslation();
   const actionLabel = getActionLabel(scheme.actionType);
 
   const handleApplyClick = () => {
@@ -51,11 +54,11 @@ export const SchemeDetailsScreen: React.FC<SchemeDetailsScreenProps> = ({
         <button
           type="button"
           onClick={onBack}
-          aria-label="Back to Schemes"
+          aria-label={t('schemes.details.backToSchemes')}
           className="flex items-center gap-1.5 py-1.5 px-3 rounded-xl bg-white border border-slate-200 text-slate-700 text-xs font-bold hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 text-slate-600" />
-          <span>Back to Schemes</span>
+          <span>{t('schemes.details.backToSchemes')}</span>
         </button>
 
         {scheme.categoryLabel && (
@@ -102,7 +105,7 @@ export const SchemeDetailsScreen: React.FC<SchemeDetailsScreenProps> = ({
         <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs space-y-2">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
             <Landmark className="w-4 h-4 text-teal-600" />
-            <span>Scheme Overview</span>
+            <span>{t('schemes.details.overview')}</span>
           </div>
           <p className="text-xs text-slate-700 leading-relaxed">
             {scheme.description}
@@ -116,9 +119,9 @@ export const SchemeDetailsScreen: React.FC<SchemeDetailsScreenProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>Who Can Benefit (Eligibility Criteria)</span>
+              <span>{t('schemes.details.eligibilityCriteria')}</span>
             </div>
-            <span className="text-[10px] text-slate-400 font-semibold">Guideline criteria</span>
+            <span className="text-[10px] text-slate-400 font-semibold">{t('common.verified')}</span>
           </div>
 
           <div className="space-y-2">
@@ -140,7 +143,7 @@ export const SchemeDetailsScreen: React.FC<SchemeDetailsScreenProps> = ({
         <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs space-y-3">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
             <ShieldCheck className="w-4 h-4 text-teal-600" />
-            <span>Key Scheme Benefits</span>
+            <span>{t('schemes.details.keyBenefits')}</span>
           </div>
 
           <div className="space-y-2">
@@ -162,7 +165,7 @@ export const SchemeDetailsScreen: React.FC<SchemeDetailsScreenProps> = ({
         <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs space-y-3">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
             <FileText className="w-4 h-4 text-indigo-600" />
-            <span>Required Verification Documents</span>
+            <span>{t('schemes.details.requiredDocs')}</span>
           </div>
 
           <div className="grid grid-cols-1 gap-2">
@@ -184,7 +187,7 @@ export const SchemeDetailsScreen: React.FC<SchemeDetailsScreenProps> = ({
         <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs space-y-3">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
             <Clock className="w-4 h-4 text-teal-600" />
-            <span>Step-by-Step How to Apply Online</span>
+            <span>{t('schemes.details.stepByStep')}</span>
           </div>
 
           <div className="space-y-2.5">
@@ -206,7 +209,7 @@ export const SchemeDetailsScreen: React.FC<SchemeDetailsScreenProps> = ({
         <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs space-y-3">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
             <Building className="w-4 h-4 text-teal-600" />
-            <span>How to Access at Health Facilities</span>
+            <span>{t('schemes.details.howToApply')}</span>
           </div>
 
           <div className="space-y-2.5">
@@ -233,11 +236,11 @@ export const SchemeDetailsScreen: React.FC<SchemeDetailsScreenProps> = ({
       <div className="bg-white rounded-3xl border border-slate-200/80 p-5 shadow-xs space-y-3">
         <div className="flex items-center gap-2 text-xs font-bold text-slate-900">
           <Landmark className="w-4 h-4 text-teal-600" />
-          <span>Official Government Portal</span>
+          <span>{t('schemes.details.officialSources')}</span>
         </div>
 
         <p className="text-xs text-slate-500 leading-relaxed">
-          Always verify personal eligibility and register directly through the official Government of India portal.
+          {t('schemes.eligibilitySummary.verifiedSourcesNotice')}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
@@ -247,7 +250,7 @@ export const SchemeDetailsScreen: React.FC<SchemeDetailsScreenProps> = ({
               onClick={() => openExternalUrl(scheme.officialWebsite)}
               className="flex-1 py-3 px-4 rounded-2xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-800 font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
             >
-              <span>Visit Official Website</span>
+              <span>{t('schemes.details.officialPortal')}</span>
               <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
             </button>
           )}

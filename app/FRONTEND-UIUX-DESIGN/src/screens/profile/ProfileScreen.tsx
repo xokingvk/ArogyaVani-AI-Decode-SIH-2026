@@ -45,12 +45,13 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           <button
             type="button"
             onClick={onNavigateBack}
+            aria-label={t('profile.back')}
             className="p-1.5 -ml-1 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors flex items-center gap-1.5 text-xs font-bold cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-teal-600" />
-            <span>Back</span>
+            <span>{t('profile.back')}</span>
           </button>
-          <h1 className="text-sm font-extrabold text-[#16324F] tracking-tight">User Profile & Account</h1>
+          <h1 className="text-sm font-extrabold text-[#16324F] tracking-tight">{t('profile.title')}</h1>
           <div className="w-12" />
         </div>
       </header>
@@ -63,7 +64,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           <div className="w-20 h-20 rounded-full overflow-hidden ring-4 ring-[#0D9488]/20 shadow-md mb-3">
             <img
               src="/female-avatar.jpg"
-              alt="Sriharini Devi profile avatar"
+              alt="Profile avatar"
               className="w-full h-full object-cover"
             />
           </div>
@@ -74,7 +75,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             </h2>
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 text-[10px] font-bold border border-teal-200">
               <CheckCircle2 className="w-3 h-3 text-teal-600" />
-              Verified
+              {t('common.verified')}
             </span>
           </div>
 
@@ -82,7 +83,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
 
           <div className="flex items-center gap-2 mt-3 text-xs text-slate-600 bg-slate-50 px-3.5 py-1.5 rounded-full border border-slate-200">
             <MapPin className="w-3.5 h-3.5 text-teal-600 shrink-0" />
-            <span className="font-semibold">{currentUser?.village_district || 'Kanchipuram District, Tamil Nadu'}</span>
+            <span className="font-semibold">{currentUser?.village_district || 'Kanchipuram District'}</span>
           </div>
         </section>
 
@@ -91,19 +92,19 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           <div className="flex items-center justify-between border-b border-white/15 pb-2">
             <div className="flex items-center gap-2">
               <CreditCard className="w-4 h-4 text-teal-300" />
-              <span className="text-xs font-bold uppercase tracking-wider text-teal-100">ABHA Health Card</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-teal-100">{t('profile.abhaCard')}</span>
             </div>
-            <span className="text-[10px] font-semibold bg-teal-400/20 text-teal-200 px-2 py-0.5 rounded-full border border-teal-300/30">ABDM Linked</span>
+            <span className="text-[10px] font-semibold bg-teal-400/20 text-teal-200 px-2 py-0.5 rounded-full border border-teal-300/30">{t('profile.abdmLinked')}</span>
           </div>
 
           <div className="py-1">
-            <p className="text-[10px] text-teal-200/80 uppercase font-semibold">Ayushman Bharat Health Account ID</p>
+            <p className="text-[10px] text-teal-200/80 uppercase font-semibold">{t('profile.abhaIdTitle')}</p>
             <p className="font-mono text-lg font-black tracking-widest text-white mt-0.5">91-8834-0912-7723</p>
           </div>
 
           <div className="flex items-center justify-between text-xs text-slate-200 pt-1">
-            <span>Linked PHC: Kanchipuram Main</span>
-            <span>Blood Group: O+</span>
+            <span>{t('profile.villageDistrict')}: Kanchipuram Main</span>
+            <span>Blood: O+</span>
           </div>
         </section>
 
@@ -111,11 +112,11 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
         <section className="bg-white rounded-3xl p-4 border border-slate-100 shadow-xs space-y-3">
           <div className="flex items-center gap-2">
             <Globe className="w-4 h-4 text-teal-600" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Language & Speech</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">{t('settings.voiceLangPreferences')}</h3>
           </div>
 
           <div className="flex flex-col gap-2 pt-1">
-            <p className="text-xs font-semibold text-slate-800">Select Application Language:</p>
+            <p className="text-xs font-semibold text-slate-800">{t('settings.preferredVoiceLanguage')}:</p>
             <LanguageToggleSelector variant="pills" />
           </div>
 
@@ -123,13 +124,14 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             <div className="flex items-center gap-2.5">
               <Volume2 className="w-4 h-4 text-blue-600 shrink-0" />
               <div>
-                <p className="text-xs font-semibold text-slate-800">Voice Assistance Audio</p>
-                <p className="text-[11px] text-slate-400">Read medical responses aloud</p>
+                <p className="text-xs font-semibold text-slate-800">{t('more.audioFeedback')}</p>
+                <p className="text-[11px] text-slate-400">{t('more.audioSub')}</p>
               </div>
             </div>
             <input
               type="checkbox"
               defaultChecked
+              aria-label={t('more.audioFeedback')}
               className="w-4 h-4 text-teal-600 rounded focus:ring-teal-500 border-slate-300 cursor-pointer"
             />
           </div>
@@ -139,18 +141,19 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
         <section className="bg-white rounded-3xl p-4 border border-slate-100 shadow-xs space-y-2.5">
           <div className="flex items-center gap-2">
             <UserCheck className="w-4 h-4 text-indigo-600" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Linked ASHA Worker</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">{t('profile.registeredAsha')}</h3>
           </div>
 
           <div className="p-3 rounded-2xl bg-indigo-50/60 border border-indigo-100 flex items-center justify-between text-xs">
             <div>
-              <p className="font-extrabold text-indigo-950">Smt. Lakshmi Devi</p>
-              <p className="text-[11px] text-indigo-700">Kanchipuram Health Buddy • PHC 04</p>
+              <p className="font-extrabold text-indigo-950">{t('emergency.ashaName')}</p>
+              <p className="text-[11px] text-indigo-700">{t('profile.assignedAshaName')}</p>
             </div>
             <button
               type="button"
-              onClick={() => alert('Calling ASHA worker Smt. Lakshmi Devi: +91 98401 XXXXX')}
-              className="p-2 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-colors"
+              aria-label={t('common.call')}
+              onClick={() => alert(`Calling ASHA worker: +91 98401 XXXXX`)}
+              className="p-2 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-colors cursor-pointer"
             >
               <PhoneCall className="w-4 h-4" />
             </button>
@@ -162,25 +165,25 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           <button
             type="button"
             onClick={() => alert('Data is encrypted locally and HIPAA/ABDM compliant.')}
-            className="w-full flex items-center justify-between py-2 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl px-2 transition-colors"
+            className="w-full flex items-center justify-between py-2 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl px-2 transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-purple-600" />
-              <span>Privacy & Patient Data Protection</span>
+              <span>{t('more.privacyData')}</span>
             </div>
-            <span className="text-slate-400">HIPAA Compliant</span>
+            <span className="text-slate-400">{t('common.verified')}</span>
           </button>
 
           <button
             type="button"
             onClick={() => alert('Healthcare Worker & Family User Guide v1.0')}
-            className="w-full flex items-center justify-between py-2 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl px-2 transition-colors border-t border-slate-100"
+            className="w-full flex items-center justify-between py-2 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl px-2 transition-colors border-t border-slate-100 cursor-pointer"
           >
             <div className="flex items-center gap-2">
               <HelpCircle className="w-4 h-4 text-teal-600" />
-              <span>Healthcare Worker Guide</span>
+              <span>{t('more.guide')}</span>
             </div>
-            <span className="text-slate-400">View</span>
+            <span className="text-slate-400">{t('common.viewDetails')}</span>
           </button>
 
           <div className="pt-3 border-t border-slate-100">
@@ -190,7 +193,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
               className="w-full py-3 rounded-2xl bg-red-50 hover:bg-red-100 border border-red-200 text-[#B33A3A] font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
-              <span>{t('more.logOut')}</span>
+              <span>{t('profile.logOutAccount')}</span>
             </button>
           </div>
         </section>

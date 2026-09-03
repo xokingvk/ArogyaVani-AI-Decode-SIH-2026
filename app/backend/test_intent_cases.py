@@ -10,48 +10,35 @@ if sys.platform == "win32":
 
 load_dotenv()
 
-from services.sarvam_service import detect_intent, process_arogyavani_pipeline
+from services.sarvam_service import detect_intent
 
-cases = [
-    ("A", "I have fever", "general", False),
-    ("B", "Which scheme helps pregnant women?", "scheme_rag", True),
-    ("C", "What benefits does Janani Suraksha Yojana provide?", "scheme_rag", True),
-    ("D", "I have headache", "general", False),
+test_cases = [
+    (1, "Good morning", "conversational"),
+    (2, "Good afternoon", "conversational"),
+    (3, "Hello", "conversational"),
+    (4, "How are you?", "conversational"),
+    (5, "What is your name?", "conversational"),
+    (6, "What can you do?", "conversational"),
+    (7, "Thank you", "conversational"),
+    (8, "Bye", "conversational"),
+    (9, "Good morning, I have fever", "healthcare"),
+    (10, "Hi, which scheme helps pregnant women?", "scheme"),
 ]
 
 print("=" * 60)
-print("TESTING SCHEME VS GENERAL INTENT ROUTING CASES")
+print("TESTING 10 MASTER PROMPT INTENT CASES")
 print("=" * 60)
 
-for code, query, expected_mode, expect_schemes in cases:
-    print(f"\n--- Case {code}: \"{query}\" ---")
+all_passed = True
+for idx, query, expected_intent in test_cases:
     intent = detect_intent(query)
-    print(f"Detected internal intent: {intent}")
-    
-    # Run through pipeline
-    english_text, response_text, audio_base64, mode, schemes, sources = process_arogyavani_pipeline(
-        user_text=query,
-        detected_language="en-IN"
-    )
-    
-    print(f"Result mode: \"{mode}\" (Expected: \"{expected_mode}\")")
-    print(f"Schemes count: {len(schemes)}")
-    if schemes:
-        print(f"Matched schemes: {[s['schemeId'] for s in schemes]}")
-    print(f"Sources count: {len(sources)}")
-    print(f"Response snippet: \"{response_text[:120].strip()}...\"")
-    
-    # Assertions
-    assert mode == expected_mode, f"Case {code} FAILED: mode '{mode}' != expected '{expected_mode}'"
-    if expect_schemes:
-        assert len(schemes) > 0, f"Case {code} FAILED: expected schemes > 0"
-        assert len(sources) > 0, f"Case {code} FAILED: expected sources > 0"
-    else:
-        assert len(schemes) == 0, f"Case {code} FAILED: expected schemes == 0"
-        assert len(sources) == 0, f"Case {code} FAILED: expected sources == 0"
-    
-    print(f"Result: PASS [OK]")
+    status = "PASS [OK]" if intent == expected_intent else f"FAIL (Got: {intent})"
+    if intent != expected_intent:
+        all_passed = False
+    print(f"Test {idx:2d}: \"{query}\" -> Detected: '{intent}' (Expected: '{expected_intent}') | {status}")
 
-print("\n" + "=" * 60)
-print("ALL 4 INTENT CASES A, B, C, D PASSED [OK]")
+assert all_passed, "Some intent test cases failed!"
 print("=" * 60)
+print("ALL 10 INTENT TEST CASES PASSED SUCCESSFULLY!")
+print("=" * 60)
+

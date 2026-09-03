@@ -1,10 +1,12 @@
 /**
  * SchemeRecommendationList Component
  * Reusable list container for scheme results with loading skeleton, header, and clean empty states.
+ * Fully localized with i18n.
  */
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, SearchX, Layers } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Scheme } from '../types/schemeTypes';
 import { SchemeCard } from './SchemeCard';
 
@@ -26,15 +28,19 @@ export const SchemeRecommendationList: React.FC<SchemeRecommendationListProps> =
   subtitle,
   isLoading = false,
   isRagResult = false,
-  emptyTitle = 'No schemes found',
-  emptySubtitle = 'Try searching with different keywords or selecting another category.',
+  emptyTitle,
+  emptySubtitle,
   onViewDetails,
   onActionClick,
 }) => {
-  const displayTitle = title || (isRagResult ? 'Relevant Schemes for Your Question' : 'Explore Government Schemes');
+  const { t } = useTranslation();
+
+  const displayTitle = title || (isRagResult ? t('schemes.recommendations.ragTitle') : t('schemes.recommendations.catalogTitle'));
   const displaySub = subtitle || (isRagResult
-    ? 'These schemes may apply to you — review eligibility details before applying.'
-    : 'Browse official healthcare, maternity, and welfare programs.');
+    ? t('schemes.recommendations.ragSubtitle')
+    : t('schemes.recommendations.catalogSubtitle'));
+  const displayEmptyTitle = emptyTitle || t('schemes.emptyState');
+  const displayEmptySubtitle = emptySubtitle || t('schemes.emptyStateSub');
 
   if (isLoading) {
     return (
@@ -80,7 +86,7 @@ export const SchemeRecommendationList: React.FC<SchemeRecommendationListProps> =
         </div>
 
         <span className="text-xs font-bold text-slate-600 px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200/70">
-          {schemes.length} {schemes.length === 1 ? 'Scheme' : 'Schemes'}
+          {schemes.length}
         </span>
       </div>
 
@@ -107,9 +113,9 @@ export const SchemeRecommendationList: React.FC<SchemeRecommendationListProps> =
           <div className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
             <SearchX className="w-6 h-6" />
           </div>
-          <h3 className="text-sm font-extrabold text-slate-800">{emptyTitle}</h3>
+          <h3 className="text-sm font-extrabold text-slate-800">{displayEmptyTitle}</h3>
           <p className="text-xs text-slate-500 max-w-xs mx-auto leading-relaxed">
-            {emptySubtitle}
+            {displayEmptySubtitle}
           </p>
         </motion.div>
       )}

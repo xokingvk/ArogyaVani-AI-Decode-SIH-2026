@@ -3,6 +3,7 @@
  * Displays a single scheme eligibility evaluation with status badge,
  * matched/missing criteria, reason, and curated official links.
  * Reuses existing SchemeCard layout conventions.
+ * Fully localized with i18n.
  */
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -14,6 +15,7 @@ import {
   ChevronRight,
   ExternalLink,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { EligibilityResult, EligibilityStatus } from '../types/schemeTypes';
 import { Scheme } from '../types/schemeTypes';
 import { openExternalUrl } from '../utils/schemeHelpers';
@@ -26,36 +28,36 @@ interface StatusConfig {
   icon: React.ReactNode;
 }
 
-function getStatusConfig(status: EligibilityStatus): StatusConfig {
+function getStatusConfig(status: EligibilityStatus, t: (key: string) => string): StatusConfig {
   switch (status) {
     case 'potentially_eligible':
       return {
-        label: 'Potentially Eligible',
+        label: t('schemes.eligibilitySummary.potentiallyEligibleTitle'),
         className: 'bg-teal-50 text-teal-800 border-teal-200',
         icon: <CheckCircle2 className="w-3 h-3 text-teal-600" />,
       };
     case 'relevant':
       return {
-        label: 'Relevant',
+        label: t('schemes.eligibilitySummary.relevantSchemesTitle'),
         className: 'bg-blue-50 text-blue-800 border-blue-200',
         icon: <AlertCircle className="w-3 h-3 text-blue-500" />,
       };
     case 'needs_more_information':
       return {
-        label: 'More Info Needed',
+        label: t('schemes.eligibilitySummary.moreInfoTitle'),
         className: 'bg-amber-50 text-amber-800 border-amber-200',
         icon: <HelpCircle className="w-3 h-3 text-amber-500" />,
       };
     case 'not_currently_eligible':
       return {
-        label: 'Not Currently Eligible',
+        label: t('schemes.eligibilitySummary.notEligibleTitle'),
         className: 'bg-red-50 text-red-800 border-red-200',
         icon: <XCircle className="w-3 h-3 text-red-500" />,
       };
     case 'unable_to_determine':
     default:
       return {
-        label: 'Unable to Determine',
+        label: t('schemes.eligibilitySummary.unableTitle'),
         className: 'bg-slate-100 text-slate-700 border-slate-200',
         icon: <HelpCircle className="w-3 h-3 text-slate-500" />,
       };
@@ -79,7 +81,8 @@ export const EligibilityResultCard: React.FC<EligibilityResultCardProps> = ({
   index = 0,
   onViewDetails,
 }) => {
-  const statusConfig = getStatusConfig(result.status);
+  const { t } = useTranslation();
+  const statusConfig = getStatusConfig(result.status, t);
   const officialUrl = schemeData?.officialWebsite || schemeData?.applicationUrl;
 
   return (
@@ -122,7 +125,7 @@ export const EligibilityResultCard: React.FC<EligibilityResultCardProps> = ({
       {result.matchedCriteria.length > 0 && (
         <div className="space-y-1">
           <p className="text-[10.5px] font-bold text-slate-700 uppercase tracking-wide">
-            Matching criteria
+            {t('schemes.eligibilitySummary.matchedCriteria')}
           </p>
           {result.matchedCriteria.map((c, i) => (
             <div key={i} className="flex items-start gap-1.5">
@@ -137,7 +140,7 @@ export const EligibilityResultCard: React.FC<EligibilityResultCardProps> = ({
       {result.missingCriteria.length > 0 && (
         <div className="space-y-1">
           <p className="text-[10.5px] font-bold text-amber-800 uppercase tracking-wide">
-            Information needed
+            {t('schemes.eligibilitySummary.missingInformation')}
           </p>
           {result.missingCriteria.map((c, i) => (
             <div key={i} className="flex items-start gap-1.5">
@@ -154,9 +157,9 @@ export const EligibilityResultCard: React.FC<EligibilityResultCardProps> = ({
           <button
             type="button"
             onClick={() => onViewDetails(schemeData)}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-[11px] font-bold transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-[11px] font-bold transition-colors cursor-pointer"
           >
-            View Details
+            {t('schemes.actions.details')}
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         )}
@@ -164,9 +167,9 @@ export const EligibilityResultCard: React.FC<EligibilityResultCardProps> = ({
           <button
             type="button"
             onClick={() => openExternalUrl(officialUrl)}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-[11px] font-bold transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-[11px] font-bold transition-colors cursor-pointer"
           >
-            {schemeData?.actionType === 'apply' ? 'Apply Online' : 'Official Website'}
+            {schemeData?.actionType === 'apply' ? t('schemes.actions.apply') : t('common.openOfficialWebsite')}
             <ExternalLink className="w-3 h-3" />
           </button>
         )}

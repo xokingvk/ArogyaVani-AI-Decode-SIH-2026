@@ -1,10 +1,12 @@
 /**
  * SchemeSearchBar Component
  * Clean, mobile-first search field for government schemes.
+ * Fully localized.
  */
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Search, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export interface SchemeSearchBarProps {
   value: string;
@@ -15,8 +17,11 @@ export interface SchemeSearchBarProps {
 export const SchemeSearchBar: React.FC<SchemeSearchBarProps> = ({
   value,
   onChange,
-  placeholder = 'Search government schemes, benefits, keywords...',
+  placeholder,
 }) => {
+  const { t } = useTranslation();
+  const searchPlaceholder = placeholder || t('schemes.searchPlaceholder');
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 6 }}
@@ -29,15 +34,15 @@ export const SchemeSearchBar: React.FC<SchemeSearchBarProps> = ({
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        aria-label="Search government schemes"
+        placeholder={searchPlaceholder}
+        aria-label={t('common.search')}
         className="w-full text-xs text-slate-800 placeholder-slate-400 focus:outline-none bg-transparent"
       />
       {value.length > 0 && (
         <button
           type="button"
           onClick={() => onChange('')}
-          aria-label="Clear search input"
+          aria-label={t('common.close')}
           className="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
         >
           <X className="w-3.5 h-3.5" />

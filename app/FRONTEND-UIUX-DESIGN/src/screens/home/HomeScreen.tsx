@@ -222,7 +222,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
             <button
               type="button"
               onClick={() => setActiveModal(null)}
-              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100"
+              aria-label={t('common.close')}
+              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -231,21 +232,26 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
                 <Stethoscope className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-slate-900">Check Health Symptoms</h3>
-                <p className="text-xs text-slate-500">Fast AI symptom assessment for rural users</p>
+                <h3 className="font-extrabold text-base text-slate-900">{t('home.modals.symptomsTitle')}</h3>
+                <p className="text-xs text-slate-500">{t('home.modals.symptomsSubtitle')}</p>
               </div>
             </div>
             <div className="space-y-3 mb-5 text-xs">
-              <label className="block text-slate-700 font-bold">Select primary symptom:</label>
+              <label className="block text-slate-700 font-bold">{t('home.modals.selectPrimarySymptom')}</label>
               <div className="grid grid-cols-2 gap-2">
-                {['Fever & Chills', 'Persistent Cough', 'Joint / Muscle Pain', 'Stomachache / Diarrhea'].map((symptom) => (
+                {[
+                  { key: 'feverChills', label: t('home.modals.feverChills') },
+                  { key: 'persistentCough', label: t('home.modals.persistentCough') },
+                  { key: 'jointPain', label: t('home.modals.jointPain') },
+                  { key: 'stomachAche', label: t('home.modals.stomachAche') },
+                ].map((symptom) => (
                   <button
-                    key={symptom}
+                    key={symptom.key}
                     type="button"
                     onClick={() => setActiveModal(null)}
                     className="p-2.5 rounded-xl border border-indigo-100 bg-indigo-50/50 hover:bg-indigo-100 text-indigo-950 text-left font-medium transition-colors cursor-pointer"
                   >
-                    {symptom}
+                    {symptom.label}
                   </button>
                 ))}
               </div>
@@ -261,7 +267,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
             <button
               type="button"
               onClick={() => setActiveModal(null)}
-              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100"
+              aria-label={t('common.close')}
+              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -270,35 +277,37 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
                 <Hospital className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-slate-900">Nearby Health Centers</h3>
-                <p className="text-xs text-slate-500">Government PHCs & Empanelled Hospitals</p>
+                <h3 className="font-extrabold text-base text-slate-900">{t('home.modals.hospitalTitle')}</h3>
+                <p className="text-xs text-slate-500">{t('home.modals.hospitalSubtitle')}</p>
               </div>
             </div>
             <div className="space-y-2.5 mb-4 text-xs">
               <div className="p-3 rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-slate-900">Kanchipuram Main PHC</p>
-                  <p className="text-slate-500 text-[11px]">Primary Health Center • Open 24/7</p>
-                  <p className="text-emerald-700 font-semibold text-[10px] mt-0.5">1.2 KM away</p>
+                  <p className="font-bold text-slate-900">{t('home.modals.mainPhcTitle')}</p>
+                  <p className="text-slate-500 text-[11px]">{t('home.modals.mainPhcSub')}</p>
+                  <p className="text-emerald-700 font-semibold text-[10px] mt-0.5">{t('home.modals.kmAway', { km: '1.2' })}</p>
                 </div>
                 <button
                   type="button"
-                  onClick={() => alert('Calling Kanchipuram Main PHC: +91 44 2722 0000')}
-                  className="p-2 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+                  aria-label={t('common.call')}
+                  onClick={() => alert(t('home.modals.callPhcNotice'))}
+                  className="p-2 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition-colors cursor-pointer"
                 >
                   <Phone className="w-4 h-4" />
                 </button>
               </div>
               <div className="p-3 rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-slate-900">Government General Hospital</p>
-                  <p className="text-slate-500 text-[11px]">Secondary Care • Ayushman Empanelled</p>
-                  <p className="text-emerald-700 font-semibold text-[10px] mt-0.5">4.8 KM away</p>
+                  <p className="font-bold text-slate-900">{t('home.modals.distHospitalTitle')}</p>
+                  <p className="text-slate-500 text-[11px]">{t('home.modals.distHospitalSub')}</p>
+                  <p className="text-emerald-700 font-semibold text-[10px] mt-0.5">{t('home.modals.kmAway', { km: '4.8' })}</p>
                 </div>
                 <button
                   type="button"
-                  onClick={() => alert('Opening map directions to District General Hospital')}
-                  className="p-2 rounded-xl bg-slate-800 text-white hover:bg-slate-900 transition-colors"
+                  aria-label={t('common.search')}
+                  onClick={() => alert(t('home.modals.mapDirectionsNotice'))}
+                  className="p-2 rounded-xl bg-slate-800 text-white hover:bg-slate-900 transition-colors cursor-pointer"
                 >
                   <MapPin className="w-4 h-4" />
                 </button>
@@ -315,7 +324,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
             <button
               type="button"
               onClick={() => setActiveModal(null)}
-              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100"
+              aria-label={t('common.close')}
+              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -324,24 +334,24 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
                 <ScanText className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-slate-900">Scan Medical / Scheme Doc</h3>
-                <p className="text-xs text-slate-500">AI OCR extraction for ration card, prescriptions & PMJAY</p>
+                <h3 className="font-extrabold text-base text-slate-900">{t('home.modals.scanTitle')}</h3>
+                <p className="text-xs text-slate-500">{t('home.modals.scanSubtitle')}</p>
               </div>
             </div>
             <div className="border-2 border-dashed border-slate-300 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-slate-50 hover:bg-amber-50/50 transition-colors mb-4 cursor-pointer">
               <FileCheck className="w-10 h-10 text-amber-500 mb-2" />
-              <p className="text-xs font-bold text-slate-800">Tap to Upload or Take Photo</p>
-              <p className="text-[11px] text-slate-400 mt-0.5">Supports JPG, PNG, PDF up to 10MB</p>
+              <p className="text-xs font-bold text-slate-800">{t('home.modals.tapToUploadPhoto')}</p>
+              <p className="text-[11px] text-slate-400 mt-0.5">{t('home.modals.supportsFormats')}</p>
             </div>
             <button
               type="button"
               onClick={() => {
-                alert('Document scanned! AI extracted Ration Card ID & Ayushman Eligibility.');
+                alert(t('home.modals.scanSuccessNotice'));
                 setActiveModal(null);
               }}
-              className="w-full py-3 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-700 transition-colors"
+              className="w-full py-3 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-700 transition-colors cursor-pointer"
             >
-              Simulate Document Scan
+              {t('home.modals.simulateScanBtn')}
             </button>
           </div>
         </div>

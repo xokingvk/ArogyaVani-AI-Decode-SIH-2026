@@ -161,6 +161,138 @@ OUT_OF_SCOPE_RESPONSE = (
     "related to healthcare services or schemes."
 )
 
+# ── Conversational & Greeting Intent Keywords ────────────────────────────────
+
+GREETING_MORNING_KEYWORDS = ["good morning", "morning", "subhodhayam", "kaalai vanakkam", "shubh prabhat"]
+GREETING_AFTERNOON_KEYWORDS = ["good afternoon", "shubh dopahar", "madhyahna vanakkam"]
+GREETING_EVENING_KEYWORDS = ["good evening", "shubh sandhya", "maalai vanakkam", "sayanthra vanakkam"]
+GREETING_NIGHT_KEYWORDS = ["good night", "shubh ratri", "iravu vanakkam"]
+GREETING_GENERAL_KEYWORDS = [
+    "hello",
+    "hi",
+    "hey",
+    "hi there",
+    "hello there",
+    "namaste",
+    "namaskar",
+    "vanakkam",
+    "namaskaram",
+    "namaskara",
+    "greetings",
+]
+
+IDENTITY_KEYWORDS = [
+    "what is your name",
+    "what's your name",
+    "tell me your name",
+    "may i know your name",
+    "who are you",
+    "what are you",
+    "are you an ai",
+    "are you a robot",
+    "are you ai",
+    "are you robot",
+    "introduce yourself",
+]
+
+CAPABILITY_KEYWORDS = [
+    "what can you do",
+    "what do you do",
+    "how can you help me",
+    "can you help me",
+    "how can you assist me",
+    "what help can you provide",
+    "what are your features",
+    "how to use this",
+    "how does this work",
+]
+
+CASUAL_KEYWORDS = [
+    "how are you",
+    "how are you doing",
+    "are you fine",
+    "are you okay",
+    "how do you do",
+    "nice to meet you",
+    "pleasure to meet you",
+]
+
+THANKS_KEYWORDS = [
+    "thank you",
+    "thanks",
+    "thank you very much",
+    "thanks a lot",
+    "thank you so much",
+    "many thanks",
+    "dhanyavad",
+    "nandri",
+    "dhanyavadamulu",
+]
+
+GOODBYE_KEYWORDS = [
+    "bye",
+    "goodbye",
+    "good bye",
+    "see you",
+    "see you later",
+    "bye bye",
+    "take care",
+    "alvida",
+]
+
+# ── Conversational Responses (English Base) ──────────────────────────────────
+
+GREETING_MORNING_RESPONSE = (
+    "Good morning! I am ArogyaVani AI, your healthcare voice assistant. "
+    "How can I help you with your health or government schemes today?"
+)
+
+GREETING_AFTERNOON_RESPONSE = (
+    "Good afternoon! I am ArogyaVani AI, your healthcare voice assistant. "
+    "How can I assist you with healthcare guidance or government health schemes today?"
+)
+
+GREETING_EVENING_RESPONSE = (
+    "Good evening! I am ArogyaVani AI, your healthcare voice assistant. "
+    "How can I assist you with your health questions or schemes today?"
+)
+
+GREETING_NIGHT_RESPONSE = (
+    "Good night! Wishing you good health and restful sleep. "
+    "I am here whenever you need healthcare or government scheme assistance."
+)
+
+GREETING_GENERAL_RESPONSE = (
+    "Hello! I am ArogyaVani AI, your voice healthcare assistant. "
+    "How can I help you today with healthcare guidance or government schemes?"
+)
+
+IDENTITY_RESPONSE = (
+    "I am ArogyaVani AI, a voice healthcare assistant designed for citizens across India. "
+    "I help you understand health symptoms, locate nearby PHCs and hospitals, "
+    "and discover government health schemes like Ayushman Bharat PM-JAY and Janani Suraksha Yojana."
+)
+
+CAPABILITY_RESPONSE = (
+    "I can help you with basic health symptom guidance, locating nearby healthcare facilities and PHCs, "
+    "checking your eligibility for government health schemes, and answering questions about maternal, child, "
+    "and family health programs."
+)
+
+CASUAL_RESPONSE = (
+    "I am doing well, thank you for asking! I am ready to help you with any healthcare questions, "
+    "symptoms, or government health schemes."
+)
+
+THANKS_RESPONSE = (
+    "You're very welcome! Please feel free to ask if you need any more healthcare guidance "
+    "or scheme information. Take good care of your health!"
+)
+
+GOODBYE_RESPONSE = (
+    "Goodbye! Take care of your health, and feel free to talk to me anytime you need healthcare help."
+)
+
 _sarvam_client = None
 
 
@@ -175,8 +307,60 @@ def get_sarvam_client() -> SarvamAI:
 
 
 def contains_keyword(text: str, keywords: list[str]) -> bool:
-    text_lower = text.lower().strip()
-    return any(keyword in text_lower for keyword in keywords)
+    """Matches keywords with word-boundary awareness to avoid substring false positives."""
+    text_clean = re.sub(r"[^\w\s]", " ", text.lower()).strip()
+    words = set(text_clean.split())
+    for keyword in keywords:
+        kw_clean = re.sub(r"[^\w\s]", " ", keyword.lower()).strip()
+        if " " in kw_clean:
+            if kw_clean in text_clean:
+                return True
+        else:
+            if kw_clean in words:
+                return True
+    return False
+
+
+def get_conversational_response(english_text: str) -> str:
+    """Returns the appropriate conversational reply based on sub-intent."""
+    if contains_keyword(english_text, GREETING_MORNING_KEYWORDS):
+        return GREETING_MORNING_RESPONSE
+    if contains_keyword(english_text, GREETING_AFTERNOON_KEYWORDS):
+        return GREETING_AFTERNOON_RESPONSE
+    if contains_keyword(english_text, GREETING_EVENING_KEYWORDS):
+        return GREETING_EVENING_RESPONSE
+    if contains_keyword(english_text, GREETING_NIGHT_KEYWORDS):
+        return GREETING_NIGHT_RESPONSE
+    if contains_keyword(english_text, IDENTITY_KEYWORDS):
+        return IDENTITY_RESPONSE
+    if contains_keyword(english_text, CAPABILITY_KEYWORDS):
+        return CAPABILITY_RESPONSE
+    if contains_keyword(english_text, CASUAL_KEYWORDS):
+        return CASUAL_RESPONSE
+    if contains_keyword(english_text, THANKS_KEYWORDS):
+        return THANKS_RESPONSE
+    if contains_keyword(english_text, GOODBYE_KEYWORDS):
+        return GOODBYE_RESPONSE
+    return GREETING_GENERAL_RESPONSE
+
+
+def is_conversational_query(english_text: str) -> bool:
+    """Checks if the text contains conversational or greeting patterns."""
+    return any(
+        contains_keyword(english_text, kw_list)
+        for kw_list in [
+            GREETING_MORNING_KEYWORDS,
+            GREETING_AFTERNOON_KEYWORDS,
+            GREETING_EVENING_KEYWORDS,
+            GREETING_NIGHT_KEYWORDS,
+            GREETING_GENERAL_KEYWORDS,
+            IDENTITY_KEYWORDS,
+            CAPABILITY_KEYWORDS,
+            CASUAL_KEYWORDS,
+            THANKS_KEYWORDS,
+            GOODBYE_KEYWORDS,
+        ]
+    )
 
 
 def detect_intent(english_text: str) -> str:
@@ -185,7 +369,8 @@ def detect_intent(english_text: str) -> str:
     2. location
     3. scheme (routes to grounded FAISS RAG)
     4. healthcare (routes to general Gemini health flow)
-    5. out_of_scope
+    5. conversational / greeting (routes to friendly conversational response)
+    6. out_of_scope
     """
     if contains_keyword(english_text, MEDICAL_ADVICE_KEYWORDS):
         return "medical_advice"
@@ -199,7 +384,11 @@ def detect_intent(english_text: str) -> str:
     if contains_keyword(english_text, HEALTHCARE_KEYWORDS):
         return "healthcare"
 
+    if is_conversational_query(english_text):
+        return "conversational"
+
     return "out_of_scope"
+
 
 
 # ── Clean text helpers for Display and Natural TTS ──────────────────────────
@@ -386,6 +575,8 @@ def process_arogyavani_pipeline(
             sources = []
     elif intent == "healthcare":
         raw_response_text = ask_gemini(english_text)
+    elif intent == "conversational":
+        raw_response_text = get_conversational_response(english_text)
     else:
         raw_response_text = OUT_OF_SCOPE_RESPONSE
 
