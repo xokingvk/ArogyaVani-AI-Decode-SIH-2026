@@ -4,11 +4,10 @@ import {
   Stethoscope,
   Hospital,
   Landmark,
-  ScanText,
+  ShieldAlert,
   ChevronRight,
   Phone,
   MapPin,
-  FileCheck,
   X,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -16,12 +15,13 @@ import { useTranslation } from 'react-i18next';
 import { useVoiceRecorder } from '../../features/voice/hooks/useVoiceRecorder';
 import { VoiceAssistantCard } from '../../features/voice/components/VoiceAssistantCard';
 import { QuickAction } from '../../features/voice/types/voiceTypes';
+import { EmergencyContactsModal } from '../../components/emergency/EmergencyContactsModal';
 
 interface HomeScreenProps {
   onNavigateToSchemes?: () => void;
 }
 
-type ActiveModal = 'symptoms' | 'hospital' | 'scan' | null;
+type ActiveModal = 'symptoms' | 'hospital' | 'contacts' | null;
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) => {
   const { currentUser } = useAuth();
@@ -35,7 +35,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
       ? currentUser.username.charAt(0).toUpperCase() + currentUser.username.slice(1)
       : 'there';
 
-  // ── Voice recorder state (all MediaRecorder logic lives in the hook) ─────
+  // ── Voice recorder state & shared AI query dispatcher ───────────────────
   const {
     voiceState,
     transcription,
@@ -46,6 +46,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
     stopRecording,
     clearError,
     replayAudio,
+    submitTextQuery,
   } = useVoiceRecorder();
 
   // ── Local UI state ────────────────────────────────────────────────────────
@@ -61,17 +62,31 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
     }
   }, [voiceState, startRecording, stopRecording]);
 
+  // ── Direct Text query handler ─────────────────────────────────────────────
   const handleTextSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    if (!textInput.trim()) return;
+    const query = textInput.trim();
+    if (!query) return;
     setTextInput('');
-    // Per spec: no /text-query endpoint — prompt user to use the mic
-    // The error banner provides the message within the existing voice card design
     clearError();
-    setTimeout(() => {
-      // Brief delay so clearing and setting feels responsive
-    }, 0);
-  }, [textInput, clearError]);
+    submitTextQuery(query, i18n.language);
+  }, [textInput, clearError, submitTextQuery, i18n.language]);
+
+  // ── Check Symptoms selection handler ──────────────────────────────────────
+  const handleSymptomSelect = useCallback((symptomKey: string) => {
+    setActiveModal(null);
+    clearError();
+
+    const queryMap: Record<string, string> = {
+      feverChills: 'I have fever and chills. What general health guidance should I follow?',
+      persistentCough: 'I have a persistent cough. What general health guidance should I follow?',
+      jointPain: 'I have joint or muscle pain. What general health guidance should I follow?',
+      stomachAche: 'I have stomachache or diarrhea. What general health guidance should I follow?',
+    };
+
+    const query = queryMap[symptomKey] || 'I have a health symptom. What general health guidance should I follow?';
+    submitTextQuery(query, i18n.language);
+  }, [clearError, submitTextQuery, i18n.language]);
 
   // ── Quick action definitions ──────────────────────────────────────────────
   const quickActions: QuickAction[] = [
@@ -109,15 +124,15 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
       onClick: () => { if (onNavigateToSchemes) onNavigateToSchemes(); },
     },
     {
-      id: 'scan',
-      label: t('home.scanTitle'),
-      subLabel: t('home.scanDesc'),
-      Icon: ScanText,
-      gradientFrom: '#FFF7ED',
-      gradientTo: '#FFEDD5',
-      border: '#FDBA74',
-      iconColor: '#EA580C',
-      onClick: () => setActiveModal('scan'),
+      id: 'sos',
+      label: t('emergency.contactsTitle', 'Emergency Contacts'),
+      subLabel: t('emergency.contactsDesc', 'Configure trusted emergency contacts'),
+      Icon: ShieldAlert,
+      gradientFrom: '#FFF1F2',
+      gradientTo: '#FFE4E6',
+      border: '#FECDD3',
+      iconColor: '#E11D48',
+      onClick: () => setActiveModal('contacts'),
     },
   ];
 
@@ -144,7 +159,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
         </motion.p>
       </div>
 
-      {/* ── VOICE ASSISTANT CARD ───────────────────────────────────── */}
+      {/* ── VOICE & TEXT ASSISTANT CARD ────────────────────────────── */}
       <VoiceAssistantCard
         voiceState={voiceState}
         transcription={transcription}
@@ -215,7 +230,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
 
       {/* ── QUICK ACTION MODALS ────────────────────────────────────── */}
 
-      {/* 1. Check Symptoms */}
+      {/* 1. Check Symptoms Modal (Functional AI Query Dispatch) */}
       {activeModal === 'symptoms' && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-xs">
           <div className="w-full max-w-md bg-white rounded-3xl rounded-b-2xl sm:rounded-3xl p-4 sm:p-5 shadow-xl border border-slate-100 relative max-h-[85vh] overflow-y-auto">
@@ -248,8 +263,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
                   <button
                     key={symptom.key}
                     type="button"
-                    onClick={() => setActiveModal(null)}
-                    className="p-2.5 rounded-xl border border-indigo-100 bg-indigo-50/50 hover:bg-indigo-100 text-indigo-950 text-left font-medium transition-colors cursor-pointer"
+                    onClick={() => handleSymptomSelect(symptom.key)}
+                    className="p-3 rounded-xl border border-indigo-100 bg-indigo-50/50 hover:bg-indigo-100 active:scale-95 text-indigo-950 text-left font-semibold transition-all cursor-pointer shadow-2xs"
                   >
                     {symptom.label}
                   </button>
@@ -291,7 +306,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
                 <button
                   type="button"
                   aria-label={t('common.call')}
-                  onClick={() => alert(t('home.modals.callPhcNotice'))}
+                  onClick={() => { window.location.href = 'tel:104'; }}
                   className="p-2 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition-colors cursor-pointer"
                 >
                   <Phone className="w-4 h-4" />
@@ -306,7 +321,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
                 <button
                   type="button"
                   aria-label={t('common.search')}
-                  onClick={() => alert(t('home.modals.mapDirectionsNotice'))}
+                  onClick={() => { window.location.href = 'tel:108'; }}
                   className="p-2 rounded-xl bg-slate-800 text-white hover:bg-slate-900 transition-colors cursor-pointer"
                 >
                   <MapPin className="w-4 h-4" />
@@ -317,45 +332,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
         </div>
       )}
 
-      {/* 3. Scan Document */}
-      {activeModal === 'scan' && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <div className="w-full max-w-md bg-white rounded-3xl p-5 shadow-xl border border-slate-100 relative">
-            <button
-              type="button"
-              onClick={() => setActiveModal(null)}
-              aria-label={t('common.close')}
-              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-                <ScanText className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-extrabold text-base text-slate-900">{t('home.modals.scanTitle')}</h3>
-                <p className="text-xs text-slate-500">{t('home.modals.scanSubtitle')}</p>
-              </div>
-            </div>
-            <div className="border-2 border-dashed border-slate-300 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-slate-50 hover:bg-amber-50/50 transition-colors mb-4 cursor-pointer">
-              <FileCheck className="w-10 h-10 text-amber-500 mb-2" />
-              <p className="text-xs font-bold text-slate-800">{t('home.modals.tapToUploadPhoto')}</p>
-              <p className="text-[11px] text-slate-400 mt-0.5">{t('home.modals.supportsFormats')}</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                alert(t('home.modals.scanSuccessNotice'));
-                setActiveModal(null);
-              }}
-              className="w-full py-3 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-700 transition-colors cursor-pointer"
-            >
-              {t('home.modals.simulateScanBtn')}
-            </button>
-          </div>
-        </div>
-      )}
+      {/* 3. Emergency Contacts Management Modal */}
+      <EmergencyContactsModal
+        isOpen={activeModal === 'contacts'}
+        onClose={() => setActiveModal(null)}
+      />
 
     </div>
   );

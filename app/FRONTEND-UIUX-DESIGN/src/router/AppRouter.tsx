@@ -14,6 +14,7 @@ import { BottomNavigationBar, BottomTab } from '../components/layout/BottomNavig
 import { TopHeaderBar } from '../components/layout/TopHeaderBar';
 import { AndroidFrameWrapper } from '../components/layout/AndroidFrameWrapper';
 import { EmergencySosModal } from '../components/emergency/EmergencySosModal';
+import { EmergencyContactsModal } from '../components/emergency/EmergencyContactsModal';
 import { NotificationsModal } from '../components/notifications/NotificationsModal';
 
 export type AppRoute = '/login' | '/signup' | '/dashboard' | '/settings' | '/profile';
@@ -23,6 +24,7 @@ export const AppRouter: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<AppRoute>('/login');
   const [activeTab, setActiveTab] = useState<BottomTab>('home');
   const [isSosOpen, setIsSosOpen] = useState<boolean>(false);
+  const [isContactsOpen, setIsContactsOpen] = useState<boolean>(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState<boolean>(false);
 
   // Sync route with authentication state
@@ -180,6 +182,13 @@ export const AppRouter: React.FC = () => {
           <EmergencySosModal
             isOpen={isSosOpen}
             onClose={() => setIsSosOpen(false)}
+            onOpenContactSetup={() => setIsContactsOpen(true)}
+          />
+
+          {/* Emergency Contacts Management Modal */}
+          <EmergencyContactsModal
+            isOpen={isContactsOpen}
+            onClose={() => setIsContactsOpen(false)}
           />
 
           {/* Notifications Modal */}

@@ -14,6 +14,7 @@ load_dotenv()
 from services.sarvam_service import (
     SUPPORTED_LANGUAGES,
     process_arogyavani_pipeline,
+    process_text_query,
     transcribe_audio,
 )
 
@@ -151,6 +152,74 @@ async def voice_query(
                 logger.warning(f"Could not remove temporary audio file {temp_audio_path}: {e}")
 
 
+from pydantic import BaseModel
+
+
+class TextQueryRequest(BaseModel):
+    text: str
+    language_code: Optional[str] = "en-IN"
+
+
+@app.post("/text-query")
+async def text_query(req: TextQueryRequest):
+    """Text query pipeline endpoint:
+    1. Validates and trims text input.
+    2. Respects language_code (or falls back to supported code).
+    3. Runs the shared ArogyaVani intent routing & Gemini/RAG pipeline.
+    4. Returns structured JSON with response_text, mode, schemes, and sources.
+    """
+    user_text = (req.text or "").strip()
+    if not user_text:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "success": False,
+                "error": "Please enter a valid question or health symptom.",
+            },
+        )
+
+    lang_code = (req.language_code or "en-IN").strip()
+    if lang_code not in SUPPORTED_LANGUAGES:
+        if lang_code.startswith("ta"):
+            lang_code = "ta-IN"
+        elif lang_code.startswith("hi"):
+            lang_code = "hi-IN"
+        elif lang_code.startswith("te"):
+            lang_code = "te-IN"
+        else:
+            lang_code = "en-IN"
+
+    try:
+        english_text, response_text, audio_base64, mode, schemes, sources = process_text_query(
+            user_text=user_text,
+            language_code=lang_code,
+            generate_tts=False,
+        )
+
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={
+                "success": True,
+                "transcript": user_text,
+                "language_code": lang_code,
+                "response_text": response_text,
+                "mode": mode,
+                "schemes": schemes,
+                "sources": sources,
+                "audio_base64": audio_base64,
+            },
+        )
+    except Exception as exc:
+        logger.exception(f"Error while processing text query: {exc}")
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={
+                "success": False,
+                "error": "Sorry, I couldn't process your request. Please try again.",
+            },
+        )
+
+
 def is_rag_enabled() -> bool:
     """Returns whether the local RAG stack (SentenceTransformer + PyTorch + FAISS) is enabled."""
     return os.getenv("ENABLE_RAG", "false").strip().lower() in ("true", "1", "yes")
@@ -160,8 +229,6 @@ def is_doc_eligibility_enabled() -> bool:
     """Returns whether the document extraction & scheme eligibility flow is enabled."""
     return os.getenv("ENABLE_DOCUMENT_ELIGIBILITY", "false").strip().lower() in ("true", "1", "yes")
 
-
-from pydantic import BaseModel
 
 class SchemeEligibilityRequest(BaseModel):
     profile: dict[str, Any]

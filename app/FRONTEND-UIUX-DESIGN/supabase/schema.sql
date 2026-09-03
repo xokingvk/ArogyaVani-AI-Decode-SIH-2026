@@ -101,3 +101,34 @@ CREATE TRIGGER on_auth_user_created
 -- Step 8: Index for fast username lookups
 CREATE INDEX IF NOT EXISTS idx_user_profiles_username ON public.user_profiles (username);
 
+-- Step 9: Emergency Contacts Table with Strict User-Level RLS
+CREATE TABLE IF NOT EXISTS public.emergency_contacts (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+  name text NOT NULL,
+  relationship text NOT NULL,
+  phone text NOT NULL,
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
+
+-- Enable Row Level Security
+ALTER TABLE public.emergency_contacts ENABLE ROW LEVEL SECURITY;
+
+-- Strict User Ownership Policies (auth.uid() only)
+CREATE POLICY "Users can view own emergency contacts" ON public.emergency_contacts
+  FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert own emergency contacts" ON public.emergency_contacts
+  FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can update own emergency contacts" ON public.emergency_contacts
+  FOR UPDATE USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete own emergency contacts" ON public.emergency_contacts
+  FOR DELETE USING (auth.uid() = user_id);
+
+-- Performance Index
+CREATE INDEX IF NOT EXISTS idx_emergency_contacts_user_id ON public.emergency_contacts (user_id);
+
+

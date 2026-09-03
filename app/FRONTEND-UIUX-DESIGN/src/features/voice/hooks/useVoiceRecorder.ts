@@ -30,7 +30,7 @@ import {
   playAudioResponse,
   stopAudioElement,
 } from '../utils/audioUtils';
-import { sendVoiceQuery } from '../../../services/voiceService';
+import { sendVoiceQuery, sendTextQuery } from '../../../services/voiceService';
 import { incrementAIQuestionCount } from '../../../services/authService';
 
 export interface UseVoiceRecorderReturn {
@@ -43,6 +43,7 @@ export interface UseVoiceRecorderReturn {
   stopRecording: () => void;
   clearError: () => void;
   replayAudio: () => void;
+  submitTextQuery: (text: string, languageCode?: string) => Promise<VoiceQuerySuccessResponse | null>;
 }
 
 function mapErrorToMessage(err: any): string {
@@ -333,6 +334,56 @@ export function useVoiceRecorder(options?: UseVoiceRecorderOptions): UseVoiceRec
     }
   }, [isSpeakingTts, aiAnswer, stopCurrentAudio, playBlob]);
 
+  // ── submitTextQuery ──────────────────────────────────────────────────────
+  // Submits a typed text query directly to the shared AI pipeline.
+
+  const submitTextQuery = useCallback(async (text: string, languageCode: string = 'en-IN') => {
+    const trimmed = text.trim();
+    if (!trimmed) return null;
+
+    stopCurrentAudio();
+    setVoiceState('processing');
+    setTranscription(trimmed);
+    setAiAnswer('');
+    setErrorMessage('');
+
+    try {
+      const result = await sendTextQuery(trimmed, languageCode);
+      if (result.success) {
+        setVoiceState('response');
+        setAiAnswer(result.response_text);
+
+        // Increment question count for successful normal general AI queries
+        if (result.mode === 'general') {
+          incrementAIQuestionCount().catch((err) => {
+            if (import.meta.env.DEV) {
+              console.warn('[useVoiceRecorder] incrementAIQuestionCount warning:', err);
+            }
+          });
+        }
+
+        if (onResultRef.current) {
+          onResultRef.current(result);
+        }
+
+        if (result.audio_base64) {
+          const audioBlob = base64ToAudioBlob(result.audio_base64);
+          audioBlobRef.current = audioBlob;
+          playBlob(audioBlob);
+        }
+        return result;
+      } else {
+        setVoiceState('idle');
+        setErrorMessage(result.error || VOICE_ERROR_MESSAGES.NetworkError);
+        return null;
+      }
+    } catch {
+      setVoiceState('idle');
+      setErrorMessage(VOICE_ERROR_MESSAGES.NetworkError);
+      return null;
+    }
+  }, [stopCurrentAudio, playBlob]);
+
   // ── Cleanup on unmount ───────────────────────────────────────────────────
 
   useEffect(() => {
@@ -355,5 +406,6 @@ export function useVoiceRecorder(options?: UseVoiceRecorderOptions): UseVoiceRec
     stopRecording,
     clearError,
     replayAudio,
+    submitTextQuery,
   };
 }

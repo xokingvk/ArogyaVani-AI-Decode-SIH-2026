@@ -1,7 +1,7 @@
 import os
 import re
 import logging
-from typing import Any
+from typing import Any, Optional
 from sarvamai import SarvamAI
 from services.gemini_service import ask_gemini
 from services.rag_service import get_rag_service, is_rag_enabled
@@ -524,27 +524,29 @@ def generate_tts_base64(text: str, language_code: str) -> str:
     return tts_response.audios[0]
 
 
-def process_arogyavani_pipeline(
+def process_text_query(
     user_text: str,
-    detected_language: str,
-) -> tuple[str, str, str, str, list[dict[str, Any]], list[dict[str, Any]]]:
-    """Full ArogyaVani intelligence pipeline with RAG & General Routing:
-    1. Translate to English for routing
-    2. Route to:
+    language_code: str = "en-IN",
+    generate_tts: bool = False,
+) -> tuple[str, str, Optional[str], str, list[dict[str, Any]], list[dict[str, Any]]]:
+    """Shared ArogyaVani intelligence query processor for both Text and Voice endpoints:
+    1. Translates input to English for semantic/safety intent routing.
+    2. Routes to:
        - medical_advice -> Safety disclaimer (General mode)
        - location -> Location prompt (General mode)
        - scheme -> FAISS RAG Retrieval + Grounded Gemini (Scheme RAG mode)
        - healthcare -> Gemini 3.5 Flash-Lite (General mode)
-       - out_of_scope -> Scope boundary (General mode)
-    3. Format and clean text for display (response_text) and speech (TTS)
-    4. Translate response back to user language if needed
-    5. Generate Bulbul v3 TTS audio with clean speech text
-    Returns: (english_text, final_response_text, audio_base64, mode, schemes, sources)
+       - conversational -> Polite conversational greeting/response
+       - out_of_scope -> Scope boundary
+    3. Cleans text for UI display.
+    4. Translates response back to user's specified language.
+    5. Optionally generates TTS audio if requested.
+    Returns: (english_text, final_response, audio_base64, mode, schemes, sources)
     """
-    logger.info(f"User query: '{user_text}' in language: '{detected_language}'")
+    logger.info(f"Processing query: '{user_text}' in language: '{language_code}', generate_tts={generate_tts}")
 
     # Step 1: Translate to English for routing
-    english_text = translate_to_english(user_text, detected_language)
+    english_text = translate_to_english(user_text, language_code)
     logger.info(f"English routing text: '{english_text}'")
 
     # Step 2: Intent detection
@@ -564,7 +566,7 @@ def process_arogyavani_pipeline(
         if is_rag_enabled():
             mode = "scheme_rag"
             rag_service = get_rag_service()
-            rag_res = rag_service.answer(english_text, language_code=detected_language)
+            rag_res = rag_service.answer(english_text, language_code=language_code)
             raw_response_text = rag_res["answer"]
             schemes = rag_res.get("schemes", [])
             sources = rag_res.get("sources", [])
@@ -583,15 +585,33 @@ def process_arogyavani_pipeline(
     # Step 4: Clean text for UI display
     display_response_text = clean_for_display(raw_response_text)
 
-    # Step 5: Translate back to detected language if needed and not already translated
-    if detected_language != "en-IN" and mode != "scheme_rag":
-        final_response = translate_from_english(display_response_text, detected_language)
+    # Step 5: Translate back to target language if needed and not already in that language
+    if language_code != "en-IN" and mode != "scheme_rag":
+        final_response = translate_from_english(display_response_text, language_code)
     else:
         final_response = display_response_text
 
     logger.info(f"ArogyaVani final response: '{final_response}', mode: '{mode}'")
 
-    # Step 6: Bulbul TTS with clean speech text
-    audio_base64 = generate_tts_base64(final_response, detected_language)
+    # Step 6: Generate TTS audio if requested
+    audio_base64 = None
+    if generate_tts:
+        try:
+            audio_base64 = generate_tts_base64(final_response, language_code)
+        except Exception as e:
+            logger.warning(f"Failed to generate TTS audio: {e}")
+            audio_base64 = None
 
     return english_text, final_response, audio_base64, mode, schemes, sources
+
+
+def process_arogyavani_pipeline(
+    user_text: str,
+    detected_language: str,
+) -> tuple[str, str, Optional[str], str, list[dict[str, Any]], list[dict[str, Any]]]:
+    """Full ArogyaVani voice pipeline. Wraps process_text_query with TTS generation enabled."""
+    return process_text_query(
+        user_text=user_text,
+        language_code=detected_language,
+        generate_tts=True,
+    )

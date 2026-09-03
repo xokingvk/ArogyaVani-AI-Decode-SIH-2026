@@ -101,6 +101,7 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
     startRecording,
     stopRecording,
     clearError,
+    submitTextQuery,
   } = useVoiceRecorder({
     onResult: handleVoiceResult,
   });
@@ -264,8 +265,8 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
         voiceState={schemeVoiceState}
         onStartSchemeVoice={startRecording}
         onStopSchemeVoice={stopRecording}
-        onSubmitSchemeQuestion={(question) => {
-          setSearchQuery(question);
+        onSubmitSchemeQuestion={async (question) => {
+          await submitTextQuery(question, i18n.language);
         }}
         errorMessage={errorMessage}
         onClearError={clearError}

@@ -191,6 +191,15 @@ export const getCurrentSession = async (): Promise<Session | null> => {
 };
 
 /**
+ * Gets the current active user profile
+ */
+export const getCurrentUser = async (): Promise<UserProfile | null> => {
+  const session = await getCurrentSession();
+  if (!session || !session.user) return null;
+  return getUserProfile(session.user.id);
+};
+
+/**
  * Registers a new user with Supabase auth and inserts their record into user_profiles
  */
 export const signUpNewUser = async (

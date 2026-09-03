@@ -155,6 +155,102 @@ export async function sendVoiceQuery(audioBlob: Blob): Promise<VoiceQueryRespons
   }
 }
 
+// ── sendTextQuery ──────────────────────────────────────────────────────────
+
+/**
+ * Sends a typed question to POST /text-query and returns a typed response.
+ * Works independently of microphone permissions.
+ */
+export async function sendTextQuery(
+  text: string,
+  languageCode: string = 'en-IN',
+): Promise<VoiceQueryResponse> {
+  const trimmed = text.trim();
+  if (!trimmed) {
+    return {
+      success: false,
+      error: 'Please enter a valid question or health symptom.',
+    };
+  }
+
+  const baseUrl = getApiBaseUrl();
+  const url = `${baseUrl}/text-query`;
+
+  if (import.meta.env.DEV) {
+    console.log('[voiceService] POST', url, { text: trimmed, languageCode });
+  }
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, REQUEST_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: trimmed,
+        language_code: languageCode,
+      }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    let data: Record<string, unknown>;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      if (import.meta.env.DEV) {
+        console.error('[voiceService] JSON parsing failed:', parseError);
+      }
+      return {
+        success: false,
+        error: response.ok
+          ? 'Received an unexpected response format from the healthcare server.'
+          : `Healthcare server error (${response.status}). Please try again later.`,
+      };
+    }
+
+    if (!response.ok || !data || data['success'] === false) {
+      const serverErr =
+        (data?.['error'] as string) ??
+        `Healthcare server error (${response.status}). Please try again later.`;
+      if (import.meta.env.DEV) {
+        console.error('[voiceService] Backend error:', { status: response.status, data });
+      }
+      return { success: false, error: serverErr };
+    }
+
+    return data as unknown as VoiceQueryResponse;
+  } catch (error: unknown) {
+    clearTimeout(timeoutId);
+
+    if (error instanceof Error && (error.name === 'AbortError' || controller.signal.aborted)) {
+      if (import.meta.env.DEV) {
+        console.error('[voiceService] Request timed out after', REQUEST_TIMEOUT_MS, 'ms');
+      }
+      return {
+        success: false,
+        error:
+          'Request timed out. The healthcare server might be waking up or taking longer than expected. Please try again.',
+      };
+    }
+
+    if (import.meta.env.DEV) {
+      console.error('[voiceService] Network / Fetch error:', error);
+    }
+
+    return {
+      success: false,
+      error: 'Unable to connect to the healthcare server. Please check your network connection.',
+    };
+  }
+}
+
 // ── Re-export audioUtils helpers for backwards-compat / convenience ────────
 // base64ToAudioBlob stays canonical in audioUtils but can be imported here too.
 
