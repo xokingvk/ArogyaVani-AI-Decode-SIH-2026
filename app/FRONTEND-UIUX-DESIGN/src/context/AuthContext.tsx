@@ -3,6 +3,7 @@ import { UserProfile, AuthResult, AuthContextType } from '../types/authTypes';
 import {
   getCurrentSession,
   getUserProfile,
+  extractProfileFromUser,
   signInExistingUser,
   signUpNewUser,
   signOutCurrentUser,
@@ -22,7 +23,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try {
         const session = await getCurrentSession();
         if (session?.user && isMounted) {
-          const profile = await getUserProfile(session.user.id);
+          let profile = await getUserProfile(session.user.id);
+          if (!profile && session.user) {
+            profile = extractProfileFromUser(session.user);
+          }
           if (isMounted) {
             setCurrentUser(profile);
           }
@@ -33,6 +37,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       } catch (err) {
         console.error('Failed to initialize auth session:', err);
+        if (isMounted) {
+          setCurrentUser(null);
+        }
       } finally {
         if (isMounted) {
           setIsAuthLoading(false);
@@ -45,6 +52,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { unsubscribe } = subscribeToAuthState((profile) => {
       if (isMounted) {
         setCurrentUser(profile);
+        setIsAuthLoading(false);
       }
     });
 

@@ -11,6 +11,7 @@ const isSupabaseConfigured = Boolean(
 
 const LOCAL_STORAGE_SESSION_KEY = 'arogya_demo_user';
 const LOCAL_STORAGE_USERS_KEY = 'arogya_registered_users';
+const CACHED_PROFILE_KEY = 'arogya_cached_profile';
 
 // Pre-seeded offline mock users for immediate local testing if Supabase is not connected
 const INITIAL_DEMO_USERS: Record<string, { password: string; profile: UserProfile }> = {
@@ -59,6 +60,30 @@ export const constructInternalEmail = (username: string): string => {
 };
 
 /**
+ * Constructs a fallback UserProfile from a Supabase User object when database query fails or is delayed
+ */
+export const extractProfileFromUser = (user: {
+  id: string;
+  email?: string;
+  user_metadata?: Record<string, any>;
+  created_at?: string;
+}): UserProfile => {
+  const meta = user.user_metadata || {};
+  const emailUsername = user.email ? user.email.replace(/@.*$/, '') : '';
+  const username = meta.username || emailUsername || 'user';
+  const village_district = meta.village_district || 'Rural Health Center';
+
+  return {
+    id: user.id,
+    username,
+    village_district,
+    preferred_language: meta.preferred_language || 'en',
+    created_at: user.created_at || new Date().toISOString(),
+    ai_question_count: meta.ai_question_count || 0,
+  };
+};
+
+/**
  * Helper to fetch mock users from localStorage when in offline/demo mode
  */
 const getStoredMockUsers = (): Record<string, { password: string; profile: UserProfile }> => {
@@ -74,7 +99,7 @@ const getStoredMockUsers = (): Record<string, { password: string; profile: UserP
 };
 
 /**
- * Fetches user profile from Supabase user_profiles table by user ID
+ * Fetches user profile from Supabase user_profiles table by user ID, falling back to local cache
  */
 export const getUserProfile = async (userId: string): Promise<UserProfile | null> => {
   if (!isSupabaseConfigured) {
@@ -89,6 +114,20 @@ export const getUserProfile = async (userId: string): Promise<UserProfile | null
     return null;
   }
 
+  // Check local profile cache first for instant retrieval
+  let cached: UserProfile | null = null;
+  try {
+    const raw = localStorage.getItem(CACHED_PROFILE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.id === userId) {
+        cached = parsed as UserProfile;
+      }
+    }
+  } catch {
+    // Ignore parse error
+  }
+
   try {
     const { data, error } = await supabase
       .from('user_profiles')
@@ -98,15 +137,22 @@ export const getUserProfile = async (userId: string): Promise<UserProfile | null
 
     if (error) {
       if (error.code !== 'PGRST116') {
-        console.error('Error fetching user profile:', error);
+        console.warn('Error fetching user profile from database:', error);
       }
-      return null;
+      return cached;
     }
 
-    return data as UserProfile;
+    if (data) {
+      try {
+        localStorage.setItem(CACHED_PROFILE_KEY, JSON.stringify(data));
+      } catch { /* ignore storage quota */ }
+      return data as UserProfile;
+    }
+
+    return cached;
   } catch (err) {
-    console.error('Failed to get user profile:', err);
-    return null;
+    console.warn('Failed to get user profile from database:', err);
+    return cached;
   }
 };
 
@@ -202,10 +248,14 @@ export const signUpNewUser = async (
         }
 
         const fetchedProfile = await getUserProfile(data.user.id);
+        const finalProfile = fetchedProfile || newProfile;
+        try {
+          localStorage.setItem(CACHED_PROFILE_KEY, JSON.stringify(finalProfile));
+        } catch { /* ignore storage quota */ }
 
         return {
           success: true,
-          user: fetchedProfile || newProfile,
+          user: finalProfile,
         };
       }
 
@@ -286,16 +336,14 @@ export const signInExistingUser = async (
       }
 
       if (data.user) {
-        // 2. On success, fetch matching row from user_profiles
+        // 2. On success, fetch matching row from user_profiles or fallback
         let profile = await getUserProfile(data.user.id);
         if (!profile) {
-          profile = {
-            id: data.user.id,
-            username: cleanUsername,
-            village_district: data.user.user_metadata?.village_district || 'Rural Health Center',
-            created_at: data.user.created_at,
-          };
+          profile = extractProfileFromUser(data.user);
         }
+        try {
+          localStorage.setItem(CACHED_PROFILE_KEY, JSON.stringify(profile));
+        } catch { /* ignore storage quota */ }
 
         return {
           success: true,
@@ -349,6 +397,7 @@ export const signOutCurrentUser = async (): Promise<void> => {
     }
   }
   localStorage.removeItem(LOCAL_STORAGE_SESSION_KEY);
+  localStorage.removeItem(CACHED_PROFILE_KEY);
 };
 
 /**
@@ -360,9 +409,16 @@ export const subscribeToAuthState = (
   if (isSupabaseConfigured) {
     const { data } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (session?.user) {
-        const profile = await getUserProfile(session.user.id);
+        let profile = await getUserProfile(session.user.id);
+        if (!profile && session.user) {
+          profile = extractProfileFromUser(session.user);
+          try {
+            localStorage.setItem(CACHED_PROFILE_KEY, JSON.stringify(profile));
+          } catch { /* ignore storage quota */ }
+        }
         callback(profile);
       } else {
+        localStorage.removeItem(CACHED_PROFILE_KEY);
         callback(null);
       }
     });

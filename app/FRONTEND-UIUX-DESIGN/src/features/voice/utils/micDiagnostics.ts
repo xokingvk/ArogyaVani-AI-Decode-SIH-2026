@@ -22,8 +22,12 @@ export async function runMicrophoneDiagnostics(): Promise<Record<string, unknown
   const ua = typeof navigator !== 'undefined' ? navigator.userAgent : '';
   const hasMediaDevices = Boolean(typeof navigator !== 'undefined' && navigator.mediaDevices);
   const hasGetUserMedia = Boolean(hasMediaDevices && navigator.mediaDevices.getUserMedia);
+  const capacitorPlatform = typeof (window as any)?.Capacitor?.getPlatform === 'function'
+    ? (window as any).Capacitor.getPlatform()
+    : 'web';
 
   console.log('[micDiagnostics] Environment:', {
+    platform: capacitorPlatform,
     isSecureContext: isSecure,
     protocol,
     hostname: host,

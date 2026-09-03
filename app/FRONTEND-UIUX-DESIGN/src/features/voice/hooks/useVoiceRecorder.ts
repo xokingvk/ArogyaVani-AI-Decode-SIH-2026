@@ -45,9 +45,34 @@ export interface UseVoiceRecorderReturn {
   replayAudio: () => void;
 }
 
-function mapErrorToMessage(err: { name?: string; message?: string }): string {
-  if (!err.name) return err.message || DEFAULT_VOICE_ERROR;
-  return VOICE_ERROR_MESSAGES[err.name] ?? err.message ?? DEFAULT_VOICE_ERROR;
+function mapErrorToMessage(err: any): string {
+  if (!err) return DEFAULT_VOICE_ERROR;
+  const name = err.name || '';
+  if (name && VOICE_ERROR_MESSAGES[name]) {
+    return VOICE_ERROR_MESSAGES[name];
+  }
+
+  const msg = (err.message || '').toLowerCase();
+  if (msg.includes('permission') || msg.includes('denied') || msg.includes('notallowed')) {
+    return VOICE_ERROR_MESSAGES.NotAllowedError;
+  }
+  if (msg.includes('notfound') || msg.includes('no device') || msg.includes('devicesnotfound') || msg.includes('noaudiotracks')) {
+    return VOICE_ERROR_MESSAGES.NotFoundError;
+  }
+  if (msg.includes('notreadable') || msg.includes('could not start') || msg.includes('busy') || msg.includes('trackstart')) {
+    return VOICE_ERROR_MESSAGES.NotReadableError;
+  }
+  if (msg.includes('security')) {
+    return VOICE_ERROR_MESSAGES.SecurityError;
+  }
+  if (msg.includes('abort')) {
+    return VOICE_ERROR_MESSAGES.AbortError;
+  }
+  if (msg.includes('overconstrained')) {
+    return VOICE_ERROR_MESSAGES.OverconstrainedError;
+  }
+
+  return DEFAULT_VOICE_ERROR;
 }
 
 export interface UseVoiceRecorderOptions {
@@ -117,9 +142,18 @@ export function useVoiceRecorder(options?: UseVoiceRecorderOptions): UseVoiceRec
     stopCurrentAudio();
     audioChunksRef.current = [];
 
+    // Ensure only one microphone stream / recorder exists at a time
+    releaseStream();
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      try {
+        mediaRecorderRef.current.stop();
+      } catch { /* ignore */ }
+    }
+    mediaRecorderRef.current = null;
+
     try {
-      // 1. Capability checks (no device enumeration — that stays in micDiagnostics)
-      if (!navigator.mediaDevices?.getUserMedia) {
+      // 1. Capability checks
+      if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
         setErrorMessage(VOICE_ERROR_MESSAGES.NoMediaDevices);
         return;
       }
@@ -128,12 +162,12 @@ export function useVoiceRecorder(options?: UseVoiceRecorderOptions): UseVoiceRec
         return;
       }
 
-      // 2. Request audio stream with NotReadableError fallback
+      // 2. Open microphone via getUserMedia with NotReadableError fallback
       let stream: MediaStream;
       try {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       } catch (firstErr: any) {
-        if (firstErr.name === 'NotReadableError') {
+        if (firstErr.name === 'NotReadableError' || firstErr.name === 'TrackStartError') {
           if (import.meta.env.DEV) {
             console.log('[VoiceRecorder] NotReadableError — trying constrained fallback...');
           }

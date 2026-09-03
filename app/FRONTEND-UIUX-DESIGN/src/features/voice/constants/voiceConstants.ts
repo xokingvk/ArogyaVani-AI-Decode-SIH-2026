@@ -47,19 +47,21 @@ export const RECORDER_TIMESLICE_MS = 250;
 // Keep these concise — they appear inside the small voice card banner.
 
 export const VOICE_ERROR_MESSAGES: Record<string, string> = {
-  NotAllowedError:    'Microphone permission is required to use voice.',
+  NotAllowedError:       'Microphone permission is required to use voice.',
   PermissionDeniedError: 'Microphone permission is required to use voice.',
-  NotFoundError:      'No microphone input device was found.',
-  DevicesNotFoundError: 'No microphone input device was found.',
-  NoAudioTracks:      'No microphone input device was found.',
-  NotReadableError:   'Microphone is currently busy or cannot be accessed by another app.',
-  TrackStartError:    'Microphone is currently busy or cannot be accessed by another app.',
-  OverconstrainedError: 'Microphone settings are not supported on this device.',
-  NotSupportedError:  'Audio format is not supported on this device.',
+  NotFoundError:         'No microphone was found on this device.',
+  DevicesNotFoundError:  'No microphone was found on this device.',
+  NoAudioTracks:         'No microphone was found on this device.',
+  NotReadableError:      'Microphone is currently unavailable. Please close other apps using the microphone and try again.',
+  TrackStartError:       'Microphone is currently unavailable. Please close other apps using the microphone and try again.',
+  SecurityError:         'Microphone access is unavailable in this app environment.',
+  AbortError:            'Audio recording was aborted. Please try again.',
+  OverconstrainedError:  'Microphone settings are not supported on this device.',
+  NotSupportedError:     'Audio format is not supported on this device.',
   MediaRecorderUnsupported: 'Audio recording is not supported on this browser/device.',
-  NoMediaDevices:     'Audio recording is not supported on this browser/device.',
-  EmptyRecording:     'No voice detected or recording was empty. Please speak clearly and try again.',
-  NetworkError:       'Unable to connect to the healthcare server. Please check your network connection.',
+  NoMediaDevices:        'Audio recording is not supported on this browser/device.',
+  EmptyRecording:        'No voice detected or recording was empty. Please speak clearly and try again.',
+  NetworkError:          'Unable to connect to the healthcare server. Please check your network connection.',
 };
 
-export const DEFAULT_VOICE_ERROR = 'Microphone access failed. Please check device permissions.';
+export const DEFAULT_VOICE_ERROR = 'Microphone access failed. Please try again.';
