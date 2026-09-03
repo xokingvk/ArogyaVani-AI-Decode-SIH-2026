@@ -39,6 +39,8 @@ export const resources = {
         or: 'OR',
         loading: 'Loading...',
         notFound: 'Not found in document',
+        km: 'KM',
+        page: 'Page',
       },
       nav: {
         home: 'Home',
@@ -212,6 +214,7 @@ export const resources = {
           verifiedSourcesNotice: 'Final eligibility must be verified by official issuing authority.',
         },
         details: {
+          viewDetails: 'View Details',
           backToSchemes: 'Back to Schemes',
           overview: 'Overview',
           eligibilityCriteria: 'Eligibility Criteria',
@@ -265,6 +268,8 @@ export const resources = {
         emergencySos: 'Emergency SOS 🚨',
         tapForEmergency: 'Tap for emergency assistance',
         callsNearestAsha: 'Calls nearest ASHA worker & health center',
+        alertsTag: 'Alerts',
+        membersTag: 'Members',
       },
       more: {
         appSettings: 'App Settings',
@@ -469,6 +474,8 @@ export const resources = {
         or: 'அல்லது',
         loading: 'ஏற்றுகிறது...',
         notFound: 'ஆவணத்தில் காணப்படவில்லை',
+        km: 'கி.மீ',
+        page: 'பக்கம்',
       },
       nav: {
         home: 'முகப்பு',
@@ -642,6 +649,7 @@ export const resources = {
           verifiedSourcesNotice: 'இறுதித் தகுதி அதிகாரப்பூர்வ அமைப்பால் சரிபார்க்கப்பட வேண்டும்.',
         },
         details: {
+          viewDetails: 'விவரங்களை காண்க',
           backToSchemes: 'திட்டங்களுக்கு திரும்பு',
           overview: 'கண்ணோட்டம்',
           eligibilityCriteria: 'தகுதி அளவுகோல்கள்',
@@ -695,6 +703,8 @@ export const resources = {
         emergencySos: 'அவசர SOS 🚨',
         tapForEmergency: 'அவசர உதவிக்கு தட்டவும்',
         callsNearestAsha: 'அருகிலுள்ள ஆஷா பணியாளர் & சுகாதார மையத்தை அழைக்கும்',
+        alertsTag: 'எச்சரிக்கைகள்',
+        membersTag: 'உறுப்பினர்கள்',
       },
       more: {
         appSettings: 'செயலி அமைப்புகள்',
@@ -899,6 +909,8 @@ export const resources = {
         or: 'या',
         loading: 'लोड हो रहा है...',
         notFound: 'दस्तावेज़ में नहीं मिला',
+        km: 'किमी',
+        page: 'पृष्ठ',
       },
       nav: {
         home: 'होम',
@@ -1072,6 +1084,7 @@ export const resources = {
           verifiedSourcesNotice: 'अंतिम पात्रता आधिकारिक जारीकर्ता प्राधिकरण द्वारा सत्यापित की जानी चाहिए।',
         },
         details: {
+          viewDetails: 'विवरण देखें',
           backToSchemes: 'योजनाओं पर वापस जाएं',
           overview: 'अवलोकन',
           eligibilityCriteria: 'पात्रता मानदंड',
@@ -1125,6 +1138,8 @@ export const resources = {
         emergencySos: 'आपातकालीन एसओएस 🚨',
         tapForEmergency: 'आपातकालीन सहायता के लिए टैप करें',
         callsNearestAsha: 'निकटतम आशा कार्यकर्ता और स्वास्थ्य केंद्र को कॉल करता है',
+        alertsTag: 'अलर्ट',
+        membersTag: 'सदस्य',
       },
       more: {
         appSettings: 'ऐप सेटिंग्स',
@@ -1329,6 +1344,8 @@ export const resources = {
         or: 'లేదా',
         loading: 'లోడ్ అవుతోంది...',
         notFound: 'పత్రంలో కనుగొనబడలేదు',
+        km: 'కి.మీ',
+        page: 'పేజీ',
       },
       nav: {
         home: 'హోమ్',
@@ -1502,6 +1519,7 @@ export const resources = {
           verifiedSourcesNotice: 'తుది అర్హతను అధికారిక జారీ విభాగం ద్వారా ధృవీకరించాలి.',
         },
         details: {
+          viewDetails: 'వివరాలు చూడండి',
           backToSchemes: 'పథకాలకు తిరిగి వెళ్లండి',
           overview: 'అవలోకనం',
           eligibilityCriteria: 'అర్హత ప్రమాణాలు',
@@ -1555,6 +1573,8 @@ export const resources = {
         emergencySos: 'అత్యవసర SOS 🚨',
         tapForEmergency: 'అత్యవసర సహాయం కోసం నొక్కండి',
         callsNearestAsha: 'సమీప ఆశా కార్యకర్త & ఆరోగ్య కేంద్రానికి కాల్ చేస్తుంది',
+        alertsTag: 'హెచ్చరికలు',
+        membersTag: 'సభ్యులు',
       },
       more: {
         appSettings: 'యాప్ సెట్టింగ్‌లు',

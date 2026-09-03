@@ -152,7 +152,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             <button
               type="button"
               aria-label={t('common.call')}
-              onClick={() => alert(`Calling ASHA worker: +91 98401 XXXXX`)}
+              onClick={() => alert(t('more.modals.callingAsha', 'Calling ASHA worker: +91 98401 XXXXX'))}
               className="p-2 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-colors cursor-pointer"
             >
               <PhoneCall className="w-4 h-4" />
@@ -164,7 +164,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
         <section className="bg-white rounded-3xl p-4 border border-slate-100 shadow-xs space-y-2">
           <button
             type="button"
-            onClick={() => alert('Data is encrypted locally and HIPAA/ABDM compliant.')}
+            onClick={() => alert(t('more.modals.privacyAlert', 'Data is encrypted locally and HIPAA/ABDM compliant.'))}
             className="w-full flex items-center justify-between py-2 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl px-2 transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-2">
@@ -176,7 +176,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
 
           <button
             type="button"
-            onClick={() => alert('Healthcare Worker & Family User Guide v1.0')}
+            onClick={() => alert(t('more.modals.guideTitle', 'Healthcare Worker & Family User Guide v1.0'))}
             className="w-full flex items-center justify-between py-2 text-left text-xs font-semibold text-slate-700 hover:bg-slate-50 rounded-xl px-2 transition-colors border-t border-slate-100 cursor-pointer"
           >
             <div className="flex items-center gap-2">

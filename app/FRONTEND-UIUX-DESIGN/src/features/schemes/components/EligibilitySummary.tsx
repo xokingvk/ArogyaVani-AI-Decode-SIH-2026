@@ -23,6 +23,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { DocumentEligibilityResponse, Scheme } from '../types/schemeTypes';
 import { GOVERNMENT_SCHEMES_DATA } from '../data/schemes';
+import { getLocalizedScheme } from '../data/localizedSchemes';
 import { EligibilityResultCard } from './EligibilityResultCard';
 
 // ── Profile summary row ────────────────────────────────────────────────────
@@ -61,12 +62,14 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
   onClear,
   onViewSchemeDetails,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { profile, summary, schemes, sources, missing_fields } = data;
 
-  // Find curated Scheme data by schemeId for each result
-  const getSchemeData = (schemeId: string): Scheme | undefined =>
-    GOVERNMENT_SCHEMES_DATA.find((s) => s.id.toLowerCase() === schemeId.toLowerCase());
+  // Find curated Scheme data by schemeId for each result and localize
+  const getSchemeData = (schemeId: string): Scheme | undefined => {
+    const found = GOVERNMENT_SCHEMES_DATA.find((s) => s.id.toLowerCase() === schemeId.toLowerCase());
+    return found ? getLocalizedScheme(found, i18n.language) : undefined;
+  };
 
   // 1. Relevant / Potentially eligible schemes
   const eligibleOrRelevantSchemes = schemes.filter(
@@ -269,7 +272,7 @@ export const EligibilitySummary: React.FC<EligibilitySummaryProps> = ({
                 <FileText className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-[10.5px] font-semibold text-slate-700 truncate">{src.source}</p>
-                  <p className="text-[10px] text-slate-500">Page {src.page}</p>
+                  <p className="text-[10px] text-slate-500">{t('common.page', 'Page')} {src.page}</p>
                 </div>
               </div>
             ))}

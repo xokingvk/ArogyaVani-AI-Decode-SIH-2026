@@ -19,6 +19,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Scheme } from '../types/schemeTypes';
 import { openExternalUrl, getActionLabel } from '../utils/schemeHelpers';
+import { getLocalizedScheme } from '../data/localizedSchemes';
 import { SchemeSourceList } from '../components/SchemeSourceList';
 
 export interface SchemeDetailsScreenProps {
@@ -27,11 +28,19 @@ export interface SchemeDetailsScreenProps {
 }
 
 export const SchemeDetailsScreen: React.FC<SchemeDetailsScreenProps> = ({
-  scheme,
+  scheme: rawScheme,
   onBack,
 }) => {
-  const { t } = useTranslation();
-  const actionLabel = getActionLabel(scheme.actionType);
+  const { t, i18n } = useTranslation();
+  const scheme = getLocalizedScheme(rawScheme, i18n.language);
+
+  const ACTION_LABEL_KEYS: Record<string, string> = {
+    apply: t('schemes.actions.apply', 'Apply Online'),
+    eligibility: t('schemes.actions.eligibility', 'Check Eligibility'),
+    access: t('schemes.actions.access', 'How to Access'),
+    details: t('schemes.actions.details', 'View Details'),
+  };
+  const actionLabel = ACTION_LABEL_KEYS[scheme.actionType] || getActionLabel(scheme.actionType);
 
   const handleApplyClick = () => {
     if (scheme.applicationUrl) {

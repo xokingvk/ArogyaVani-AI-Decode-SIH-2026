@@ -152,7 +152,7 @@ export const MoreOverviewScreen: React.FC<MoreOverviewScreenProps> = ({
             iconBg="bg-purple-50"
             label={t('more.privacyData')}
             sublabel={t('more.privacyDataSub')}
-            onClick={() => alert('ArogyaVani AI is 100% HIPAA & ABDM (Ayushman Bharat Digital Mission) compliant.')}
+            onClick={() => alert(t('more.modals.privacyAlert', 'ArogyaVani AI is 100% HIPAA & ABDM (Ayushman Bharat Digital Mission) compliant.'))}
           />
           <div className="h-px bg-slate-100 mx-4" />
           <MenuRow
@@ -249,7 +249,7 @@ export const MoreOverviewScreen: React.FC<MoreOverviewScreenProps> = ({
                   <p className="font-bold text-slate-800">{t('more.modals.ashaWorkerTitle')}</p>
                   <p className="text-[11px] text-slate-500">{t('more.modals.ashaWorkerSub')}</p>
                 </div>
-                <button type="button" onClick={() => alert('Calling ASHA worker: +91 98401 XXXXX')} className="px-3 py-1 bg-indigo-600 text-white rounded-xl font-bold cursor-pointer">{t('common.call')}</button>
+                <button type="button" onClick={() => alert(t('more.modals.callingAsha', 'Calling ASHA worker: +91 98401 XXXXX'))} className="px-3 py-1 bg-indigo-600 text-white rounded-xl font-bold cursor-pointer">{t('common.call')}</button>
               </div>
               <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div>

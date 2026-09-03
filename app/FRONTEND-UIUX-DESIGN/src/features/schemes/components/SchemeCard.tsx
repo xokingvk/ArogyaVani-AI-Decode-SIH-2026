@@ -2,6 +2,7 @@
  * SchemeCard Component
  * Polished, information-dense government scheme card.
  * Supports differentiated actions (Apply Online, Check Eligibility, How to Access, View Details).
+ * Fully localized with i18n across English, Tamil, Hindi, and Telugu.
  */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +22,7 @@ import {
 } from 'lucide-react';
 import { Scheme } from '../types/schemeTypes';
 import { getActionLabel, openExternalUrl } from '../utils/schemeHelpers';
+import { getLocalizedScheme } from '../data/localizedSchemes';
 
 export interface SchemeCardProps {
   scheme: Scheme;
@@ -74,14 +76,16 @@ const getIconBackground = (iconName?: string) => {
 };
 
 export const SchemeCard: React.FC<SchemeCardProps> = ({
-  scheme,
+  scheme: rawScheme,
   onViewDetails,
   onActionClick,
   isRecommended = false,
   matchReason,
   index = 0,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const scheme = getLocalizedScheme(rawScheme, i18n.language);
+
   const handlePrimaryAction = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (onActionClick) {
@@ -99,10 +103,10 @@ export const SchemeCard: React.FC<SchemeCardProps> = ({
   };
 
   const ACTION_LABEL_KEYS: Record<string, string> = {
-    apply: t('schemes.actions.apply', 'Apply Online'),
-    eligibility: t('schemes.actions.eligibility', 'Check Eligibility'),
-    access: t('schemes.actions.access', 'How to Access'),
-    details: t('schemes.actions.details', 'View Details'),
+    apply: t('schemes.actions.apply'),
+    eligibility: t('schemes.actions.eligibility'),
+    access: t('schemes.actions.access'),
+    details: t('schemes.actions.details'),
   };
   const actionLabel = ACTION_LABEL_KEYS[scheme.actionType] || getActionLabel(scheme.actionType);
 
@@ -181,16 +185,16 @@ export const SchemeCard: React.FC<SchemeCardProps> = ({
             e.stopPropagation();
             onViewDetails(scheme);
           }}
-          className="flex-1 py-2 px-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold text-center transition-colors flex items-center justify-center gap-1"
+          className="flex-1 py-2 px-3 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold text-center transition-colors flex items-center justify-center gap-1 cursor-pointer"
         >
-          <span>{t('schemes.details.viewDetails', 'View Details')}</span>
+          <span>{t('schemes.actions.details')}</span>
           <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
         </button>
 
         <button
           type="button"
           onClick={handlePrimaryAction}
-          className="flex-1 py-2 px-3 rounded-xl bg-[#0D9488] hover:bg-[#0b7c72] text-white text-xs font-bold text-center transition-colors shadow-2xs flex items-center justify-center gap-1"
+          className="flex-1 py-2 px-3 rounded-xl bg-[#0D9488] hover:bg-[#0b7c72] text-white text-xs font-bold text-center transition-colors shadow-2xs flex items-center justify-center gap-1 cursor-pointer"
         >
           <span>{actionLabel}</span>
           {(scheme.actionType === 'apply' || scheme.actionType === 'eligibility') && (

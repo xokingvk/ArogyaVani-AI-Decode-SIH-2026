@@ -24,6 +24,7 @@ import {
   EditableProfile,
 } from '../types/schemeTypes';
 import { GOVERNMENT_SCHEMES_DATA } from '../data/schemes';
+import { getLocalizedSchemes } from '../data/localizedSchemes';
 import { filterSchemes } from '../utils/schemeHelpers';
 import { SchemeHero } from '../components/SchemeHero';
 import { SchemeVoiceAssistant } from '../components/SchemeVoiceAssistant';
@@ -46,7 +47,7 @@ export interface SchemesScreenProps {
 export const SchemesScreen: React.FC<SchemesScreenProps> = ({
   initialSelectedSchemeId,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<SchemeCategory>('all');
   const [selectedScheme, setSelectedScheme] = useState<Scheme | null>(() => {
@@ -55,6 +56,10 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
     }
     return null;
   });
+
+  const localizedAllSchemes = useMemo(() => {
+    return getLocalizedSchemes(GOVERNMENT_SCHEMES_DATA, i18n.language);
+  }, [i18n.language]);
 
   // ── Voice RAG State ──────────────────────────────────────────────────────
   const [ragResult, setRagResult] = useState<SchemeRagResult | null>(null);
@@ -110,10 +115,9 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
 
   const ragMatchedSchemes = useMemo(() => {
     if (!isRagRecommendation || !ragResult) return [];
-    const allSchemes = filterSchemes(GOVERNMENT_SCHEMES_DATA, '', 'all');
     const matchedIds = new Set(ragResult.schemes.map((s) => s.schemeId.toLowerCase()));
-    return allSchemes.filter((s) => matchedIds.has(s.id.toLowerCase()));
-  }, [isRagRecommendation, ragResult]);
+    return localizedAllSchemes.filter((s) => matchedIds.has(s.id.toLowerCase()));
+  }, [isRagRecommendation, ragResult, localizedAllSchemes]);
 
   // ── Document Eligibility State ───────────────────────────────────────────
   const [docUploadState, setDocUploadState] = useState<DocumentUploadState>('idle');
@@ -237,8 +241,8 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
 
   // ── Static Catalog ───────────────────────────────────────────────────────
   const staticCatalogSchemes = useMemo(() => {
-    return filterSchemes(GOVERNMENT_SCHEMES_DATA, searchQuery, selectedCategory);
-  }, [searchQuery, selectedCategory]);
+    return filterSchemes(localizedAllSchemes, searchQuery, selectedCategory);
+  }, [localizedAllSchemes, searchQuery, selectedCategory]);
 
   // If a scheme is selected for detailed view, show SchemeDetailsScreen
   if (selectedScheme) {

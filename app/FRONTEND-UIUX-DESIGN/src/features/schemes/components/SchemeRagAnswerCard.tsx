@@ -11,6 +11,7 @@ import { Sparkles, Volume2, BookOpen, X, HeartPulse, ExternalLink, Globe } from 
 import { useTranslation } from 'react-i18next';
 import { SchemeRagResult } from '../types/schemeTypes';
 import { GOVERNMENT_SCHEMES_DATA } from '../data/schemes';
+import { getLocalizedScheme } from '../data/localizedSchemes';
 
 export interface SchemeRagAnswerCardProps {
   ragResult: SchemeRagResult;
@@ -83,7 +84,7 @@ export const SchemeRagAnswerCard: React.FC<SchemeRagAnswerCardProps> = ({
   onPlayAudio,
   isPlayingAudio = false,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isSchemeRag = ragResult.mode === 'scheme_rag';
 
   const blocks = useMemo(() => parseAnswerToBlocks(ragResult.answer), [ragResult.answer]);
@@ -95,8 +96,8 @@ export const SchemeRagAnswerCard: React.FC<SchemeRagAnswerCardProps> = ({
     const matchedIds = new Set(ragResult.schemes.map((s) => s.schemeId.toLowerCase()));
     return GOVERNMENT_SCHEMES_DATA.filter(
       (scheme) => matchedIds.has(scheme.id.toLowerCase()) && (scheme.officialWebsite || scheme.applicationUrl)
-    );
-  }, [isSchemeRag, ragResult.schemes]);
+    ).map((s) => getLocalizedScheme(s, i18n.language));
+  }, [isSchemeRag, ragResult.schemes, i18n.language]);
 
   return (
     <motion.div
