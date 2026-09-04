@@ -61,6 +61,8 @@ export async function getEmergencyContactCount(): Promise<number> {
         .eq('user_id', user.id);
 
       if (!error && count !== null && count !== undefined) {
+        // Keep the local fallback cache in sync with the authoritative DB count.
+        // Local data is only used when Supabase is unavailable.
         return count;
       }
     } catch {
@@ -154,10 +156,15 @@ export async function createEmergencyContact(contact: {
         return { success: true, contact: newContact };
       }
 
+      // Mirror successful cloud write into the local fallback cache so the
+      // dashboard can still show the right count if connectivity drops later.
+      const cloudContact = data as EmergencyContact;
+      const local = getLocalContacts(user.id).filter((c) => c.id !== cloudContact.id);
+      saveLocalContacts(user.id, [...local, cloudContact]);
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
       }
-      return { success: true, contact: data as EmergencyContact };
+      return { success: true, contact: cloudContact };
     } catch {
       const local = getLocalContacts(user.id);
       const updated = [...local, newContact];
@@ -226,10 +233,13 @@ export async function updateEmergencyContact(
         return { success: true, contact: { id, user_id: user.id, name, relationship, phone } };
       }
 
+      const cloudContact = data as EmergencyContact;
+      const local = getLocalContacts(user.id);
+      saveLocalContacts(user.id, local.map((c) => c.id === cloudContact.id ? cloudContact : c));
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
       }
-      return { success: true, contact: data as EmergencyContact };
+      return { success: true, contact: cloudContact };
     } catch {
       const local = getLocalContacts(user.id);
       const updated = local.map((c) => (c.id === id ? { ...c, name, relationship, phone } : c));
@@ -280,6 +290,8 @@ export async function deleteEmergencyContact(id: string): Promise<{ success: boo
         return { success: true };
       }
 
+      const local = getLocalContacts(user.id);
+      saveLocalContacts(user.id, local.filter((c) => c.id !== id));
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
       }

@@ -34,6 +34,16 @@ async function getAuthUser() {
   return data?.session?.user ?? null;
 }
 
+function getLocalSchemeChecks(userId: string): any[] {
+  try {
+    const raw = localStorage.getItem(`arogya_scheme_checks_${userId}`);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 // ──────────────────────────────────────────────────────────────
 // Individual card fetchers (all fail-safe & independent)
 // ──────────────────────────────────────────────────────────────
@@ -55,19 +65,20 @@ async function fetchSchemeStatus(): Promise<{ primaryValue: string; secondaryLab
       .order('checked_at', { ascending: false })
       .limit(20);
 
-    if (error) {
-      if (import.meta.env.DEV) {
+    let rows: any[] = (data as any[]) || [];
+    if (error || rows.length === 0) {
+      if (error && import.meta.env.DEV) {
         console.warn('[dashboardService] fetchSchemeStatus query failed:', error.message);
       }
-      return { primaryValue: '0', secondaryLabel: 'No matches yet' };
-    }
-
-    if (!data || data.length === 0) {
-      return { primaryValue: '0', secondaryLabel: 'No matches yet' };
+      const localRows = getLocalSchemeChecks(user.id);
+      if (localRows.length === 0) {
+        return { primaryValue: '0', secondaryLabel: 'No matches yet' };
+      }
+      rows = localRows;
     }
 
     const distinctSchemes = new Set<string>();
-    for (const row of data) {
+    for (const row of rows) {
       if (!row.schemes) continue;
       let list = row.schemes;
       if (typeof list === 'string') {

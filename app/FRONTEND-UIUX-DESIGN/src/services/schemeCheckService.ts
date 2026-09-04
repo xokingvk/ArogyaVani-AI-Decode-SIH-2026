@@ -219,6 +219,27 @@ export const getSchemeCheckSummary = async (): Promise<SchemeCheckSummary> => {
     }
 
     if (!data?.checked_at) {
+      // DB is reachable but may be empty (e.g. RPC/insert unavailable).
+      // Fall back to the locally persisted successful Scheme RAG record so
+      // the dashboard remains accurate in demo/offline mode.
+      if (typeof localStorage !== 'undefined') {
+        try {
+          const raw = localStorage.getItem(`${LOCAL_SCHEME_CHECKS_KEY}${user.id}`);
+          if (raw) {
+            const list = JSON.parse(raw);
+            if (Array.isArray(list) && list[0]?.checked_at) {
+              const days = daysSince(list[0].checked_at);
+              return {
+                lastCheckedAt: list[0].checked_at,
+                lastCheckedLabel: formatDate(list[0].checked_at),
+                subLabel: days === 0 ? 'Checked today' : days === 1 ? 'Checked yesterday' : `${days} days ago`,
+              };
+            }
+          }
+        } catch {
+          // Ignore local cache parse failures.
+        }
+      }
       return empty;
     }
 
