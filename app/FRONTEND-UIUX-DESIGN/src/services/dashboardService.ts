@@ -23,7 +23,7 @@ import { supabase } from '../lib/supabaseClient';
 import { DashboardStatsData } from '../types/dashboardTypes';
 import { UserProfile } from '../types/authTypes';
 import { getSchemeCheckSummary } from './schemeCheckService';
-import { getEmergencyContacts } from './emergencyContactService';
+import { getEmergencyContactCount } from './emergencyContactService';
 
 // ──────────────────────────────────────────────────────────────
 // Helpers
@@ -167,33 +167,15 @@ async function fetchActiveAlerts(): Promise<{ primaryValue: string; secondaryLab
  */
 async function fetchFamilyConnected(): Promise<{ primaryValue: string; secondaryLabel: string }> {
   try {
-    const user = await getAuthUser();
-    if (!user) {
-      return { primaryValue: '0', secondaryLabel: 'No members added' };
-    }
-
-    const { count, error } = await supabase
-      .from('emergency_contacts')
-      .select('id', { count: 'exact', head: true })
-      .eq('user_id', user.id);
-
-    let members = 0;
-    if (!error && count !== null && count !== undefined) {
-      members = count;
-    } else {
-      // Local fallback for offline/demo support
-      const contacts = await getEmergencyContacts();
-      members = contacts.length;
-    }
-
+    const count = await getEmergencyContactCount();
     return {
-      primaryValue: String(members),
+      primaryValue: String(count),
       secondaryLabel:
-        members === 0
+        count === 0
           ? 'No members added'
-          : members === 1
+          : count === 1
           ? '1 emergency contact'
-          : `${members} emergency contacts`,
+          : `${count} emergency contacts`,
     };
   } catch {
     return { primaryValue: '0', secondaryLabel: 'No members added' };

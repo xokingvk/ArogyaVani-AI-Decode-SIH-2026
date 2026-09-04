@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, AlertTriangle, Sparkles, Navigation } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -9,6 +9,7 @@ import { getNearestPDS } from '../../services/pdsService';
 import { DashboardStatsData } from '../../types/dashboardTypes';
 
 interface DashboardHomeScreenProps {
+  isActive?: boolean;
   onNavigateToSettings?: () => void;
   onNavigateToEmergencySos?: () => void;
 }
@@ -23,13 +24,15 @@ type PdsState =
   | { status: 'error'; message: string };
 
 export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
+  isActive = true,
   onNavigateToEmergencySos,
 }) => {
   const { currentUser } = useAuth();
   const { t } = useTranslation();
   const [stats, setStats] = useState<DashboardStatsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [pds, setPds] = useState<PdsState>({ status: 'idle' });
+  const [pds, setPds] = useState<PdsState>({ status: 'loading' });
+  const isPdsFetchingRef = useRef(false);
 
   const loadStats = useCallback(() => {
     getDashboardStats(currentUser).then((data) => {
@@ -38,9 +41,39 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
     });
   }, [currentUser]);
 
-  // ── Load stats on mount & listen for real-time app events ───────────
+  // ── Auto-fetch PDS centre (one-shot GPS on tab activation) ───
+  const fetchPds = useCallback(async (_force: boolean = false) => {
+    if (isPdsFetchingRef.current) return;
+    isPdsFetchingRef.current = true;
+    setPds({ status: 'loading' });
+
+    try {
+      const result = await getNearestPDS();
+      if (result.centre) {
+        setPds({
+          status: 'found',
+          name: result.centre.name || 'Fair Price Shop',
+          distanceLabel: `${result.centre.distance_km} km`,
+          subLabel: result.subLabel,
+          mapsUrl: result.mapsUrl,
+        });
+      } else {
+        setPds({ status: 'error', message: 'No nearby PDS found' });
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Location lookup failed';
+      setPds({ status: 'error', message: msg });
+    } finally {
+      isPdsFetchingRef.current = false;
+    }
+  }, []);
+
+  // ── Load stats & trigger PDS lookup whenever screen is active ──
   useEffect(() => {
-    loadStats();
+    if (isActive) {
+      loadStats();
+      fetchPds();
+    }
 
     const handleContactsUpdated = () => {
       loadStats();
@@ -56,51 +89,33 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
       window.removeEventListener('arogya:emergency_contacts_updated', handleContactsUpdated);
       window.removeEventListener('arogya:scheme_check_logged', handleSchemeLogged);
     };
-  }, [loadStats]);
+  }, [isActive, loadStats, fetchPds]);
 
-  // ── On-demand PDS lookup / Maps tap ─────────────────────────
-  const handlePdsTap = useCallback(async () => {
-    if (pds.status === 'loading') return;
+  // ── Card click handler (Open Maps when found, or retry if error) ──
+  const handlePdsTap = useCallback(() => {
     if (pds.status === 'found' && pds.mapsUrl) {
       window.open(pds.mapsUrl, '_blank', 'noopener,noreferrer');
-      return;
+    } else if (pds.status === 'error' || pds.status === 'idle') {
+      fetchPds(true);
     }
-    setPds({ status: 'loading' });
-    try {
-      const result = await getNearestPDS();
-      if (result.centre) {
-        setPds({
-          status: 'found',
-          name: result.centre.name || 'Fair Price Shop',
-          distanceLabel: result.distanceLabel,
-          subLabel: result.subLabel,
-          mapsUrl: result.mapsUrl,
-        });
-      } else {
-        setPds({ status: 'error', message: 'No nearby PDS found' });
-      }
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Location lookup failed';
-      setPds({ status: 'error', message: msg });
-    }
-  }, [pds]);
+  }, [pds, fetchPds]);
 
   // ── Derive PDS card display values ───────────────────────────
   const pdsCardValue = (): string => {
     switch (pds.status) {
-      case 'idle':    return t('history.tapToFind', 'Tap to find');
+      case 'idle':
       case 'loading': return t('common.locating', 'Locating…');
       case 'found':   return pds.name;
-      case 'error':   return t('common.unavailable', 'Unavailable');
+      case 'error':   return t('common.unavailable', 'Location unavailable');
     }
   };
 
   const pdsCardSub = (): string => {
     switch (pds.status) {
-      case 'idle':    return t('history.nearestPdsSub', 'Tap card to locate nearest');
-      case 'loading': return t('common.gettingLocation', 'Getting your location…');
-      case 'found':   return `${pds.distanceLabel} • Tap for maps`;
-      case 'error':   return pds.message;
+      case 'idle':
+      case 'loading': return 'Finding nearest PDS…';
+      case 'found':   return `${pds.distanceLabel} away • Tap for maps`;
+      case 'error':   return pds.message || 'No nearby PDS found';
     }
   };
 

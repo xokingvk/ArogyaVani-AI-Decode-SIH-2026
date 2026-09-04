@@ -27,6 +27,12 @@ export interface SchemeCheckSummary {
 const LOCAL_SCHEME_CHECKS_KEY = 'arogya_scheme_checks_';
 
 // ──────────────────────────────────────────────────────────────
+export interface LogSchemeCheckResult {
+  success: boolean;
+  checkedAt: string | null;
+}
+
+// ──────────────────────────────────────────────────────────────
 // Log a scheme query (called after a successful scheme RAG response)
 // ──────────────────────────────────────────────────────────────
 
@@ -37,20 +43,24 @@ const LOCAL_SCHEME_CHECKS_KEY = 'arogya_scheme_checks_';
 export const logSchemeCheck = async (
   queryText: string,
   schemes: (string | { schemeId?: string; schemeName?: string })[] = [],
-): Promise<void> => {
+): Promise<LogSchemeCheckResult> => {
+  const timestamp = new Date().toISOString();
   try {
     const { data: sessionData } = await supabase.auth.getSession();
     const user = sessionData?.session?.user;
     if (!user) {
       // In demo/guest mode, save locally so UI still functions
       saveLocalSchemeCheck('demo-user', queryText, schemes);
-      return;
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('arogya:scheme_check_logged'));
+      }
+      return { success: true, checkedAt: timestamp };
     }
 
     // Normalize schemes to clean array of names/IDs
     const normalizedSchemes: string[] = schemes.map((s) => {
-      if (typeof s === 'string') return s;
-      return s.schemeName || s.schemeId || '';
+      if (typeof s === 'string') return s.trim();
+      return (s.schemeName || s.schemeId || '').trim();
     }).filter(Boolean);
 
     // 1. Try Supabase RPC first (passes array directly as JSONB)
@@ -67,11 +77,11 @@ export const logSchemeCheck = async (
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('arogya:scheme_check_logged'));
       }
-      return;
+      return { success: true, checkedAt: timestamp };
     }
 
     if (import.meta.env.DEV) {
-      console.warn('[schemeCheckService] RPC log_scheme_check failed, attempting direct insert:', rpcError.message);
+      console.warn('[schemeCheckService] RPC failed:\n' + rpcError.message);
     }
 
     // 2. Direct table insert fallback
@@ -79,28 +89,30 @@ export const logSchemeCheck = async (
       user_id: user.id,
       query_text: queryText.slice(0, 500),
       schemes: normalizedSchemes,
-      checked_at: new Date().toISOString(),
+      checked_at: timestamp,
     });
 
     if (insertError) {
       if (import.meta.env.DEV) {
-        console.warn('[schemeCheckService] Direct insert failed:', insertError.message);
+        console.warn('[schemeCheckService] Scheme check persistence failed:\n' + insertError.message);
       }
+      saveLocalSchemeCheck(user.id, queryText, normalizedSchemes);
+      return { success: false, checkedAt: null };
     } else {
       if (import.meta.env.DEV) {
         console.log('[schemeCheckService] Scheme check logged successfully via direct insert');
       }
+      saveLocalSchemeCheck(user.id, queryText, normalizedSchemes);
       if (typeof window !== 'undefined') {
         window.dispatchEvent(new CustomEvent('arogya:scheme_check_logged'));
       }
+      return { success: true, checkedAt: timestamp };
     }
-
-    // Save local copy for offline persistence
-    saveLocalSchemeCheck(user.id, queryText, normalizedSchemes);
-  } catch (err) {
+  } catch (err: any) {
     if (import.meta.env.DEV) {
-      console.warn('[schemeCheckService] Unexpected logging error:', err);
+      console.warn('[schemeCheckService] Scheme check persistence failed:\n' + (err?.message || String(err)));
     }
+    return { success: false, checkedAt: null };
   }
 };
 

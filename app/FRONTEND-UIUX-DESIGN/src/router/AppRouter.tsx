@@ -120,6 +120,7 @@ export const AppRouter: React.FC = () => {
       case 'history':
         return (
           <DashboardHomeScreen
+            isActive={activeTab === 'history'}
             onNavigateToSettings={() => setCurrentRoute('/settings')}
             onNavigateToEmergencySos={() => setIsSosOpen(true)}
           />

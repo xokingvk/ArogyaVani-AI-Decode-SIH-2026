@@ -46,6 +46,32 @@ export function formatPhoneForCall(phone: string): string {
 }
 
 /**
+ * Single source of truth for total emergency contacts count.
+ * Queries Supabase when configured and falls back to local storage.
+ */
+export async function getEmergencyContactCount(): Promise<number> {
+  const user = await getCurrentUser();
+  if (!user) return 0;
+
+  if (isSupabaseConfigured && !user.id.startsWith('demo-')) {
+    try {
+      const { count, error } = await supabase
+        .from('emergency_contacts')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+
+      if (!error && count !== null && count !== undefined) {
+        return count;
+      }
+    } catch {
+      // Fall through to local
+    }
+  }
+
+  return getLocalContacts(user.id).length;
+}
+
+/**
  * Fetches all emergency contacts for the authenticated user
  */
 export async function getEmergencyContacts(): Promise<EmergencyContact[]> {

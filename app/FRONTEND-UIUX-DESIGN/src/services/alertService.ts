@@ -40,15 +40,19 @@ export const getAlertSummary = async (): Promise<AlertSummary> => {
 
   try {
     const { data: sessionData } = await supabase.auth.getSession();
-    if (!sessionData?.session) return zero;
+    const user = sessionData?.session?.user;
+    if (!user) return zero;
 
     const { count, error } = await supabase
       .from('health_alerts')
       .select('id', { count: 'exact', head: true })
-      .eq('is_read', false);
+      .eq('is_read', false)
+      .or(`user_id.eq.${user.id},user_id.is.null`);
 
     if (error) {
-      console.warn('[alertService] Failed to fetch alert count:', error.message);
+      if (import.meta.env.DEV) {
+        console.warn('[alertService] Failed to fetch alert count:', error.message);
+      }
       return zero;
     }
 
@@ -59,7 +63,9 @@ export const getAlertSummary = async (): Promise<AlertSummary> => {
       subLabel: unread === 0 ? 'No active alerts' : unread === 1 ? '1 unread alert' : `${unread} unread alerts`,
     };
   } catch (err) {
-    console.warn('[alertService] Unexpected error:', err);
+    if (import.meta.env.DEV) {
+      console.warn('[alertService] Unexpected error:', err);
+    }
     return zero;
   }
 };
