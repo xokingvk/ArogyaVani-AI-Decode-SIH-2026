@@ -19,7 +19,7 @@ interface DashboardHomeScreenProps {
 type PdsState =
   | { status: 'idle' }
   | { status: 'loading' }
-  | { status: 'found'; distanceLabel: string; subLabel: string; mapsUrl: string | null }
+  | { status: 'found'; name: string; distanceLabel: string; subLabel: string; mapsUrl: string | null }
   | { status: 'error'; message: string };
 
 export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
@@ -31,48 +31,66 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [pds, setPds] = useState<PdsState>({ status: 'idle' });
 
-  // ── Load all non-GPS stats on mount ──────────────────────────
-  useEffect(() => {
-    let isMounted = true;
+  const loadStats = useCallback(() => {
     getDashboardStats(currentUser).then((data) => {
-      if (isMounted) {
-        setStats(data);
-        setIsLoading(false);
-      }
+      setStats(data);
+      setIsLoading(false);
     });
-    return () => {
-      isMounted = false;
-    };
   }, [currentUser]);
 
-  // ── On-demand PDS lookup (only when user taps the card) ──────
+  // ── Load stats on mount & listen for real-time app events ───────────
+  useEffect(() => {
+    loadStats();
+
+    const handleContactsUpdated = () => {
+      loadStats();
+    };
+    const handleSchemeLogged = () => {
+      loadStats();
+    };
+
+    window.addEventListener('arogya:emergency_contacts_updated', handleContactsUpdated);
+    window.addEventListener('arogya:scheme_check_logged', handleSchemeLogged);
+
+    return () => {
+      window.removeEventListener('arogya:emergency_contacts_updated', handleContactsUpdated);
+      window.removeEventListener('arogya:scheme_check_logged', handleSchemeLogged);
+    };
+  }, [loadStats]);
+
+  // ── On-demand PDS lookup / Maps tap ─────────────────────────
   const handlePdsTap = useCallback(async () => {
     if (pds.status === 'loading') return;
+    if (pds.status === 'found' && pds.mapsUrl) {
+      window.open(pds.mapsUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
     setPds({ status: 'loading' });
     try {
       const result = await getNearestPDS();
       if (result.centre) {
         setPds({
           status: 'found',
+          name: result.centre.name || 'Fair Price Shop',
           distanceLabel: result.distanceLabel,
           subLabel: result.subLabel,
           mapsUrl: result.mapsUrl,
         });
       } else {
-        setPds({ status: 'error', message: 'No PDS centre found nearby' });
+        setPds({ status: 'error', message: 'No nearby PDS found' });
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Location lookup failed';
       setPds({ status: 'error', message: msg });
     }
-  }, [pds.status]);
+  }, [pds]);
 
   // ── Derive PDS card display values ───────────────────────────
   const pdsCardValue = (): string => {
     switch (pds.status) {
       case 'idle':    return t('history.tapToFind', 'Tap to find');
       case 'loading': return t('common.locating', 'Locating…');
-      case 'found':   return pds.distanceLabel;
+      case 'found':   return pds.name;
       case 'error':   return t('common.unavailable', 'Unavailable');
     }
   };
@@ -81,7 +99,7 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
     switch (pds.status) {
       case 'idle':    return t('history.nearestPdsSub', 'Tap card to locate nearest');
       case 'loading': return t('common.gettingLocation', 'Getting your location…');
-      case 'found':   return pds.subLabel;
+      case 'found':   return `${pds.distanceLabel} • Tap for maps`;
       case 'error':   return pds.message;
     }
   };
@@ -120,7 +138,7 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
           backgroundColorClass: 'bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] border-[#CBD5E1]',
           visualIndicator: 'mapPin' as const,
           dataSourceKey: 'nearest_pds_centre',
-          onTap: pds.status !== 'loading' && pds.status !== 'found' ? handlePdsTap : undefined,
+          onTap: pds.status !== 'loading' ? handlePdsTap : undefined,
         },
         {
           title: t('history.activeAlerts'),

@@ -9,11 +9,9 @@
  * distance calculation.
  */
 
-const API_BASE =
-  import.meta.env.VITE_API_BASE_URL ||
-  (typeof window !== 'undefined' && window.location.hostname !== 'localhost'
-    ? 'https://arogyavani-ai-decode-sih-2026.onrender.com'
-    : 'http://localhost:8000');
+import { getApiBaseUrl } from './voiceService';
+
+const API_BASE = getApiBaseUrl();
 
 // ──────────────────────────────────────────────────────────────
 // Types
@@ -83,8 +81,8 @@ export const getNearestPDS = async (): Promise<PDSResult> => {
 
   const { latitude, longitude } = position.coords;
 
-  // 2. Call backend
-  const url = `${API_BASE}/nearby-pds?latitude=${latitude}&longitude=${longitude}&radius=25000`;
+  // 2. Call backend with 5km radius for nearby dashboard lookup
+  const url = `${API_BASE}/nearby-pds?latitude=${encodeURIComponent(latitude)}&longitude=${encodeURIComponent(longitude)}&radius=5000`;
   let json: Record<string, unknown>;
   try {
     const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
@@ -104,16 +102,16 @@ export const getNearestPDS = async (): Promise<PDSResult> => {
       centre: null,
       distanceLabel: '—',
       mapsUrl: null,
-      subLabel: 'No PDS centre found nearby',
+      subLabel: 'No nearby PDS found',
     };
   }
 
-  const distanceLabel = `${centre.distance_km} KM`;
+  const distanceLabel = `${centre.distance_km} km away`;
 
   return {
     centre,
     distanceLabel,
     mapsUrl: json.maps_url as string | null,
-    subLabel: centre.name || 'Fair Price Shop',
+    subLabel: `${centre.distance_km} km away`,
   };
 };

@@ -6,11 +6,11 @@
  *
  * Data sources:
  *  1. voice_queries_today  → user_profiles.ai_question_count  (already live)
- *  2. scheme_status        → scheme_checks count + last check  (Supabase)
- *  3. last_scheme_check    → scheme_checks last row            (Supabase)
- *  4. nearest_pds_centre   → deferred to on-demand GPS tap     (lazy)
- *  5. active_alerts        → health_alerts unread count        (Supabase)
- *  6. family_connected     → family_members count              (Supabase)
+ *  2. scheme_status        → distinct matched schemes count    (scheme_checks)
+ *  3. last_scheme_check    → latest checked_at timestamp       (scheme_checks)
+ *  4. nearest_pds_centre   → deferred to on-demand GPS tap     (pdsService)
+ *  5. active_alerts        → unread health_alerts count        (health_alerts)
+ *  6. family_connected     → emergency_contacts count          (emergency_contacts)
  *
  * Privacy guarantee:
  *  - GPS is NEVER read here. The PDS card shows "Tap to find" and fetches
@@ -22,123 +22,179 @@
 import { supabase } from '../lib/supabaseClient';
 import { DashboardStatsData } from '../types/dashboardTypes';
 import { UserProfile } from '../types/authTypes';
+import { getSchemeCheckSummary } from './schemeCheckService';
+import { getEmergencyContacts } from './emergencyContactService';
 
 // ──────────────────────────────────────────────────────────────
 // Helpers
 // ──────────────────────────────────────────────────────────────
 
-function formatDate(iso: string): string {
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
-}
-
-function daysSince(iso: string): number {
-  return Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
-}
-
-async function isAuthenticated(): Promise<boolean> {
+async function getAuthUser() {
   const { data } = await supabase.auth.getSession();
-  return Boolean(data?.session);
+  return data?.session?.user ?? null;
 }
 
 // ──────────────────────────────────────────────────────────────
-// Individual card fetchers (all fail-safe)
+// Individual card fetchers (all fail-safe & independent)
 // ──────────────────────────────────────────────────────────────
 
+/**
+ * Calculates the number of distinct matched schemes across recent scheme RAG queries.
+ */
 async function fetchSchemeStatus(): Promise<{ primaryValue: string; secondaryLabel: string }> {
   try {
-    if (!(await isAuthenticated())) {
-      return { primaryValue: '0', secondaryLabel: 'No scheme queries yet' };
+    const user = await getAuthUser();
+    if (!user) {
+      return { primaryValue: '0', secondaryLabel: 'No matches yet' };
     }
-    const { count, error } = await supabase
-      .from('scheme_checks')
-      .select('id', { count: 'exact', head: true });
 
-    if (error) throw error;
-    const total = count ?? 0;
+    const { data, error } = await supabase
+      .from('scheme_checks')
+      .select('schemes')
+      .eq('user_id', user.id)
+      .order('checked_at', { ascending: false })
+      .limit(20);
+
+    if (error) {
+      if (import.meta.env.DEV) {
+        console.warn('[dashboardService] fetchSchemeStatus query failed:', error.message);
+      }
+      return { primaryValue: '0', secondaryLabel: 'No matches yet' };
+    }
+
+    if (!data || data.length === 0) {
+      return { primaryValue: '0', secondaryLabel: 'No matches yet' };
+    }
+
+    const distinctSchemes = new Set<string>();
+    for (const row of data) {
+      if (!row.schemes) continue;
+      let list = row.schemes;
+      if (typeof list === 'string') {
+        try {
+          list = JSON.parse(list);
+        } catch {
+          list = [list];
+        }
+      }
+      if (Array.isArray(list)) {
+        for (const item of list) {
+          if (!item) continue;
+          if (typeof item === 'string') {
+            const trimmed = item.trim();
+            if (trimmed) distinctSchemes.add(trimmed);
+          } else if (typeof item === 'object') {
+            const name = item.schemeName || item.schemeId || item.name || item.id;
+            if (name) distinctSchemes.add(String(name).trim());
+          }
+        }
+      }
+    }
+
+    const count = distinctSchemes.size;
     return {
-      primaryValue: String(total),
-      secondaryLabel: total === 0 ? 'No queries yet' : total === 1 ? '1 total query' : `${total} total queries`,
+      primaryValue: String(count),
+      secondaryLabel:
+        count === 0
+          ? 'No matches yet'
+          : count === 1
+          ? '1 scheme matched'
+          : `${count} schemes matched`,
     };
   } catch {
-    return { primaryValue: '0', secondaryLabel: 'No scheme queries yet' };
+    return { primaryValue: '0', secondaryLabel: 'No matches yet' };
   }
 }
 
+/**
+ * Retrieves the latest scheme check timestamp from scheme_checks.
+ */
 async function fetchLastSchemeCheck(): Promise<{ primaryValue: string; secondaryLabel: string }> {
   try {
-    if (!(await isAuthenticated())) {
+    const summary = await getSchemeCheckSummary();
+    if (!summary.lastCheckedAt) {
       return { primaryValue: '—', secondaryLabel: 'No scheme query yet' };
     }
-    const { data, error } = await supabase
-      .from('scheme_checks')
-      .select('checked_at')
-      .order('checked_at', { ascending: false })
-      .limit(1)
-      .maybeSingle();
-
-    if (error) throw error;
-    if (!data?.checked_at) {
-      return { primaryValue: '—', secondaryLabel: 'No scheme query yet' };
-    }
-
-    const days = daysSince(data.checked_at);
-    const sub =
-      days === 0 ? 'Checked today' : days === 1 ? 'Checked yesterday' : `${days} days ago`;
-
-    return { primaryValue: formatDate(data.checked_at), secondaryLabel: sub };
+    return {
+      primaryValue: summary.lastCheckedLabel,
+      secondaryLabel: summary.subLabel,
+    };
   } catch {
     return { primaryValue: '—', secondaryLabel: 'No scheme query yet' };
   }
 }
 
+/**
+ * Counts unread health alerts relevant to the current user (user_id = user.id OR user_id IS NULL).
+ */
 async function fetchActiveAlerts(): Promise<{ primaryValue: string; secondaryLabel: string }> {
   try {
-    if (!(await isAuthenticated())) {
+    const user = await getAuthUser();
+    if (!user) {
       return { primaryValue: '0', secondaryLabel: 'No active alerts' };
     }
+
     const { count, error } = await supabase
       .from('health_alerts')
       .select('id', { count: 'exact', head: true })
-      .eq('is_read', false);
+      .eq('is_read', false)
+      .or(`user_id.eq.${user.id},user_id.is.null`);
 
-    if (error) throw error;
+    if (error) {
+      if (import.meta.env.DEV) {
+        console.warn('[dashboardService] fetchActiveAlerts failed:', error.message);
+      }
+      return { primaryValue: '0', secondaryLabel: 'No active alerts' };
+    }
+
     const unread = count ?? 0;
     return {
       primaryValue: String(unread),
-      secondaryLabel: unread === 0 ? 'No active alerts' : unread === 1 ? '1 unread alert' : `${unread} unread alerts`,
+      secondaryLabel:
+        unread === 0
+          ? 'No active alerts'
+          : unread === 1
+          ? '1 unread alert'
+          : `${unread} unread alerts`,
     };
   } catch {
     return { primaryValue: '0', secondaryLabel: 'No active alerts' };
   }
 }
 
+/**
+ * Counts emergency contacts configured in public.emergency_contacts (NOT family_members).
+ */
 async function fetchFamilyConnected(): Promise<{ primaryValue: string; secondaryLabel: string }> {
   try {
-    if (!(await isAuthenticated())) {
+    const user = await getAuthUser();
+    if (!user) {
       return { primaryValue: '0', secondaryLabel: 'No members added' };
     }
-    const { count: total, error: err1 } = await supabase
-      .from('family_members')
-      .select('id', { count: 'exact', head: true });
 
-    if (err1) throw err1;
-
-    const { count: ashaLinked } = await supabase
-      .from('family_members')
+    const { count, error } = await supabase
+      .from('emergency_contacts')
       .select('id', { count: 'exact', head: true })
-      .eq('asha_linked', true);
+      .eq('user_id', user.id);
 
-    const members = total ?? 0;
-    const linked = ashaLinked ?? 0;
-    const sub =
-      members === 0
-        ? 'No members added'
-        : linked > 0
-        ? `${linked} ASHA linked`
-        : 'ASHA not linked';
+    let members = 0;
+    if (!error && count !== null && count !== undefined) {
+      members = count;
+    } else {
+      // Local fallback for offline/demo support
+      const contacts = await getEmergencyContacts();
+      members = contacts.length;
+    }
 
-    return { primaryValue: String(members), secondaryLabel: sub };
+    return {
+      primaryValue: String(members),
+      secondaryLabel:
+        members === 0
+          ? 'No members added'
+          : members === 1
+          ? '1 emergency contact'
+          : `${members} emergency contacts`,
+    };
   } catch {
     return { primaryValue: '0', secondaryLabel: 'No members added' };
   }
@@ -152,7 +208,7 @@ export const getDashboardStats = async (
   userProfile?: UserProfile | null,
 ): Promise<DashboardStatsData> => {
   // Run all independent fetches in parallel for speed.
-  // The PDS card uses a special sentinel — the UI will render a tap-to-load state.
+  // One failure will never block or break the other cards.
   const [schemeStatus, lastSchemeCheck, activeAlerts, familyConnected] = await Promise.all([
     fetchSchemeStatus(),
     fetchLastSchemeCheck(),

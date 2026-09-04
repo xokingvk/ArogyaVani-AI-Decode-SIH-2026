@@ -128,11 +128,17 @@ export async function createEmergencyContact(contact: {
         return { success: true, contact: newContact };
       }
 
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
+      }
       return { success: true, contact: data as EmergencyContact };
     } catch {
       const local = getLocalContacts(user.id);
       const updated = [...local, newContact];
       saveLocalContacts(user.id, updated);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
+      }
       return { success: true, contact: newContact };
     }
   }
@@ -140,6 +146,9 @@ export async function createEmergencyContact(contact: {
   const local = getLocalContacts(user.id);
   const updated = [...local, newContact];
   saveLocalContacts(user.id, updated);
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
+  }
   return { success: true, contact: newContact };
 }
 
@@ -185,14 +194,23 @@ export async function updateEmergencyContact(
         const local = getLocalContacts(user.id);
         const updated = local.map((c) => (c.id === id ? { ...c, name, relationship, phone } : c));
         saveLocalContacts(user.id, updated);
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
+        }
         return { success: true, contact: { id, user_id: user.id, name, relationship, phone } };
       }
 
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
+      }
       return { success: true, contact: data as EmergencyContact };
     } catch {
       const local = getLocalContacts(user.id);
       const updated = local.map((c) => (c.id === id ? { ...c, name, relationship, phone } : c));
       saveLocalContacts(user.id, updated);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
+      }
       return { success: true, contact: { id, user_id: user.id, name, relationship, phone } };
     }
   }
@@ -200,6 +218,9 @@ export async function updateEmergencyContact(
   const local = getLocalContacts(user.id);
   const updated = local.map((c) => (c.id === id ? { ...c, name, relationship, phone } : c));
   saveLocalContacts(user.id, updated);
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
+  }
   return { success: true, contact: { id, user_id: user.id, name, relationship, phone } };
 }
 
@@ -227,14 +248,23 @@ export async function deleteEmergencyContact(id: string): Promise<{ success: boo
         const local = getLocalContacts(user.id);
         const updated = local.filter((c) => c.id !== id);
         saveLocalContacts(user.id, updated);
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
+        }
         return { success: true };
       }
 
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
+      }
       return { success: true };
     } catch {
       const local = getLocalContacts(user.id);
       const updated = local.filter((c) => c.id !== id);
       saveLocalContacts(user.id, updated);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
+      }
       return { success: true };
     }
   }
@@ -242,5 +272,8 @@ export async function deleteEmergencyContact(id: string): Promise<{ success: boo
   const local = getLocalContacts(user.id);
   const updated = local.filter((c) => c.id !== id);
   saveLocalContacts(user.id, updated);
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('arogya:emergency_contacts_updated'));
+  }
   return { success: true };
 }
