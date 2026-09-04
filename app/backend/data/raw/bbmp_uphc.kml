@@ -1,0 +1,6194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2">
+ <Document>
+  <name>
+   UPHC
+  </name>
+  <Schema id="J_bengaluru_UPHCs_SIDDSSS" name="bengaluru_UPHCs">
+   <SimpleField name="Contact_No" type="string">
+    <displayName>
+     Contact No
+    </displayName>
+   </SimpleField>
+   <SimpleField name="FID" type="int">
+    <displayName>
+     FID
+    </displayName>
+   </SimpleField>
+   <SimpleField name="Lattitude" type="double">
+    <displayName>
+     Lattitude
+    </displayName>
+   </SimpleField>
+   <SimpleField name="Longitude" type="double">
+    <displayName>
+     Longitude
+    </displayName>
+   </SimpleField>
+   <SimpleField name="NODAL_OFFI" type="string">
+    <displayName>
+     NODAL OFFI
+    </displayName>
+   </SimpleField>
+   <SimpleField name="UPHC" type="string">
+    <displayName>
+     UPHC
+    </displayName>
+   </SimpleField>
+   <SimpleField name="Zone" type="string">
+    <displayName>
+     Zone
+    </displayName>
+   </SimpleField>
+   <SimpleField name="ward" type="string">
+    <displayName>
+     ward
+    </displayName>
+   </SimpleField>
+   <SimpleField name="ac" type="string">
+    <displayName>
+     ac
+    </displayName>
+   </SimpleField>
+   <SimpleField name="ls" type="string">
+    <displayName>
+     ls
+    </displayName>
+   </SimpleField>
+  </Schema>
+  <Style id="bengaluru_UPHCs_style">
+   <BalloonStyle>
+    <text>
+     &lt;table border="0"&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;$[bengaluru_UPHCs/Contact_No/displayName]&lt;/b&gt;&lt;/td&gt;&lt;td&gt;$[bengaluru_UPHCs/Contact_No]&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;$[bengaluru_UPHCs/FID/displayName]&lt;/b&gt;&lt;/td&gt;&lt;td&gt;$[bengaluru_UPHCs/FID]&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;$[bengaluru_UPHCs/Lattitude/displayName]&lt;/b&gt;&lt;/td&gt;&lt;td&gt;$[bengaluru_UPHCs/Lattitude]&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;$[bengaluru_UPHCs/Longitude/displayName]&lt;/b&gt;&lt;/td&gt;&lt;td&gt;$[bengaluru_UPHCs/Longitude]&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;$[bengaluru_UPHCs/NODAL_OFFI/displayName]&lt;/b&gt;&lt;/td&gt;&lt;td&gt;$[bengaluru_UPHCs/NODAL_OFFI]&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;$[bengaluru_UPHCs/UPHC/displayName]&lt;/b&gt;&lt;/td&gt;&lt;td&gt;$[bengaluru_UPHCs/UPHC]&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;$[bengaluru_UPHCs/Zone/displayName]&lt;/b&gt;&lt;/td&gt;&lt;td&gt;$[bengaluru_UPHCs/Zone]&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;$[bengaluru_UPHCs/ward/displayName]&lt;/b&gt;&lt;/td&gt;&lt;td&gt;$[bengaluru_UPHCs/ward]&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;$[bengaluru_UPHCs/ac/displayName]&lt;/b&gt;&lt;/td&gt;&lt;td&gt;$[bengaluru_UPHCs/ac]&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;$[bengaluru_UPHCs/ls/displayName]&lt;/b&gt;&lt;/td&gt;&lt;td&gt;$[bengaluru_UPHCs/ls]&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+$[description]
+    </text>
+   </BalloonStyle>
+  </Style>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      97398 95701
+     </SimpleData>
+     <SimpleData name="FID">
+      0
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.123417
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.605472
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR IMRAN
+     </SimpleData>
+     <SimpleData name="UPHC">
+      APTS
+     </SimpleData>
+     <SimpleData name="Zone">
+      Yelahanka
+     </SimpleData>
+     <SimpleData name="ward">
+      Kempegowda Ward
+     </SimpleData>
+     <SimpleData name="ac">
+      Yelahanka
+     </SimpleData>
+     <SimpleData name="ls">
+      Chikkaballapur
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.60547200000001,13.123417,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      94482 36208
+     </SimpleData>
+     <SimpleData name="FID">
+      1
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.102361
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.565694
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR HEMA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      ATTURU
+     </SimpleData>
+     <SimpleData name="Zone">
+      Yelahanka
+     </SimpleData>
+     <SimpleData name="ward">
+      Atturu
+     </SimpleData>
+     <SimpleData name="ac">
+      Yelahanka
+     </SimpleData>
+     <SimpleData name="ls">
+      Chikkaballapur
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.56569399999999,13.102361,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      98866 39322
+     </SimpleData>
+     <SimpleData name="FID">
+      2
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.080389
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.553639
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR USHA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      M S PALYA
+     </SimpleData>
+     <SimpleData name="Zone">
+      Yelahanka
+     </SimpleData>
+     <SimpleData name="ward">
+      Vidyaranyapura
+     </SimpleData>
+     <SimpleData name="ac">
+      Byatarayanapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.553639,13.080389,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      96116 21286
+     </SimpleData>
+     <SimpleData name="FID">
+      3
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0985
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.627722
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR MURALIDHAR
+     </SimpleData>
+     <SimpleData name="UPHC">
+      AGRAHARA
+     </SimpleData>
+     <SimpleData name="Zone">
+      Yelahanka
+     </SimpleData>
+     <SimpleData name="ward">
+      Jakkuru
+     </SimpleData>
+     <SimpleData name="ac">
+      Byatarayanapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.62772200000001,13.0985,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      88611 04895
+     </SimpleData>
+     <SimpleData name="FID">
+      4
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.069738
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.632016
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR KESHAVAPANI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      THANISANDRA
+     </SimpleData>
+     <SimpleData name="Zone">
+      Yelahanka
+     </SimpleData>
+     <SimpleData name="ward">
+      Thanisandra
+     </SimpleData>
+     <SimpleData name="ac">
+      Byatarayanapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.63201599999999,13.069738,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      94802 16164
+     </SimpleData>
+     <SimpleData name="FID">
+      5
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.065587
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.600227
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SHARADA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      AMRUTHAHALLI
+     </SimpleData>
+     <SimpleData name="Zone">
+      Yelahanka
+     </SimpleData>
+     <SimpleData name="ward">
+      Byatarayanapura
+     </SimpleData>
+     <SimpleData name="ac">
+      Byatarayanapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.600227,13.065587,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      94487 92436
+     </SimpleData>
+     <SimpleData name="FID">
+      6
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.060083
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.575389
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR PREMANAND
+     </SimpleData>
+     <SimpleData name="UPHC">
+      KODIGEHALLI
+     </SimpleData>
+     <SimpleData name="Zone">
+      Yelahanka
+     </SimpleData>
+     <SimpleData name="ward">
+      Kodigehalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Byatarayanapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.575389,13.060083,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      80507 74714
+     </SimpleData>
+     <SimpleData name="FID">
+      7
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.068296
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.578247
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR PUSPALATHA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      SAHAKARNAGAR
+     </SimpleData>
+     <SimpleData name="Zone">
+      Yelahanka
+     </SimpleData>
+     <SimpleData name="ward">
+      Vidyaranyapura
+     </SimpleData>
+     <SimpleData name="ac">
+      Byatarayanapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.578247,13.068296,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      86187 76088
+     </SimpleData>
+     <SimpleData name="FID">
+      8
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.070917
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.557056
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SHOBHA NAGESH
+     </SimpleData>
+     <SimpleData name="UPHC">
+      THINDLU
+     </SimpleData>
+     <SimpleData name="Zone">
+      Yelahanka
+     </SimpleData>
+     <SimpleData name="ward">
+      Dodda Bommasandra
+     </SimpleData>
+     <SimpleData name="ac">
+      Byatarayanapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.557056,13.070917,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      97421 10589
+     </SimpleData>
+     <SimpleData name="FID">
+      9
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.070528
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.538861
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR GAYATHRI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      BYATARAYANAPURA
+     </SimpleData>
+     <SimpleData name="Zone">
+      Yelahanka
+     </SimpleData>
+     <SimpleData name="ward">
+      Kuvempu Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Byatarayanapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.538861,13.070528,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8618285360
+     </SimpleData>
+     <SimpleData name="FID">
+      10
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.07131
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.52869
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Ravishankar
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Abbigere Uphc 1
+     </SimpleData>
+     <SimpleData name="Zone">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Shettihalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.52869,13.07131,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      944-968-3898
+     </SimpleData>
+     <SimpleData name="FID">
+      11
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.05802
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.50929
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Dayanand
+     </SimpleData>
+     <SimpleData name="UPHC">
+      MALLASANDRA UPHC 1
+     </SimpleData>
+     <SimpleData name="Zone">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Mallasandra
+     </SimpleData>
+     <SimpleData name="ac">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.50928999999999,13.05802,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8971001852
+     </SimpleData>
+     <SimpleData name="FID">
+      12
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.061012
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.49946
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr manasa
+     </SimpleData>
+     <SimpleData name="UPHC">
+      BAGALAGUNTE UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Bagalakunte
+     </SimpleData>
+     <SimpleData name="ac">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.49946,13.061012,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      984-564-6376
+     </SimpleData>
+     <SimpleData name="FID">
+      13
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0492
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.51039
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr manjula
+     </SimpleData>
+     <SimpleData name="UPHC">
+      NELAMAHESHWARI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Bagalakunte
+     </SimpleData>
+     <SimpleData name="ac">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.51039,13.0492,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9886493087
+     </SimpleData>
+     <SimpleData name="FID">
+      14
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.03255
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.48384
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr.Nagesh Kumar H B
+     </SimpleData>
+     <SimpleData name="UPHC">
+      THIPPENAHALLI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Dodda Bidarakallu
+     </SimpleData>
+     <SimpleData name="ac">
+      Yeshwanthapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.48384,13.03255,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      973-182-5515
+     </SimpleData>
+     <SimpleData name="FID">
+      15
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.013316
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.512448
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr sowmya
+     </SimpleData>
+     <SimpleData name="UPHC">
+      RAJAGOPALNAGAR UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Rajagopal Nagara
+     </SimpleData>
+     <SimpleData name="ac">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.51244800000001,13.013316,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      973-988-1851
+     </SimpleData>
+     <SimpleData name="FID">
+      16
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.00391
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.50428
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr ravikumar
+     </SimpleData>
+     <SimpleData name="UPHC">
+      HEGGANAHALLI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Hegganahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Dasarahalli
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.50427999999999,13.00391,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9972963029
+     </SimpleData>
+     <SimpleData name="FID">
+      17
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.92413
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.649404
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR LOKESH
+     </SimpleData>
+     <SimpleData name="UPHC">
+      AGARA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      HSR Layout
+     </SimpleData>
+     <SimpleData name="ac">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.649404,12.92413,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8088087243
+     </SimpleData>
+     <SimpleData name="FID">
+      18
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.862268
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.562951
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR. ARUN C.M
+     </SimpleData>
+     <SimpleData name="UPHC">
+      ANJANAPURA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Anjanapura
+     </SimpleData>
+     <SimpleData name="ac">
+      Bangalore South
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.562951,12.862268,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9845658900
+     </SimpleData>
+     <SimpleData name="FID">
+      19
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.886861
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.603337
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr. Smitha Reddy
+     </SimpleData>
+     <SimpleData name="UPHC">
+      ARAKERE UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Arakere
+     </SimpleData>
+     <SimpleData name="ac">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.603337,12.886861,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8660534700
+     </SimpleData>
+     <SimpleData name="FID">
+      20
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.896415
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.62421
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR.YASHASWINI KR
+     </SimpleData>
+     <SimpleData name="UPHC">
+      BOMMANHALLI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Hongasandra
+     </SimpleData>
+     <SimpleData name="ac">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.62421000000001,12.896415,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9449063353
+     </SimpleData>
+     <SimpleData name="FID">
+      21
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.857864
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.588371
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr LAKSHMIPATHY
+     </SimpleData>
+     <SimpleData name="UPHC">
+      GOTTIGERE UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Gottigere
+     </SimpleData>
+     <SimpleData name="ac">
+      Bangalore South
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.588371,12.857864,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9743808301
+     </SimpleData>
+     <SimpleData name="FID">
+      22
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.900308
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.620083
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr.KRISHNAPPA. B.K
+     </SimpleData>
+     <SimpleData name="UPHC">
+      KODICHIKKANHALLI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.62008299999999,12.900308,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9448343155
+     </SimpleData>
+     <SimpleData name="FID">
+      23
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.888681
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.571805
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR RAVISHANKAR
+     </SimpleData>
+     <SimpleData name="UPHC">
+      KONANAKUNTE UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Konanakunte
+     </SimpleData>
+     <SimpleData name="ac">
+      Bangalore South
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.571805,12.888681,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+     </SimpleData>
+     <SimpleData name="FID">
+      24
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.909946
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.624414
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr. Devatha Lakshmi
+     </SimpleData>
+     <SimpleData name="UPHC">
+      ROOPENAGRAHARA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.624414,12.909946,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9964562935
+     </SimpleData>
+     <SimpleData name="FID">
+      25
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.871916
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6524
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr NAVEEN
+     </SimpleData>
+     <SimpleData name="UPHC">
+      SINGASANDRA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Singasandra
+     </SimpleData>
+     <SimpleData name="ac">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6524,12.871916,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9844130888
+     </SimpleData>
+     <SimpleData name="FID">
+      26
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.877818
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.624645
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr. Latha
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC BEGURU
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Begur
+     </SimpleData>
+     <SimpleData name="ac">
+      Bangalore South
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.624645,12.877818,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9741688775
+     </SimpleData>
+     <SimpleData name="FID">
+      27
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.906521
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.543563
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SUDHA BK
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UTTARAHALLI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Uttarahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Bangalore South
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.54356300000001,12.906521,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9886919977
+     </SimpleData>
+     <SimpleData name="FID">
+      28
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.896235
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.550589
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR. MANUSHREE
+     </SimpleData>
+     <SimpleData name="UPHC">
+      VASANTHAPURA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Vasanthpura
+     </SimpleData>
+     <SimpleData name="ac">
+      Bangalore South
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.550589,12.896235,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9845203783
+     </SimpleData>
+     <SimpleData name="FID">
+      29
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.90038
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.570403
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr. Keerthi Prasad
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Yalachanahalli UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Bommanahalli
+     </SimpleData>
+     <SimpleData name="ward">
+      Yelchenahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Bangalore South
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.570403,12.90038,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9945053872
+     </SimpleData>
+     <SimpleData name="FID">
+      30
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.92516
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5271
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR PUSHPALATHA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      BANGARAPPA NAGARA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      RR NAGAR
+     </SimpleData>
+     <SimpleData name="ward">
+      Rajarajeshwari Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Rajarajeshwarinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5271,12.92516,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9741879756
+     </SimpleData>
+     <SimpleData name="FID">
+      31
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.91755
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.481285
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      GIRISH
+     </SimpleData>
+     <SimpleData name="UPHC">
+      KENGERI UPANAGARA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      RR NAGAR
+     </SimpleData>
+     <SimpleData name="ward">
+      Kengeri
+     </SimpleData>
+     <SimpleData name="ac">
+      Yeshwanthapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.481285,12.91755,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9481230898
+     </SimpleData>
+     <SimpleData name="FID">
+      32
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.91022
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.48381
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      CHETHAN
+     </SimpleData>
+     <SimpleData name="UPHC">
+      KENGERI CHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      RR NAGAR
+     </SimpleData>
+     <SimpleData name="ward">
+      Kengeri
+     </SimpleData>
+     <SimpleData name="ac">
+      Yeshwanthapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.48381000000001,12.91022,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9886603003
+     </SimpleData>
+     <SimpleData name="FID">
+      33
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.96605
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.47507
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      KAVYA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      ULLALU UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      RR NAGAR
+     </SimpleData>
+     <SimpleData name="ward">
+      Ullalu
+     </SimpleData>
+     <SimpleData name="ac">
+      Yeshwanthapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.47507,12.96605,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8618595586
+     </SimpleData>
+     <SimpleData name="FID">
+      34
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.04796
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.54949
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      ROOPA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      JALAHALLI UPHC 1
+     </SimpleData>
+     <SimpleData name="Zone">
+      RR NAGAR
+     </SimpleData>
+     <SimpleData name="ward">
+      Jalahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Rajarajeshwarinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.54949000000001,13.04796,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9606711561
+     </SimpleData>
+     <SimpleData name="FID">
+      35
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.981793
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.485526
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      FARAH
+     </SimpleData>
+     <SimpleData name="UPHC">
+      HEROHALLI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      RR NAGAR
+     </SimpleData>
+     <SimpleData name="ward">
+      Herohalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Yeshwanthapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.48552599999999,12.981793,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9980197451
+     </SimpleData>
+     <SimpleData name="FID">
+      36
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.01002
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.52322
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR RAMYA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      LAGGERE UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      RR NAGAR
+     </SimpleData>
+     <SimpleData name="ward">
+      Laggere
+     </SimpleData>
+     <SimpleData name="ac">
+      Rajarajeshwarinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.52321999999999,13.01002,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8618100766
+     </SimpleData>
+     <SimpleData name="FID">
+      37
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.022506
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.55554
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      PAVAN
+     </SimpleData>
+     <SimpleData name="UPHC">
+      YASHAVANTHPUR UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      RR NAGAR
+     </SimpleData>
+     <SimpleData name="ward">
+      Yeshwanthpura
+     </SimpleData>
+     <SimpleData name="ac">
+      Rajarajeshwarinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.55553999999999,13.022506,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9980425528
+     </SimpleData>
+     <SimpleData name="FID">
+      38
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.02785
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.55382
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      GANGAPPA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      MATTHIKERE UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      RR NAGAR
+     </SimpleData>
+     <SimpleData name="ward">
+      Yeshwanthpura
+     </SimpleData>
+     <SimpleData name="ac">
+      Rajarajeshwarinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.55382,13.02785,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8123818586
+     </SimpleData>
+     <SimpleData name="FID">
+      39
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0164
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.54195
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR RENUKA PRASAD
+     </SimpleData>
+     <SimpleData name="UPHC">
+      NANDHINI LAYOUT PHC 1
+     </SimpleData>
+     <SimpleData name="Zone">
+      RR NAGAR
+     </SimpleData>
+     <SimpleData name="ward">
+      Marappana Palya
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahalakshmi Layout
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.54195,13.0164,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8277216889
+     </SimpleData>
+     <SimpleData name="FID">
+      40
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.96326
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.50449
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      AMBIKA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      MALLATHALLI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      RR NAGAR
+     </SimpleData>
+     <SimpleData name="ward">
+      Jnana Bharathi Ward
+     </SimpleData>
+     <SimpleData name="ac">
+      Rajarajeshwarinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.50449,12.96326,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9900989731
+     </SimpleData>
+     <SimpleData name="FID">
+      41
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.031281
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.484008
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      GANGADHR
+     </SimpleData>
+     <SimpleData name="UPHC">
+      THIPPENAHALLI PHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      RR NAGAR
+     </SimpleData>
+     <SimpleData name="ward">
+      Dodda Bidarakallu
+     </SimpleData>
+     <SimpleData name="ac">
+      Yeshwanthapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.484008,13.031281,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9740212536
+     </SimpleData>
+     <SimpleData name="FID">
+      42
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.997271
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.761837
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Shashirekha
+     </SimpleData>
+     <SimpleData name="UPHC">
+      KADUGODI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Kadugodi
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.761837,12.997271,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      6363815882
+     </SimpleData>
+     <SimpleData name="FID">
+      43
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9372696
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.7461854
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr. Thrupti Shetty
+     </SimpleData>
+     <SimpleData name="UPHC">
+      VARTHURU UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Varthuru
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.7461854,12.9372696,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9110289433
+     </SimpleData>
+     <SimpleData name="FID">
+      44
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9718109
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6937471
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      NAGAVENI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      DODDANEKKUNDI PHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Dodda Nekkundi
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6937471,12.9718109,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9449765102
+     </SimpleData>
+     <SimpleData name="FID">
+      45
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9557565
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.7319145
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR.SUMATHI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      SIDDAPURA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Hagadur
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.7319145,12.9557565,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9731857700
+     </SimpleData>
+     <SimpleData name="FID">
+      46
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9967556
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6760333
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr indhushree S
+     </SimpleData>
+     <SimpleData name="UPHC">
+      A NARAYANAPURA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      A Narayanapura
+     </SimpleData>
+     <SimpleData name="ac">
+      K.R. Pura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6760333,12.9967556,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9482664619
+     </SimpleData>
+     <SimpleData name="FID">
+      47
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.910022
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6971861
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Bharath Padmashali BS
+     </SimpleData>
+     <SimpleData name="UPHC">
+      DODDAKANNALLI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Bellanduru
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6971861,12.910022,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      7815803934
+     </SimpleData>
+     <SimpleData name="FID">
+      48
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9902311
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6990083
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      SWETHA P
+     </SimpleData>
+     <SimpleData name="UPHC">
+      GARUDACHARPALYA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Garudachar Palya
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6990083,12.9902311,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      7899957469
+     </SimpleData>
+     <SimpleData name="FID">
+      49
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9675968
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.7598489
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      VANITHA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      HAGADURU UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Hagadur
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.75984889999999,12.9675968,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8762961062
+     </SimpleData>
+     <SimpleData name="FID">
+      50
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0628913
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6424739
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR.ASHWIN
+     </SimpleData>
+     <SimpleData name="UPHC">
+      K NARAYANAPURA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Horamavu
+     </SimpleData>
+     <SimpleData name="ac">
+      K.R. Pura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6424739,13.0628913,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8660951225/9880301739
+     </SimpleData>
+     <SimpleData name="FID">
+      51
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9444948
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6788865
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      MUNIYAPPA/ DR ASHWINI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Yemluru UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Marattahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6788865,12.9444948,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8296776582
+     </SimpleData>
+     <SimpleData name="FID">
+      52
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.958533
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.696099
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr sushma
+     </SimpleData>
+     <SimpleData name="UPHC">
+      MARATHAHALLI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Marattahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.696099,12.958533,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8660569642
+     </SimpleData>
+     <SimpleData name="FID">
+      53
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9379614
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.7515724
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      HN SAVITHA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      VIBUTIPURA PHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Varthuru
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.7515724,12.9379614,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9986694289
+     </SimpleData>
+     <SimpleData name="FID">
+      54
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0067422
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6720158
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR AZAM
+     </SimpleData>
+     <SimpleData name="UPHC">
+      vijinapura phc
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Vijnanapura
+     </SimpleData>
+     <SimpleData name="ac">
+      K.R. Pura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6720158,13.0067422,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      7022218814
+     </SimpleData>
+     <SimpleData name="FID">
+      55
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0149457
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6782888
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR AISHWARYA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      RAMMURTHY NAGAR UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      Mahadevapura
+     </SimpleData>
+     <SimpleData name="ward">
+      Ramamurthy Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      K.R. Pura
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6782888,13.0149457,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9480683914
+     </SimpleData>
+     <SimpleData name="FID">
+      56
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9987
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.582
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Madhu R T
+     </SimpleData>
+     <SimpleData name="UPHC">
+      AZADNAGAR UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Rajamahal Guttahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Malleshwaram
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.58199999999999,12.9987,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      7019164454
+     </SimpleData>
+     <SimpleData name="FID">
+      57
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9531
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.577
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR YATHISH KUMAR V
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Gooripalya J J R Nagar UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Vishveshwara Puram
+     </SimpleData>
+     <SimpleData name="ac">
+      Chickpet
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.577,12.9531,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9986606960
+     </SimpleData>
+     <SimpleData name="FID">
+      58
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9112
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.604
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR VASANTI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Anjanappa Garden UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      B T M Layout
+     </SimpleData>
+     <SimpleData name="ac">
+      B.T.M Layout
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.604,12.9112,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9980376666
+     </SimpleData>
+     <SimpleData name="FID">
+      59
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6115
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR. TEJASHWINI NGO
+     </SimpleData>
+     <SimpleData name="UPHC">
+      IRCS UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Pulikeshi Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Pulakeshinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.61150000000001,13,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9611507245
+     </SimpleData>
+     <SimpleData name="FID">
+      60
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9948
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5261
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SANJANA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Gangondanahalli UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Shakthi Ganapathi Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahalakshmi Layout
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5261,12.9948,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9480683900
+     </SimpleData>
+     <SimpleData name="FID">
+      61
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9844
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5553
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SUDHA V
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Govindarajnagar UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Srirammandir
+     </SimpleData>
+     <SimpleData name="ac">
+      Rajajinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5553,12.9844,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9686379950
+     </SimpleData>
+     <SimpleData name="FID">
+      62
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9962
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5573
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR NISHA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      MOODALPALYA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Prakash Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Rajajinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5573,12.9962,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9886100226
+     </SimpleData>
+     <SimpleData name="FID">
+      63
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9908
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5651
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR GOPINATH
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Hosahalli UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Dayananda Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Rajajinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5651,12.9908,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8050649814
+     </SimpleData>
+     <SimpleData name="FID">
+      64
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9376
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5697
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR.MALAVIKA NAYAK
+     </SimpleData>
+     <SimpleData name="UPHC">
+      A D Halli UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Basavanagudi
+     </SimpleData>
+     <SimpleData name="ac">
+      Basavanagudi
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5697,12.9376,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9880446506
+     </SimpleData>
+     <SimpleData name="FID">
+      65
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9735
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6265
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR RAVINDRANATH
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Pantharapalya UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Jogapalya
+     </SimpleData>
+     <SimpleData name="ac">
+      Shantinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.62649999999999,12.9735,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9886210326
+     </SimpleData>
+     <SimpleData name="FID">
+      66
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0152
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5457
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr SHAHEEN JAVEED
+     </SimpleData>
+     <SimpleData name="UPHC">
+      KODANDRAM PURA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Marappana Palya
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahalakshmi Layout
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5457,13.0152,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9008049976
+     </SimpleData>
+     <SimpleData name="FID">
+      67
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9618
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5978
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Nandhini
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Magadi Road UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Shanthi Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Shantinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.59780000000001,12.9618,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9886205341
+     </SimpleData>
+     <SimpleData name="FID">
+      68
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9494
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5969
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SATHYAVATHI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Srirampuram UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Hombegowda Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Chickpet
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.59690000000001,12.9494,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9448065120
+     </SimpleData>
+     <SimpleData name="FID">
+      69
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.032657
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.558732
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR.POORNIMA P NAIK
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Manvarthpete UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Mattikere
+     </SimpleData>
+     <SimpleData name="ac">
+      Rajarajeshwarinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.55873200000001,13.032657,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9980767810
+     </SimpleData>
+     <SimpleData name="FID">
+      70
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9886165
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5674589
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Pradeep Kumar R
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Subhashnagar Uphc
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Dayananda Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Rajajinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.56745890000001,12.9886165,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9480683795
+     </SimpleData>
+     <SimpleData name="FID">
+      71
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.034354
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.575797
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR. SHOBHA BBMP
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Kamakshiplaya UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Sanjay Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Hebbal
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.57579699999999,13.034354,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9880939739
+     </SimpleData>
+     <SimpleData name="FID">
+      72
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.967498
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5085286
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr.Sheela Prasad
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Subramanyanagara UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Kottegepalya
+     </SimpleData>
+     <SimpleData name="ac">
+      Rajarajeshwarinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Rural
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.50852860000001,12.967498,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9164662207
+     </SimpleData>
+     <SimpleData name="FID">
+      73
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.978421
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.588357
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SINDHU R
+     </SimpleData>
+     <SimpleData name="UPHC">
+      RAJAJINAGARA
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Sampangiram Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Shivajinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.588357,12.978421,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8762765661
+     </SimpleData>
+     <SimpleData name="FID">
+      74
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.949
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5635
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR CHAITHANYA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      RC PURA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Sunkenahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Chickpet
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5635,12.949,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      7760532433
+     </SimpleData>
+     <SimpleData name="FID">
+      75
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9884
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5682
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR PUSHPITHA M K
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Manjunathnagar UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Subhash Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Gandhinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5682,12.9884,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9071332346
+     </SimpleData>
+     <SimpleData name="FID">
+      76
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9507
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5558
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR.SUJATHA.S.HIREMATH
+     </SimpleData>
+     <SimpleData name="UPHC">
+      P G Halli UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Azad Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Basavanagudi
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5558,12.9507,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9769666155
+     </SimpleData>
+     <SimpleData name="FID">
+      77
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0223
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6027
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Pradeep Kumar R
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Nagappa Block UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Kaval Bairasandra
+     </SimpleData>
+     <SimpleData name="ac">
+      Pulakeshinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6027,13.0223,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9743576318
+     </SimpleData>
+     <SimpleData name="FID">
+      78
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9415
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5244
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR LAVANYA T
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Gandhigrama UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Nayandahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Govindarajanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5244,12.9415,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9886620365
+     </SimpleData>
+     <SimpleData name="FID">
+      79
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9705
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5421
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SAVITHA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      SUBEDHAR PALYA
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Hosahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Vijayanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5421,12.9705,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      7022648817
+     </SimpleData>
+     <SimpleData name="FID">
+      80
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9218
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6104
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR BHAGYALAKSHMI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Nethaji Circle UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Madivala
+     </SimpleData>
+     <SimpleData name="ac">
+      B.T.M Layout
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6104,12.9218,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8618020901
+     </SimpleData>
+     <SimpleData name="FID">
+      81
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0111157
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5371372
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR MAMATHA B P
+     </SimpleData>
+     <SimpleData name="UPHC">
+      MAHALAKSHMI LAYOUT UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Nandini Layout
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahalakshmi Layout
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5371372,13.0111157,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9901500116
+     </SimpleData>
+     <SimpleData name="FID">
+      82
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9946981
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5242575
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR KUSUMA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Peenya Kamalanagar UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Vrisabhavathi Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Mahalakshmi Layout
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5242575,12.9946981,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9480685533
+     </SimpleData>
+     <SimpleData name="FID">
+      83
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.953853
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.58549
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR. Y S MALATHI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Shankarnagar UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Vishveshwara Puram
+     </SimpleData>
+     <SimpleData name="ac">
+      Chickpet
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.58548999999999,12.953853,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9731709732
+     </SimpleData>
+     <SimpleData name="FID">
+      84
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9935
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6433
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR. DARSHAN .C
+     </SimpleData>
+     <SimpleData name="UPHC">
+      ASHOKPURAM UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      West
+     </SimpleData>
+     <SimpleData name="ward">
+      Benniganahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      C.V. RamannNagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6433,12.9935,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9902156278
+     </SimpleData>
+     <SimpleData name="FID">
+      85
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.943997
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.607717
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR RAJESHWARI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Adugodi Dispensary
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Adugodi
+     </SimpleData>
+     <SimpleData name="ac">
+      B.T.M Layout
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.60771699999999,12.943997,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9535837965
+     </SimpleData>
+     <SimpleData name="FID">
+      86
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.94276
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.613304
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR LATHA KIRAN
+     </SimpleData>
+     <SimpleData name="UPHC">
+      ADUGODI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Adugodi
+     </SimpleData>
+     <SimpleData name="ac">
+      B.T.M Layout
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.613304,12.94276,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8892965742
+     </SimpleData>
+     <SimpleData name="FID">
+      87
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.945877
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.548609
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR NAVYASHREE S
+     </SimpleData>
+     <SimpleData name="UPHC">
+      AVALAHALLI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Gali Anjaneya Temple
+     </SimpleData>
+     <SimpleData name="ac">
+      Vijayanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.548609,12.945877,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9008255802
+     </SimpleData>
+     <SimpleData name="FID">
+      88
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.922828
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.564685
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SOWMYA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      BANASHANKARI UFWC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Ganesh Mandiara Ward
+     </SimpleData>
+     <SimpleData name="ac">
+      Padmanabanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.564685,12.922828,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9686880880
+     </SimpleData>
+     <SimpleData name="FID">
+      89
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.95478
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.540754
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SAVITHA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Bapujinagar UHPC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Bapuji Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Vijayanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.54075400000001,12.95478,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8618369221
+     </SimpleData>
+     <SimpleData name="FID">
+      90
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.930682
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.563376
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR JHANSI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Channammanakeretankbed UHPC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Vidyapeeta Ward
+     </SimpleData>
+     <SimpleData name="ac">
+      Basavanagudi
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.56337600000001,12.930682,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9080622257
+     </SimpleData>
+     <SimpleData name="FID">
+      91
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.964041
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.584294
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR HEMALATHA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Dasappa UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Dharmaraya Swamy Temple
+     </SimpleData>
+     <SimpleData name="ac">
+      Chickpet
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.584294,12.964041,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9972628854
+     </SimpleData>
+     <SimpleData name="FID">
+      92
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.948902
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.563453
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR JAYASHREE
+     </SimpleData>
+     <SimpleData name="UPHC">
+      GG HALLI UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Sunkenahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Chickpet
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.563453,12.948902,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9741844809
+     </SimpleData>
+     <SimpleData name="FID">
+      93
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.950785
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.555227
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR YOGESH
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Hanumanthnagara Tr Mill UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Azad Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Basavanagudi
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.555227,12.950785,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9886879469
+     </SimpleData>
+     <SimpleData name="FID">
+      94
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9504874
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5960105
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR MAHESHWARI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      HOMBEGOWDA NAGARA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Hombegowda Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Chickpet
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.59601050000001,12.9504874,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8377932181
+     </SimpleData>
+     <SimpleData name="FID">
+      95
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.956525
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.582524
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR NITU
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Hsiddaiah Road UPHC1
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Sudham Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Chickpet
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.58252400000001,12.956525,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9945178886
+     </SimpleData>
+     <SimpleData name="FID">
+      96
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.940275
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.584267
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR HALLEMA SARAH
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Jayanagara Dispensary
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Jayanagara
+     </SimpleData>
+     <SimpleData name="ac">
+      Chickpet
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.584267,12.940275,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9008261979
+     </SimpleData>
+     <SimpleData name="FID">
+      97
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.940667
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.584131
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SAHANA N C
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Jayanagara UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Jayanagara
+     </SimpleData>
+     <SimpleData name="ac">
+      Chickpet
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.584131,12.940667,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9008193333
+     </SimpleData>
+     <SimpleData name="FID">
+      98
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.907442
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.578438
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR GEETHA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Jayaprakashnagara UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Sarakki
+     </SimpleData>
+     <SimpleData name="ac">
+      Jayanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.57843800000001,12.907442,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      7676345289
+     </SimpleData>
+     <SimpleData name="FID">
+      99
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.950067
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.618355
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR RASHMI
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Koramangala UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Nilasandra
+     </SimpleData>
+     <SimpleData name="ac">
+      Shantinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.61835499999999,12.950067,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9480683566
+     </SimpleData>
+     <SimpleData name="FID">
+      100
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.905569
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.563277
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR HUNSE PRAJNA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Kumaraswamylayout UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Kumaraswamy Layout
+     </SimpleData>
+     <SimpleData name="ac">
+      Padmanabanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.563277,12.905569,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9964464502
+     </SimpleData>
+     <SimpleData name="FID">
+      101
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.923453
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.61351
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SANJANA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      MADIWALA UPHC -1
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Madivala
+     </SimpleData>
+     <SimpleData name="ac">
+      B.T.M Layout
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.61351000000001,12.923453,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8277289968
+     </SimpleData>
+     <SimpleData name="FID">
+      102
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.93811
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.569768
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR NANDHISH KUMAR
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Narasimharaja Colony UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Basavanagudi
+     </SimpleData>
+     <SimpleData name="ac">
+      Basavanagudi
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.569768,12.93811,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9620045901
+     </SimpleData>
+     <SimpleData name="FID">
+      103
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.91136
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.603908
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR GOVARDHANA GOPAL
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Narayanappasetty Palya UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      B T M Layout
+     </SimpleData>
+     <SimpleData name="ac">
+      B.T.M Layout
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.603908,12.91136,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9742734530
+     </SimpleData>
+     <SimpleData name="FID">
+      104
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.953336
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.582081
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR MANJESH TC
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Pobbathi UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Vishveshwara Puram
+     </SimpleData>
+     <SimpleData name="ac">
+      Chickpet
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.582081,12.953336,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9880852741
+     </SimpleData>
+     <SimpleData name="FID">
+      105
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.921536
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.610004
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr MAMATHA N
+     </SimpleData>
+     <SimpleData name="UPHC">
+      THAVAREKERE UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Madivala
+     </SimpleData>
+     <SimpleData name="ac">
+      B.T.M Layout
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.610004,12.921536,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      7760839355
+     </SimpleData>
+     <SimpleData name="FID">
+      106
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.935437
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.560394
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR GRIJESH B J
+     </SimpleData>
+     <SimpleData name="UPHC">
+      VIDYAPEETA UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Vidyapeeta Ward
+     </SimpleData>
+     <SimpleData name="ac">
+      Basavanagudi
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.560394,12.935437,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9986030169
+     </SimpleData>
+     <SimpleData name="FID">
+      107
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.970617
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.542062
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR NIRMALA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      West Of ChordroadUPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Hosahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Vijayanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.542062,12.970617,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9880686682
+     </SimpleData>
+     <SimpleData name="FID">
+      108
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.920387
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.599689
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SYED HOORIEN FATHIMA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      WILSON GARDEN DISPENSARY
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Jayanagar East
+     </SimpleData>
+     <SimpleData name="ac">
+      Jayanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.599689,12.920387,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9844355248
+     </SimpleData>
+     <SimpleData name="FID">
+      109
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.946949
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.591
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR SOWMYA
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Wilson Garden UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Siddapura
+     </SimpleData>
+     <SimpleData name="ac">
+      Chickpet
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.59099999999999,12.946949,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9448168017
+     </SimpleData>
+     <SimpleData name="FID">
+      110
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.93583903
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.57683028
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR JYOTHI SATHISH
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Yadiyur UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Yediyur
+     </SimpleData>
+     <SimpleData name="ac">
+      Padmanabanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.57683028,12.93583903,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8217704124
+     </SimpleData>
+     <SimpleData name="FID">
+      111
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.917523
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.568568
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      DR MOHAN
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Yarab Nagar UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      SOUTH
+     </SimpleData>
+     <SimpleData name="ward">
+      Banashankari Temple Ward
+     </SimpleData>
+     <SimpleData name="ac">
+      Padmanabanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore South
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.568568,12.917523,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9845817464
+     </SimpleData>
+     <SimpleData name="FID">
+      112
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9883487
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6040344
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Ashish
+     </SimpleData>
+     <SimpleData name="UPHC">
+      TASKER TOWN UPHC
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Shivaji Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Shivajinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6040344,12.9883487,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9886510486
+     </SimpleData>
+     <SimpleData name="FID">
+      113
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0258822
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5915682
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Ramesh
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Ganganagar
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Ganga Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Hebbal
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5915682,13.0258822,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      7406847749
+     </SimpleData>
+     <SimpleData name="FID">
+      114
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0099012
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.59443
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr. Sridevi
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC M R PALYA
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Jayachamrajendra Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Hebbal
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.59443,13.0099012,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9741110351
+     </SimpleData>
+     <SimpleData name="FID">
+      115
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9788052
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6267726
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Anil
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Murphy Town
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Hoysala Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      C.V. RamannNagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6267726,12.9788052,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9036405889
+     </SimpleData>
+     <SimpleData name="FID">
+      116
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9947001
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6436532
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Seema
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Old Byappanahalli
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Benniganahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      C.V. RamannNagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6436532,12.9947001,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9035107536
+     </SimpleData>
+     <SimpleData name="FID">
+      117
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0002629
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6115564
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Zaiba Ambreen
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Robert Son Street
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Pulikeshi Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Pulakeshinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6115564,13.0002629,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9972418766
+     </SimpleData>
+     <SimpleData name="FID">
+      118
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0343887
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5755611
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Shylaja
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Sanjayanagar
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Sanjay Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Hebbal
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5755611,13.0343887,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9663292686
+     </SimpleData>
+     <SimpleData name="FID">
+      119
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0223144
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6027155
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr.Abdul mistaque
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Sulthan Palya
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Kaval Bairasandra
+     </SimpleData>
+     <SimpleData name="ac">
+      Pulakeshinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6027155,13.0223144,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9901393300
+     </SimpleData>
+     <SimpleData name="FID">
+      120
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.97380924
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6266708
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr.Kishore
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Ulsoor
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Jogapalya
+     </SimpleData>
+     <SimpleData name="ac">
+      Shantinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6266708,12.97380924,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9986555314
+     </SimpleData>
+     <SimpleData name="FID">
+      121
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.03645
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.59726
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Bahrathi
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC V Nagenahalli
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Hebbal
+     </SimpleData>
+     <SimpleData name="ac">
+      Hebbal
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.59726000000001,13.03645,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9880037365
+     </SimpleData>
+     <SimpleData name="FID">
+      122
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9948804
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.5936497
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Mohammed Afief Ali
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Vasanthnagar
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Jayamahal
+     </SimpleData>
+     <SimpleData name="ac">
+      Shivajinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.5936497,12.9948804,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9535478385
+     </SimpleData>
+     <SimpleData name="FID">
+      123
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0211807
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6183733
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Shobha N
+     </SimpleData>
+     <SimpleData name="UPHC">
+      Kghalli uphc
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Kushal Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Pulakeshinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6183733,13.0211807,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9740324746
+     </SimpleData>
+     <SimpleData name="FID">
+      124
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9693327
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.60949707
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Najla
+     </SimpleData>
+     <SimpleData name="UPHC">
+      DR B R Ambedkar
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Shantala Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Shantinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.60949707,12.9693327,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9880094957
+     </SimpleData>
+     <SimpleData name="FID">
+      125
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.99827766
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.61967468
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Salmon joseph
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Cox Town
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Sarvagna Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      C.V. RamannNagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.61967468,12.99827766,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9880406336
+     </SimpleData>
+     <SimpleData name="FID">
+      126
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0146198
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6513135
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr.K.Ravi Shekar
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Banasawadi
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Banasavadi
+     </SimpleData>
+     <SimpleData name="ac">
+      Sarvagnanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6513135,13.0146198,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8095454231
+     </SimpleData>
+     <SimpleData name="FID">
+      127
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0209505
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6291972
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr.Shaheen
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Kacharakanahalli
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Kacharkanahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Sarvagnanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.62919719999999,13.0209505,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      7022380759
+     </SimpleData>
+     <SimpleData name="FID">
+      128
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0101657
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6116016
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr. Ramya M K
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC D.J.Halli
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Muneshwara Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Pulakeshinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6116016,13.0101657,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9738518889
+     </SimpleData>
+     <SimpleData name="FID">
+      129
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9595713
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6459812
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Darshan
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC KodiHalli
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Konena Agrahara
+     </SimpleData>
+     <SimpleData name="ac">
+      C.V. RamannNagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.64598119999999,12.9595713,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9731415555
+     </SimpleData>
+     <SimpleData name="FID">
+      130
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.00937653
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.62837982
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Venkatesh
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Lingaraj Puram
+     </SimpleData>
+     <SimpleData name="Zone">
+      EAST
+     </SimpleData>
+     <SimpleData name="ward">
+      Lingarajapura
+     </SimpleData>
+     <SimpleData name="ac">
+      Sarvagnanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.62837982000001,13.00937653,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8971806667
+     </SimpleData>
+     <SimpleData name="FID">
+      131
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9611866
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6346972
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Abhishek
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Domaluru
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Agara
+     </SimpleData>
+     <SimpleData name="ac">
+      Shantinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.63469720000001,12.9611866,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      7760590008
+     </SimpleData>
+     <SimpleData name="FID">
+      132
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.997169
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.628455
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Vinutha
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Jeevanahalli
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Maruthi Seva Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Sarvagnanagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.628455,12.997169,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      8073923094
+     </SimpleData>
+     <SimpleData name="FID">
+      133
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.03599105
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.59881249
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Rakshitha
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Cholanayakana Halli
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Vishwanatha Nagenahalli
+     </SimpleData>
+     <SimpleData name="ac">
+      Hebbal
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.59881249,13.03599105,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9986953714
+     </SimpleData>
+     <SimpleData name="FID">
+      134
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9514163
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6250652
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Chitra
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Austin Town
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Vannarpete
+     </SimpleData>
+     <SimpleData name="ac">
+      Shantinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.62506519999999,12.9514163,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9742184629
+     </SimpleData>
+     <SimpleData name="FID">
+      135
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.98465824
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.66580963
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr. Purushotham
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Bhuvaneshwari Nagar
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      CV Raman Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      C.V. RamannNagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.66580963,12.98465824,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9900457012
+     </SimpleData>
+     <SimpleData name="FID">
+      136
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0071914
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6173559
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Shilpa MN
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC New bagluru layout
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Sagayarapura
+     </SimpleData>
+     <SimpleData name="ac">
+      Pulakeshinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.61735590000001,13.0071914,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9448731924
+     </SimpleData>
+     <SimpleData name="FID">
+      137
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      13.0211807
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6183733
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Rajeev
+     </SimpleData>
+     <SimpleData name="UPHC">
+      CHC Kghalli
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Kushal Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Pulakeshinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore North
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.6183733,13.0211807,0
+    </coordinates>
+   </Point>
+  </Placemark>
+  <Placemark>
+   <styleUrl>
+    #bengaluru_UPHCs_style
+   </styleUrl>
+   <ExtendedData>
+    <SchemaData schemaUrl="#J_bengaluru_UPHCs_SIDDSSS">
+     <SimpleData name="Contact_No">
+      9591385565
+     </SimpleData>
+     <SimpleData name="FID">
+      138
+     </SimpleData>
+     <SimpleData name="Lattitude">
+      12.9586088
+     </SimpleData>
+     <SimpleData name="Longitude">
+      77.6009199
+     </SimpleData>
+     <SimpleData name="NODAL_OFFI">
+      Dr Jeshma britto
+     </SimpleData>
+     <SimpleData name="UPHC">
+      UPHC Shanthinagara
+     </SimpleData>
+     <SimpleData name="Zone">
+      East
+     </SimpleData>
+     <SimpleData name="ward">
+      Shanthi Nagar
+     </SimpleData>
+     <SimpleData name="ac">
+      Shantinagar
+     </SimpleData>
+     <SimpleData name="ls">
+      Bangalore Central
+     </SimpleData>
+    </SchemaData>
+   </ExtendedData>
+   <Point>
+    <coordinates>
+     77.60091989999999,12.9586088,0
+    </coordinates>
+   </Point>
+  </Placemark>
+ </Document>
+</kml>

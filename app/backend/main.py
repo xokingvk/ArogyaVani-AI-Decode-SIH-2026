@@ -50,10 +50,10 @@ def health_check():
 def get_nearby_phc(latitude: float, longitude: float, radius: int = 5000):
     """Real-time location-based Primary Health Centre (PHC) & government healthcare facility search:
     1. Validates device GPS coordinates.
-    2. Queries OpenStreetMap Overpass API for healthcare facilities.
+    2. Searches verified local national & Bengaluru PHC dataset.
     3. Calculates geodesic Haversine distance in meters and kilometers.
-    4. Categorizes into Primary Health Centre, Government Health Facility, or Healthcare Facility.
-    5. Deduplicates and sorts nearest-first.
+    4. Prioritizes Primary Health Centres over Government Health Facilities.
+    5. Sorts nearest-first and returns top 5 facilities.
     6. Returns structured facilities with Google Maps directions link and verified phone (if available).
     """
     from services.location_service import fetch_nearby_phc

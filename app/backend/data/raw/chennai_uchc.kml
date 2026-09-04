@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>chennai_uchcs.geojson</name>
+	<Schema name="chennai_uchcs" id="J_chennai_uchcs_SSSISSISSI">
+		<SimpleField type="string" name="ADDRESS"><displayName>ADDRESS</displayName>
+</SimpleField>
+		<SimpleField type="string" name="ASSET_NAME"><displayName>ASSET_NAME</displayName>
+</SimpleField>
+		<SimpleField type="string" name="DEPARTMENT"><displayName>DEPARTMENT</displayName>
+</SimpleField>
+		<SimpleField type="int" name="DIVISION"><displayName>DIVISION</displayName>
+</SimpleField>
+		<SimpleField type="string" name="FINAL_CODE"><displayName>FINAL_CODE</displayName>
+</SimpleField>
+		<SimpleField type="string" name="LOCATION"><displayName>LOCATION</displayName>
+</SimpleField>
+		<SimpleField type="int" name="OBJECTID"><displayName>OBJECTID</displayName>
+</SimpleField>
+		<SimpleField type="string" name="REMARKS"><displayName>REMARKS</displayName>
+</SimpleField>
+		<SimpleField type="string" name="TYPE"><displayName>TYPE</displayName>
+</SimpleField>
+		<SimpleField type="int" name="ZONE"><displayName>ZONE</displayName>
+</SimpleField>
+	</Schema>
+	<Style id="chennai_uchcs_style">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[chennai_uchcs/ADDRESS/displayName]</b></td><td>$[chennai_uchcs/ADDRESS]</td></tr>
+  <tr><td><b>$[chennai_uchcs/ASSET_NAME/displayName]</b></td><td>$[chennai_uchcs/ASSET_NAME]</td></tr>
+  <tr><td><b>$[chennai_uchcs/DEPARTMENT/displayName]</b></td><td>$[chennai_uchcs/DEPARTMENT]</td></tr>
+  <tr><td><b>$[chennai_uchcs/DIVISION/displayName]</b></td><td>$[chennai_uchcs/DIVISION]</td></tr>
+  <tr><td><b>$[chennai_uchcs/FINAL_CODE/displayName]</b></td><td>$[chennai_uchcs/FINAL_CODE]</td></tr>
+  <tr><td><b>$[chennai_uchcs/LOCATION/displayName]</b></td><td>$[chennai_uchcs/LOCATION]</td></tr>
+  <tr><td><b>$[chennai_uchcs/OBJECTID/displayName]</b></td><td>$[chennai_uchcs/OBJECTID]</td></tr>
+  <tr><td><b>$[chennai_uchcs/REMARKS/displayName]</b></td><td>$[chennai_uchcs/REMARKS]</td></tr>
+  <tr><td><b>$[chennai_uchcs/TYPE/displayName]</b></td><td>$[chennai_uchcs/TYPE]</td></tr>
+  <tr><td><b>$[chennai_uchcs/ZONE/displayName]</b></td><td>$[chennai_uchcs/ZONE]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+	</Style>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">11,Begum Sahib Vth lane,Royapettah, Ch-14.</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">119</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM9</SimpleData>
+				<SimpleData name="LOCATION">Mirsahibpet</SimpleData>
+				<SimpleData name="OBJECTID">1</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE">URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">9</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.26980020000001,13.0516614,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">29,United India Nagar,Ayanavaram,Ch-23.</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">96</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM8</SimpleData>
+				<SimpleData name="LOCATION">Ayanavaram</SimpleData>
+				<SimpleData name="OBJECTID">2</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE">URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">8</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.23027879999999,13.099145,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">40,Thiruvengadasamy street, Pulianthope,Chennai-12.</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">73</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM6</SimpleData>
+				<SimpleData name="LOCATION">TVK Nagar</SimpleData>
+				<SimpleData name="OBJECTID">3</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE">URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">6</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.2606274,13.1008566,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">2,Venkatarathnam Nagar,Adyar,Ch- 20</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">175</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM13</SimpleData>
+				<SimpleData name="LOCATION">Adyar</SimpleData>
+				<SimpleData name="OBJECTID">4</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE">URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">13</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.2559021,13.0001384,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">No.56,Sowri street,Alandur,Ch-16.</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">160</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM12</SimpleData>
+				<SimpleData name="LOCATION">Alandur</SimpleData>
+				<SimpleData name="OBJECTID">5</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE">URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">12</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.20646619999999,13.0032194,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">Hospital road,Chinna Porur,Jai Garden,  Ch-116.</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">153</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM11</SimpleData>
+				<SimpleData name="LOCATION">Porur</SimpleData>
+				<SimpleData name="OBJECTID">6</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE">URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">11</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.16975979999999,13.0368481,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">No.5, Church road,TMP Nagar,Brittania company back side, Padi, CH 50</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">87</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM7</SimpleData>
+				<SimpleData name="LOCATION">Ambattur</SimpleData>
+				<SimpleData name="OBJECTID">7</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE">URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">7</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.17843360000001,13.0948053,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">NO.47, Swamy Nagar,Madhavaram, Ch.</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">26</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM3</SimpleData>
+				<SimpleData name="LOCATION">Madhavaram</SimpleData>
+				<SimpleData name="OBJECTID">8</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE">URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">3</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.2301193,13.1480498,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">Kuppam EOC, No.1, School street,Jothy Nagar,Kuppam.</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">4</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM1</SimpleData>
+				<SimpleData name="LOCATION">Thiruvottiyur</SimpleData>
+				<SimpleData name="OBJECTID">9</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE"> URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">1</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.3094394,13.1912963,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">No.1,Nedunchezhian salai, Manali, Ch-68</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">21</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM2</SimpleData>
+				<SimpleData name="LOCATION">Manali</SimpleData>
+				<SimpleData name="OBJECTID">10</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE"> URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">2</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.2579003,13.1685842,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">No 88,Kathivakkam high road, Meenambal Nagar,               Ch -21.</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">53</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM4</SimpleData>
+				<SimpleData name="LOCATION">Tondiarpet</SimpleData>
+				<SimpleData name="OBJECTID">11</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE"> URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">5</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.2745039,13.1043938,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">194,Solaiappan Street,Old Washermanpet,  Chennai-21</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">49</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM5</SimpleData>
+				<SimpleData name="LOCATION">Sanjeevaryanpet</SimpleData>
+				<SimpleData name="OBJECTID">12</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE"> URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">5</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.2874178,13.119296,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">65/119, NSK Salai,Kodambakkam,Ch-24.</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">134</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM10</SimpleData>
+				<SimpleData name="LOCATION">Vadapalani</SimpleData>
+				<SimpleData name="OBJECTID">13</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE"> URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">10</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.219649,13.051757,0</coordinates>
+		</Point>
+	</Placemark>
+	<Placemark>
+		<styleUrl>#chennai_uchcs_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_chennai_uchcs_SSSISSISSI">
+				<SimpleData name="ADDRESS">1st main road,Opp to Tsunami nagar bus stop,  Ch-119.</SimpleData>
+				<SimpleData name="ASSET_NAME">UCHC</SimpleData>
+				<SimpleData name="DEPARTMENT">HEALTH-MSD</SimpleData>
+				<SimpleData name="DIVISION">198</SimpleData>
+				<SimpleData name="FINAL_CODE">GCHM14</SimpleData>
+				<SimpleData name="LOCATION">Chemmancherry</SimpleData>
+				<SimpleData name="OBJECTID">14</SimpleData>
+				<SimpleData name="REMARKS"></SimpleData>
+				<SimpleData name="TYPE"> URBAN COMMUNITY HEALTH CENTRES (UCHCs 24 X 7)</SimpleData>
+				<SimpleData name="ZONE">15</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Point>
+			<coordinates>80.2393096,12.8875911,0</coordinates>
+		</Point>
+	</Placemark>
+</Document>
+</kml>

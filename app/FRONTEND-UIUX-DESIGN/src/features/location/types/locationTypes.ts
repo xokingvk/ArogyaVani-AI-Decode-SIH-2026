@@ -18,6 +18,8 @@ export interface NearbyPHCFacility {
   distance_km: number;
   phone: string | null;
   maps_url: string;
+  source?: string;
+  verified?: boolean;
 }
 
 export interface NearbyPHCSuccessResponse {
@@ -30,6 +32,7 @@ export interface NearbyPHCSuccessResponse {
   has_phc_match: boolean;
   facilities: NearbyPHCFacility[];
   total_found: number;
+  message?: string;
 }
 
 export interface NearbyPHCErrorResponse {

@@ -1,0 +1,4819 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+ <Document id="root_doc">
+  <Schema id="namma_clinics" name="namma_clinics">
+   <SimpleField name="OBJECTID" type="int"/>
+   <SimpleField name="KGISNammaClinicID" type="int"/>
+   <SimpleField name="NammaClinicName" type="string"/>
+   <SimpleField name="KGISCode" type="string"/>
+   <SimpleField name="KGISVillageID" type="int"/>
+   <SimpleField name="KGISWardID" type="string"/>
+   <SimpleField name="ZoneCode" type="int"/>
+   <SimpleField name="WardCode" type="string"/>
+   <SimpleField name="ward" type="string"/>
+   <SimpleField name="ac" type="string"/>
+   <SimpleField name="ls" type="string"/>
+  </Schema>
+  <Folder>
+   <name>
+    namma_clinics
+   </name>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       1
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       1
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Kempegowda
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0001
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15545
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5219
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003172
+      </SimpleData>
+      <SimpleData name="ward">
+       Madivala
+      </SimpleData>
+      <SimpleData name="ac">
+       B.T.M Layout
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.61458,12.92322
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       2
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       2
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Someshwara
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0002
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15426
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4886
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20038
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003005
+      </SimpleData>
+      <SimpleData name="ward">
+       Jakkuru
+      </SimpleData>
+      <SimpleData name="ac">
+       Byatarayanapura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.62054,13.07979
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       3
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       3
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Atturu Layout
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0003
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15404
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4886
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20038
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003005
+      </SimpleData>
+      <SimpleData name="ward">
+       Jakkuru
+      </SimpleData>
+      <SimpleData name="ac">
+       Byatarayanapura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.62264,13.06988
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       4
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       4
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Amrutahalli
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0004
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21391
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4887
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20038
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003006
+      </SimpleData>
+      <SimpleData name="ward">
+       Thanisandra
+      </SimpleData>
+      <SimpleData name="ac">
+       Byatarayanapura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.612121,13.05459
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       5
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       5
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Kodigehalli
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0005
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15145
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4891
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20038
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003008
+      </SimpleData>
+      <SimpleData name="ward">
+       Kodigehalli
+      </SimpleData>
+      <SimpleData name="ac">
+       Byatarayanapura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.575306,13.048461
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       6
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       6
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Vidyaranyapura
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0006
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15400
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4895
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20038
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003010
+      </SimpleData>
+      <SimpleData name="ward">
+       Dodda Bommasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       Byatarayanapura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.556718,13.071421
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       7
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       7
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Kuvempu Nagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0007
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15401
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4895
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20038
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003010
+      </SimpleData>
+      <SimpleData name="ward">
+       Dodda Bommasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       Byatarayanapura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.55182,13.06133
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       8
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       8
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Babusab Palya
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0008
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15124
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4974
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003049
+      </SimpleData>
+      <SimpleData name="ward">
+       Lingarajapura
+      </SimpleData>
+      <SimpleData name="ac">
+       Sarvagnanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.6232733,13.011929
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       9
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       9
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Kalkere
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0009
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21316
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5042
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20034
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003083
+      </SimpleData>
+      <SimpleData name="ward">
+       Kadugodi
+      </SimpleData>
+      <SimpleData name="ac">
+       Mahadevapura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.7610619,12.9821279
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       10
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       10
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Kr Puram
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0010
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21414
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4986
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20034
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003055
+      </SimpleData>
+      <SimpleData name="ward">
+       Devasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       K.R. Pura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.6768977,13.0057975
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       11
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       11
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Basavanapura
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0011
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21428
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4982
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20034
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003053
+      </SimpleData>
+      <SimpleData name="ward">
+       Basavanapura
+      </SimpleData>
+      <SimpleData name="ac">
+       K.R. Pura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.718511,13.013107
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       12
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       12
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Belatthur
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0012
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21350
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4983
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20034
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003054
+      </SimpleData>
+      <SimpleData name="ward">
+       assembly_constituency:Mahadevapura
+      </SimpleData>
+      <SimpleData name="ac">
+       grama_panchayath:&lt;Null&gt;
+      </SimpleData>
+      <SimpleData name="ls">
+       u_district:Bengaluru (Urban)
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.6864766,13.0269225
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       13
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       13
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Aecs Layout
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0013
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21415
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4990
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003057
+      </SimpleData>
+      <SimpleData name="ward">
+       CV Raman Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       C.V. RamannNagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.6733994,12.9811785
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       14
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       14
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Munnekollala
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0014
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21442
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5047
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20034
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003086
+      </SimpleData>
+      <SimpleData name="ward">
+       Marattahalli
+      </SimpleData>
+      <SimpleData name="ac">
+       Mahadevapura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.69442,12.9475262
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       15
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       15
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Doddakanahalli
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055446131200000URBMPPUGENNMC0001
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21451
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5175
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20034
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003150
+      </SimpleData>
+      <SimpleData name="ward">
+       assembly_constituency:Mahadevapura
+      </SimpleData>
+      <SimpleData name="ac">
+       grama_panchayath:Halanayakanahalli
+      </SimpleData>
+      <SimpleData name="ls">
+       u_district:Bengaluru (Urban)
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.7016696,12.9034953
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       16
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       16
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Shettihalli
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0015
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15452
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4899
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20032
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003012
+      </SimpleData>
+      <SimpleData name="ward">
+       Shettihalli
+      </SimpleData>
+      <SimpleData name="ac">
+       Dasarahalli
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.505733,13.066673
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       17
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       17
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Defence Colony
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0016
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15450
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4903
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20032
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003014
+      </SimpleData>
+      <SimpleData name="ward">
+       Bagalakunte
+      </SimpleData>
+      <SimpleData name="ac">
+       Dasarahalli
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.507238,13.053966
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       18
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       18
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Mallasandra
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0017
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15465
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4902
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20032
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003013
+      </SimpleData>
+      <SimpleData name="ward">
+       Mallasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       Dasarahalli
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.513707,13.053767
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       19
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       19
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Chokkasandra
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0018
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15489
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4954
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20032
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003039
+      </SimpleData>
+      <SimpleData name="ward">
+       Chokkasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       Dasarahalli
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.503409,13.040356
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       20
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       20
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Chatrapathi Shivaji
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0019
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15485
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5022
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20035
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003073
+      </SimpleData>
+      <SimpleData name="ward">
+       Kottegepalya
+      </SimpleData>
+      <SimpleData name="ac">
+       Rajarajeshwarinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Rural
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.512832,12.971949
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       21
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       21
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Veera Madakari
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0020
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15485
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5022
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20035
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003073
+      </SimpleData>
+      <SimpleData name="ward">
+       Kottegepalya
+      </SimpleData>
+      <SimpleData name="ac">
+       Rajarajeshwarinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Rural
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.512833,12.971948
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       22
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       22
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Veera Sindhura Lakshmana
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0021
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15498
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5015
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20032
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003070
+      </SimpleData>
+      <SimpleData name="ward">
+       Rajagopal Nagara
+      </SimpleData>
+      <SimpleData name="ac">
+       Dasarahalli
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.507909,12.998883
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       23
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       23
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Rajarajeshwari Nagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0022
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15570
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5195
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20035
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003160
+      </SimpleData>
+      <SimpleData name="ward">
+       Rajarajeshwari Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Rajarajeshwarinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Rural
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.52092,12.911071
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       24
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       24
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Doddabidarakallu
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0023
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15479
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4955
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20035
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003040
+      </SimpleData>
+      <SimpleData name="ward">
+       Dodda Bidarakallu
+      </SimpleData>
+      <SimpleData name="ac">
+       Yeshwanthapura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.483416,13.016554
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       25
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       25
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Vidyamanyanagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0024
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15460
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4955
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20035
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003040
+      </SimpleData>
+      <SimpleData name="ward">
+       Dodda Bidarakallu
+      </SimpleData>
+      <SimpleData name="ac">
+       Yeshwanthapura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.477816,12.994853
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       26
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       26
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Kengeri
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0025
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15582
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5194
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20035
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003159
+      </SimpleData>
+      <SimpleData name="ward">
+       Kengeri
+      </SimpleData>
+      <SimpleData name="ac">
+       Yeshwanthapura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.4816511,12.9169979
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       27
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       27
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Thalgatpura
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0026
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15713
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5271
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20035
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003198
+      </SimpleData>
+      <SimpleData name="ward">
+       Hemmigepura
+      </SimpleData>
+      <SimpleData name="ac">
+       Yeshwanthapura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.536808,12.869465
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       28
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       28
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Mattikere
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0027
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15143
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4946
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003035
+      </SimpleData>
+      <SimpleData name="ward">
+       Aramane Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Malleshwaram
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.562982,13.031079
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       29
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       29
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Aramane Nagara
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0028
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       30091
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4946
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003035
+      </SimpleData>
+      <SimpleData name="ward">
+       Aramane Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Malleshwaram
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.582124,13.005826
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       30
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       30
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Subramanya Nagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0029
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15481
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5007
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003066
+      </SimpleData>
+      <SimpleData name="ward">
+       Subramanya Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Malleshwaram
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.5571,13.0073
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       31
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       31
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Kadu Malleshwara
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0030
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       40193
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5006
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003065
+      </SimpleData>
+      <SimpleData name="ward">
+       Kadu Malleshwara Ward
+      </SimpleData>
+      <SimpleData name="ac">
+       Malleshwaram
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.5677969,13.0034964
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       32
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       32
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Dayanandanagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0031
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15481
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5070
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003097
+      </SimpleData>
+      <SimpleData name="ward">
+       Dayananda Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Rajajinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.56435,12.990346
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       33
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       33
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Rajajinagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0032
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15494
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5074
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003099
+      </SimpleData>
+      <SimpleData name="ward">
+       Rajajinagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Rajajinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.544983,12.995235
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       34
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       34
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Shivanagara
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0033
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15115
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5090
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003107
+      </SimpleData>
+      <SimpleData name="ward">
+       Shivanagara
+      </SimpleData>
+      <SimpleData name="ac">
+       Rajajinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.55037,12.98663
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       35
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       35
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Basaveshwaranagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0034
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15494
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5075
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003100
+      </SimpleData>
+      <SimpleData name="ward">
+       Basaveshwara Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Rajajinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.541912,12.990525
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       36
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       36
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Subhashnagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0035
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15481
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5066
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003095
+      </SimpleData>
+      <SimpleData name="ward">
+       Subhash Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Gandhinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.569052,12.99222
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       37
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       37
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Okalipuram
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0036
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15109
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5067
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003096
+      </SimpleData>
+      <SimpleData name="ward">
+       Okalipura
+      </SimpleData>
+      <SimpleData name="ac">
+       Gandhinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.56111,12.977047
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       38
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       38
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Cottonpete
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0037
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15116
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5115
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003120
+      </SimpleData>
+      <SimpleData name="ward">
+       Cottonpete
+      </SimpleData>
+      <SimpleData name="ac">
+       Gandhinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.562736,12.97204
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       39
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       39
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Chickpete
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0038
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       30092
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5094
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003109
+      </SimpleData>
+      <SimpleData name="ward">
+       Chickpete
+      </SimpleData>
+      <SimpleData name="ac">
+       Gandhinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.573091,12.970321
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       40
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       40
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Chamarajapet
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0039
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       30092
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5154
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003139
+      </SimpleData>
+      <SimpleData name="ward">
+       K R Market
+      </SimpleData>
+      <SimpleData name="ac">
+       Chamrajapet
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.5662258,12.9613734
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       41
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       41
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Chalavadipalya
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0040
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       30092
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5151
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003138
+      </SimpleData>
+      <SimpleData name="ward">
+       Chalavadipalya
+      </SimpleData>
+      <SimpleData name="ac">
+       Chamrajapet
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.5671183,12.96531
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       42
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       42
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Jagajivanramnagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0041
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15081
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5150
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003137
+      </SimpleData>
+      <SimpleData name="ward">
+       Rayapura
+      </SimpleData>
+      <SimpleData name="ac">
+       Chamrajapet
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.5575633,12.96431
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       43
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       43
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Devrajursnagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0042
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15116
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5147
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003136
+      </SimpleData>
+      <SimpleData name="ward">
+       Jagajivanram Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Chamrajapet
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.54994,12.960274
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       44
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       44
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Agraharadasarahalli
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0043
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15470
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5086
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003105
+      </SimpleData>
+      <SimpleData name="ward">
+       Agrahara Dasarahalli
+      </SimpleData>
+      <SimpleData name="ac">
+       Govindarajanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.541199,12.979692
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       45
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       45
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Kaveripura
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0044
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15485
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5082
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003103
+      </SimpleData>
+      <SimpleData name="ward">
+       Kaveripura
+      </SimpleData>
+      <SimpleData name="ac">
+       Govindarajanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.526848,12.977725
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       46
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       46
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Maruthimandirward
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0045
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15488
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5127
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003126
+      </SimpleData>
+      <SimpleData name="ward">
+       Maruthi Mandira Ward
+      </SimpleData>
+      <SimpleData name="ac">
+       Govindarajanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.52565,12.963614
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       47
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       47
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Govindarajanagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0046
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15485
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5130
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003127
+      </SimpleData>
+      <SimpleData name="ward">
+       Mudalapalya
+      </SimpleData>
+      <SimpleData name="ac">
+       Govindarajanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.520386,12.972706
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       48
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       48
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Mudalapalya
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0047
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15485
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5130
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003127
+      </SimpleData>
+      <SimpleData name="ward">
+       Mudalapalya
+      </SimpleData>
+      <SimpleData name="ac">
+       Govindarajanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.52009,12.972751
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       49
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       49
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Mahalakshmipuram
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0048
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15481
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5011
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003068
+      </SimpleData>
+      <SimpleData name="ward">
+       Mahalakshmipura
+      </SimpleData>
+      <SimpleData name="ac">
+       Mahalakshmi Layout
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.543862,13.009838
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       50
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       50
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Nandinilayout
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0049
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15369
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4962
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003043
+      </SimpleData>
+      <SimpleData name="ward">
+       Nandini Layout
+      </SimpleData>
+      <SimpleData name="ac">
+       Mahalakshmi Layout
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.537848,13.011573
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       51
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       51
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Shaktiganapathinagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0050
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15494
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5023
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003074
+      </SimpleData>
+      <SimpleData name="ward">
+       Shakthi Ganapathi Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Mahalakshmi Layout
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.535023,12.993046
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       52
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       52
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Vrishabhavathinagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0051
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15494
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5079
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003102
+      </SimpleData>
+      <SimpleData name="ward">
+       Vrisabhavathi Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Mahalakshmi Layout
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.529206,12.99213
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       53
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       53
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Vijayanagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0052
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15116
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5122
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003123
+      </SimpleData>
+      <SimpleData name="ward">
+       Vijayanagara
+      </SimpleData>
+      <SimpleData name="ac">
+       Vijayanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.5468,12.9723
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       54
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       54
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Hampinagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0053
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15116
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5142
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003133
+      </SimpleData>
+      <SimpleData name="ward">
+       Hampinagara
+      </SimpleData>
+      <SimpleData name="ac">
+       Vijayanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.53604,12.959347
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       55
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       55
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Bapujinagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0054
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15720
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5210
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003167
+      </SimpleData>
+      <SimpleData name="ward">
+       Yediyur
+      </SimpleData>
+      <SimpleData name="ac">
+       Padmanabanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.57507,12.92928
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       56
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       56
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Attiguppe
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0055
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15116
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5139
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003132
+      </SimpleData>
+      <SimpleData name="ward">
+       Attiguppe
+      </SimpleData>
+      <SimpleData name="ac">
+       Vijayanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.527742,12.958166
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       57
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       57
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Basavanagudi
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0056
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15721
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5183
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003154
+      </SimpleData>
+      <SimpleData name="ward">
+       Basavanagudi
+      </SimpleData>
+      <SimpleData name="ac">
+       Basavanagudi
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.570526,12.934804
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       58
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       58
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Srinagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0057
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15099
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5187
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003156
+      </SimpleData>
+      <SimpleData name="ward">
+       Srinagara
+      </SimpleData>
+      <SimpleData name="ac">
+       Basavanagudi
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.5558889,12.9414444
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       59
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       59
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Katriguppe
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0058
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15698
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5202
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003163
+      </SimpleData>
+      <SimpleData name="ward">
+       Katriguppe
+      </SimpleData>
+      <SimpleData name="ac">
+       Basavanagudi
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.5534,12.92679
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       60
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       60
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Vidyapeetaward
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0059
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15099
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5203
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003164
+      </SimpleData>
+      <SimpleData name="ward">
+       Vidyapeeta Ward
+      </SimpleData>
+      <SimpleData name="ac">
+       Basavanagudi
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.5620633,12.9415183
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       61
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       61
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Umamaheshwariward
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0060
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15693
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5235
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003180
+      </SimpleData>
+      <SimpleData name="ward">
+       Banashankari Temple Ward
+      </SimpleData>
+      <SimpleData name="ac">
+       Padmanabanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.570034,12.912488
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       62
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       62
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Ganeshmandirward
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0061
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15721
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5206
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003165
+      </SimpleData>
+      <SimpleData name="ward">
+       Ganesh Mandiara Ward
+      </SimpleData>
+      <SimpleData name="ac">
+       Padmanabanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.561831,12.926224
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       63
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       63
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Vikramnagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0062
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15696
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5239
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003182
+      </SimpleData>
+      <SimpleData name="ward">
+       Padmanabha Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Padmanabanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.555751,12.905113
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       64
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       64
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Kamakyanagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0063
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15698
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5242
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003183
+      </SimpleData>
+      <SimpleData name="ward">
+       Chikkalsandra
+      </SimpleData>
+      <SimpleData name="ac">
+       Padmanabanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.553929,12.921273
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       65
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       65
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Suddaguntepalya
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0064
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15500
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5167
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003146
+      </SimpleData>
+      <SimpleData name="ward">
+       Lakkasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       B.T.M Layout
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.608821,12.939538
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       66
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       66
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Madivala
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0065
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15536
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5179
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003152
+      </SimpleData>
+      <SimpleData name="ward">
+       Suddagunte Palya
+      </SimpleData>
+      <SimpleData name="ac">
+       B.T.M Layout
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.617291,12.925294
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       67
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       67
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Btmlayout
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0066
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15536
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5219
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003172
+      </SimpleData>
+      <SimpleData name="ward">
+       Madivala
+      </SimpleData>
+      <SimpleData name="ac">
+       B.T.M Layout
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.619719,12.920036
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       68
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       68
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Nspalya
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0067
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15536
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5227
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003176
+      </SimpleData>
+      <SimpleData name="ward">
+       B T M Layout
+      </SimpleData>
+      <SimpleData name="ac">
+       B.T.M Layout
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.61005,12.9103
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       69
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       69
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Gurappanapalya
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0068
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15680
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5214
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003169
+      </SimpleData>
+      <SimpleData name="ward">
+       Byrasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       Jayanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.59066,12.930851
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       70
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       70
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Byrasandra
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0069
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15714
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5234
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003179
+      </SimpleData>
+      <SimpleData name="ward">
+       Shakambari Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Jayanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.580141,12.917343
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       71
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       71
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Jpnagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0070
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15707
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5230
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003177
+      </SimpleData>
+      <SimpleData name="ward">
+       J P Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Jayanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.587602,12.9152272
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       72
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       72
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Sarakki
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0071
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15707
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5231
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003178
+      </SimpleData>
+      <SimpleData name="ward">
+       Sarakki
+      </SimpleData>
+      <SimpleData name="ac">
+       Jayanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.587557,12.908988
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       73
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       73
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Dharmarayaswamytemple
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0072
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15481
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5010
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20037
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003067
+      </SimpleData>
+      <SimpleData name="ward">
+       Nagapura
+      </SimpleData>
+      <SimpleData name="ac">
+       Mahalakshmi Layout
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.552032,12.998704
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       74
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       74
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Sunkenahalli
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0073
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       30092
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5159
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003142
+      </SimpleData>
+      <SimpleData name="ward">
+       Sunkenahalli
+      </SimpleData>
+      <SimpleData name="ac">
+       Chickpet
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.5720388,12.945828
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       75
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       75
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Vishveshwarapuram
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0074
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15089
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5162
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003143
+      </SimpleData>
+      <SimpleData name="ward">
+       Vishveshwara Puram
+      </SimpleData>
+      <SimpleData name="ac">
+       Chickpet
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.576834,12.95306
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       76
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       76
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Hombegowdanagara
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0075
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15153
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5182
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003153
+      </SimpleData>
+      <SimpleData name="ward">
+       Jayanagara
+      </SimpleData>
+      <SimpleData name="ac">
+       Chickpet
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.587602,12.942708
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       77
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       77
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Radhakrishnatempleward
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0076
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15100
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4911
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003018
+      </SimpleData>
+      <SimpleData name="ward">
+       Radhakrishna Temple
+      </SimpleData>
+      <SimpleData name="ac">
+       Hebbal
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.57623,13.03009
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       78
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       78
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Vishwanathnagenahalli
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0077
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15160
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4919
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003022
+      </SimpleData>
+      <SimpleData name="ward">
+       Vishwanatha Nagenahalli
+      </SimpleData>
+      <SimpleData name="ac">
+       Hebbal
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.60446,13.03946
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       79
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       79
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Chamundinagara
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0078
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15086
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4942
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003033
+      </SimpleData>
+      <SimpleData name="ward">
+       Manorayanapalya
+      </SimpleData>
+      <SimpleData name="ac">
+       Hebbal
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.59937,13.02977
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       80
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       80
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Ganganagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0079
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15098
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4943
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003034
+      </SimpleData>
+      <SimpleData name="ward">
+       Gangenahalli
+      </SimpleData>
+      <SimpleData name="ac">
+       Hebbal
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.588808,13.0193
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       81
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       81
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Kavalbairasandra
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0080
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15129
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4939
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003032
+      </SimpleData>
+      <SimpleData name="ward">
+       Kaval Bairasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       Pulakeshinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.613007,13.031485
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       82
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       82
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Kushalnagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0081
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15125
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4938
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003031
+      </SimpleData>
+      <SimpleData name="ward">
+       Kushal Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Pulakeshinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.61494,13.013992
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       83
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       83
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Devarajeevanahalli
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0082
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15133
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4939
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003032
+      </SimpleData>
+      <SimpleData name="ward">
+       Kaval Bairasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       Pulakeshinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.606841,13.019722
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       84
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       84
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Skgarden
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0083
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15121
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4998
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003061
+      </SimpleData>
+      <SimpleData name="ward">
+       S K Garden
+      </SimpleData>
+      <SimpleData name="ac">
+       Pulakeshinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.60838,13.00059
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       85
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       85
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Hennur
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0084
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15146
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4923
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003024
+      </SimpleData>
+      <SimpleData name="ward">
+       HBR Layout
+      </SimpleData>
+      <SimpleData name="ac">
+       Sarvagnanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.623723,13.03855
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       86
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       86
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Nagavara
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0085
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15146
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4922
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003023
+      </SimpleData>
+      <SimpleData name="ward">
+       Nagavara
+      </SimpleData>
+      <SimpleData name="ac">
+       Sarvagnanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.615622,13.03408
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       87
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       87
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Kacharkanahalli
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0086
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15124
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4974
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003049
+      </SimpleData>
+      <SimpleData name="ward">
+       Lingarajapura
+      </SimpleData>
+      <SimpleData name="ac">
+       Sarvagnanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.630453,13.01196
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       88
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       88
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Lingarajapura
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0087
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15126
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4931
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003028
+      </SimpleData>
+      <SimpleData name="ward">
+       Kammanahalli
+      </SimpleData>
+      <SimpleData name="ac">
+       Sarvagnanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.632931,13.00587
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       89
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       89
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Newtippasandra
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0088
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21477
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4991
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003058
+      </SimpleData>
+      <SimpleData name="ward">
+       New Tippasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       C.V. RamannNagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.65322,12.96893
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       90
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       90
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Jalakanteshwaranagara
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0089
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21415
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4990
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003057
+      </SimpleData>
+      <SimpleData name="ward">
+       CV Raman Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       C.V. RamannNagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.671439,12.976338
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       91
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       91
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Jeevanbhimanagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0090
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21435
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5051
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003088
+      </SimpleData>
+      <SimpleData name="ward">
+       Jeevanbhima Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       C.V. RamannNagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.65985,12.96459
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       92
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       92
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Konenaagrahara
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0091
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21478
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5102
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003113
+      </SimpleData>
+      <SimpleData name="ward">
+       Konena Agrahara
+      </SimpleData>
+      <SimpleData name="ac">
+       C.V. RamannNagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.660831,12.95324
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       93
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       93
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Vannarpet
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0092
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       30092
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5054
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003089
+      </SimpleData>
+      <SimpleData name="ward">
+       Jogapalya
+      </SimpleData>
+      <SimpleData name="ac">
+       Shantinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.6279472,12.9738551
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       94
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       94
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Shantalanagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0093
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       21433
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5050
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20034
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003087
+      </SimpleData>
+      <SimpleData name="ward">
+       HAL Airport
+      </SimpleData>
+      <SimpleData name="ac">
+       K.R. Pura
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore North
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.667383,12.962959
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       95
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       95
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Shanthinagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0094
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15071
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5110
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003117
+      </SimpleData>
+      <SimpleData name="ward">
+       Shanthi Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Shantinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.601088,12.958701
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       96
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       96
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Nilasandra
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0095
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15530
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5107
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003116
+      </SimpleData>
+      <SimpleData name="ward">
+       Nilasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       Shantinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.6164006,12.9499023
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       97
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       97
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Ramaswamypalya
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0096
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15121
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       4999
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003062
+      </SimpleData>
+      <SimpleData name="ward">
+       Ramaswamy Palya
+      </SimpleData>
+      <SimpleData name="ac">
+       Shivajinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.601471,13.00148
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       98
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       98
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Jayamahal
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0097
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       30092
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5059
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003092
+      </SimpleData>
+      <SimpleData name="ward">
+       Shivaji Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Shivajinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.603287,12.98804
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       99
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       99
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Sampangiramnagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0098
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       30092
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5095
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003110
+      </SimpleData>
+      <SimpleData name="ward">
+       Sampangiram Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Shivajinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.589743,12.96745
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       100
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       100
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Ulsoor
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0099
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15072
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5055
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20033
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003090
+      </SimpleData>
+      <SimpleData name="ward">
+       Halsoor
+      </SimpleData>
+      <SimpleData name="ac">
+       Shivajinagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Central
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.622618,12.97923
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       101
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       101
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Mangammanapalya
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0100
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15518
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5254
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20031
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003189
+      </SimpleData>
+      <SimpleData name="ward">
+       Hongasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       Bommanahalli
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.628952,12.894272
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       102
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       102
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Rupenaagrahara
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0101
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15533
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5251
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20031
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003188
+      </SimpleData>
+      <SimpleData name="ward">
+       Bilekhali
+      </SimpleData>
+      <SimpleData name="ac">
+       Bommanahalli
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.616859,12.899162
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       103
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       103
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Hongasandra
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0102
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15518
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5254
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20031
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003189
+      </SimpleData>
+      <SimpleData name="ward">
+       Hongasandra
+      </SimpleData>
+      <SimpleData name="ac">
+       Bommanahalli
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.6278267,12.8925325
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       104
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       104
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Vinayakanagar
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0103
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15508
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5250
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20031
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003187
+      </SimpleData>
+      <SimpleData name="ward">
+       Puttenahalli
+      </SimpleData>
+      <SimpleData name="ac">
+       Bommanahalli
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.5985503,12.8990992
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       105
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       105
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Uttarahalli
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0104
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15717
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5239
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20036
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003182
+      </SimpleData>
+      <SimpleData name="ward">
+       Padmanabha Nagar
+      </SimpleData>
+      <SimpleData name="ac">
+       Padmanabanagar
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore South
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.552177,12.90688
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       106
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       106
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Subramanyapura
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0105
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15683
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5270
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20031
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003197
+      </SimpleData>
+      <SimpleData name="ward">
+       Vasanthpura
+      </SimpleData>
+      <SimpleData name="ac">
+       Bangalore South
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Rural
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.551173,12.884147
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       107
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       107
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Konankunte
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0106
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15690
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5267
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20031
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003196
+      </SimpleData>
+      <SimpleData name="ward">
+       Anjanapura
+      </SimpleData>
+      <SimpleData name="ac">
+       Bangalore South
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Rural
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.564064,12.873001
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       108
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       108
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Rbilayout
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0107
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15704
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5266
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20031
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003195
+      </SimpleData>
+      <SimpleData name="ward">
+       Konanakunte
+      </SimpleData>
+      <SimpleData name="ac">
+       Bangalore South
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Rural
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.579852,12.893648
+     </coordinates>
+    </Point>
+   </Placemark>
+   <Placemark>
+    <ExtendedData>
+     <SchemaData schemaUrl="#namma_clinics">
+      <SimpleData name="OBJECTID">
+       109
+      </SimpleData>
+      <SimpleData name="KGISNammaClinicID">
+       109
+      </SimpleData>
+      <SimpleData name="NammaClinicName">
+       Gottigere
+      </SimpleData>
+      <SimpleData name="KGISCode">
+       29572055428031620000URBMPPUGENNMC0108
+      </SimpleData>
+      <SimpleData name="KGISVillageID">
+       15685
+      </SimpleData>
+      <SimpleData name="KGISWardID">
+       5263
+      </SimpleData>
+      <SimpleData name="ZoneCode">
+       20031
+      </SimpleData>
+      <SimpleData name="WardCode">
+       2003194
+      </SimpleData>
+      <SimpleData name="ward">
+       Gottigere
+      </SimpleData>
+      <SimpleData name="ac">
+       Bangalore South
+      </SimpleData>
+      <SimpleData name="ls">
+       Bangalore Rural
+      </SimpleData>
+     </SchemaData>
+    </ExtendedData>
+    <Point>
+     <coordinates>
+      77.583748,12.847849
+     </coordinates>
+    </Point>
+   </Placemark>
+  </Folder>
+ </Document>
+</kml>
