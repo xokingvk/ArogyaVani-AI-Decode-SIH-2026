@@ -12,6 +12,8 @@ export interface DashboardStatFlashCardProps {
   visualIndicator?: VisualIndicator;
   dataSourceKey: string;
   animationDelay?: number;
+  /** Optional tap handler — renders card as interactive button when provided */
+  onTap?: () => void;
 }
 
 // ── Decorative mini-visuals aligned safely in the card header ──────────────────
@@ -79,6 +81,7 @@ export const DashboardStatFlashCard: React.FC<DashboardStatFlashCardProps> = ({
   backgroundColorClass,
   visualIndicator,
   animationDelay = 0,
+  onTap,
 }) => {
   return (
     <motion.div
@@ -86,7 +89,11 @@ export const DashboardStatFlashCard: React.FC<DashboardStatFlashCardProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.28, delay: animationDelay, ease: 'easeOut' }}
       whileTap={{ scale: 0.98 }}
-      className={`relative rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between h-full min-h-[118px] sm:min-h-[124px] shadow-[0_2px_10px_rgba(0,0,0,0.04)] border transition-all duration-200 ${backgroundColorClass}`}
+      onClick={onTap}
+      role={onTap ? 'button' : undefined}
+      tabIndex={onTap ? 0 : undefined}
+      onKeyDown={onTap ? (e) => (e.key === 'Enter' || e.key === ' ') && onTap() : undefined}
+      className={`relative rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between h-full min-h-[118px] sm:min-h-[124px] shadow-[0_2px_10px_rgba(0,0,0,0.04)] border transition-all duration-200 ${backgroundColorClass}${onTap ? ' cursor-pointer hover:shadow-md active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400' : ''}`}
       style={{ overflowWrap: 'anywhere' }}
     >
       {/* Subtle top highlight sheen */}

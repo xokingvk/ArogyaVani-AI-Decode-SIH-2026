@@ -1,16 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, AlertTriangle, Sparkles } from 'lucide-react';
+import { MapPin, AlertTriangle, Sparkles, Navigation } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { DashboardStatFlashCard } from '../../components/dashboard/DashboardStatFlashCard';
 import { getDashboardStats } from '../../services/dashboardService';
+import { getNearestPDS } from '../../services/pdsService';
 import { DashboardStatsData } from '../../types/dashboardTypes';
 
 interface DashboardHomeScreenProps {
   onNavigateToSettings?: () => void;
   onNavigateToEmergencySos?: () => void;
 }
+
+// ──────────────────────────────────────────────────────────────
+// PDS card state machine
+// ──────────────────────────────────────────────────────────────
+type PdsState =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'found'; distanceLabel: string; subLabel: string; mapsUrl: string | null }
+  | { status: 'error'; message: string };
 
 export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
   onNavigateToEmergencySos,
@@ -19,7 +29,9 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
   const { t } = useTranslation();
   const [stats, setStats] = useState<DashboardStatsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [pds, setPds] = useState<PdsState>({ status: 'idle' });
 
+  // ── Load all non-GPS stats on mount ──────────────────────────
   useEffect(() => {
     let isMounted = true;
     getDashboardStats(currentUser).then((data) => {
@@ -33,64 +45,107 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
     };
   }, [currentUser]);
 
+  // ── On-demand PDS lookup (only when user taps the card) ──────
+  const handlePdsTap = useCallback(async () => {
+    if (pds.status === 'loading') return;
+    setPds({ status: 'loading' });
+    try {
+      const result = await getNearestPDS();
+      if (result.centre) {
+        setPds({
+          status: 'found',
+          distanceLabel: result.distanceLabel,
+          subLabel: result.subLabel,
+          mapsUrl: result.mapsUrl,
+        });
+      } else {
+        setPds({ status: 'error', message: 'No PDS centre found nearby' });
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Location lookup failed';
+      setPds({ status: 'error', message: msg });
+    }
+  }, [pds.status]);
+
+  // ── Derive PDS card display values ───────────────────────────
+  const pdsCardValue = (): string => {
+    switch (pds.status) {
+      case 'idle':    return t('history.tapToFind', 'Tap to find');
+      case 'loading': return t('common.locating', 'Locating…');
+      case 'found':   return pds.distanceLabel;
+      case 'error':   return t('common.unavailable', 'Unavailable');
+    }
+  };
+
+  const pdsCardSub = (): string => {
+    switch (pds.status) {
+      case 'idle':    return t('history.nearestPdsSub', 'Tap card to locate nearest');
+      case 'loading': return t('common.gettingLocation', 'Getting your location…');
+      case 'found':   return pds.subLabel;
+      case 'error':   return pds.message;
+    }
+  };
+
+  // ── Card definitions ─────────────────────────────────────────
   const cardDefs = stats
     ? [
-      {
-        title: t('history.voiceQueriesToday'),
-        primaryValue: stats.voice_queries_today.primaryValue,
-        secondaryLabel: t('history.voiceQueriesSub'),
-        backgroundColorClass: 'bg-gradient-to-br from-[#EEF2FF] to-[#E0E7FF] border-[#C7D2FE]',
-        visualIndicator: 'sparkline' as const,
-        dataSourceKey: 'voice_queries_today',
-      },
-      {
-        title: t('history.schemeStatus'),
-        primaryValue: `2 ${t('schemes.statusActive')}`,
-        secondaryLabel: t('history.schemeStatusSub'),
-        backgroundColorClass: 'bg-gradient-to-br from-[#ECFDF5] to-[#D1FAE5] border-[#A7F3D0]',
-        visualIndicator: 'trendUp' as const,
-        dataSourceKey: 'scheme_status',
-      },
-      {
-        title: t('history.lastSchemeCheck'),
-        primaryValue: stats.last_scheme_check.primaryValue,
-        secondaryLabel: t('history.lastSchemeCheckSub'),
-        backgroundColorClass: 'bg-gradient-to-br from-[#FFFBEB] to-[#FEF3C7] border-[#FDE68A]',
-        visualIndicator: 'calendarCheck' as const,
-        dataSourceKey: 'last_scheme_check',
-      },
-      {
-        title: t('history.nearestPdsCentre'),
-        primaryValue: `1.2 ${t('common.km', 'KM')}`,
-        secondaryLabel: t('history.nearestPdsSub'),
-        backgroundColorClass: 'bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] border-[#CBD5E1]',
-        visualIndicator: 'mapPin' as const,
-        dataSourceKey: 'nearest_pds_centre',
-      },
-      {
-        title: t('history.activeAlerts'),
-        primaryValue: `3 ${t('history.alertsTag', 'Alerts')}`,
-        secondaryLabel: t('history.activeAlertsSub'),
-        backgroundColorClass: 'bg-gradient-to-br from-[#FFF1F2] to-[#FFE4E6] border-[#FECDD3]',
-        visualIndicator: 'pulseLine' as const,
-        dataSourceKey: 'active_alerts',
-      },
-      {
-        title: t('history.familyConnected'),
-        primaryValue: `4 ${t('history.membersTag', 'Members')}`,
-        secondaryLabel: t('history.familyConnectedSub'),
-        backgroundColorClass: 'bg-gradient-to-br from-[#FAF5FF] to-[#F3E8FF] border-[#E9D5FF]',
-        visualIndicator: 'networkNodes' as const,
-        dataSourceKey: 'family_connected_status',
-      },
-    ]
+        {
+          title: t('history.voiceQueriesToday'),
+          primaryValue: stats.voice_queries_today.primaryValue,
+          secondaryLabel: stats.voice_queries_today.secondaryLabel,
+          backgroundColorClass: 'bg-gradient-to-br from-[#EEF2FF] to-[#E0E7FF] border-[#C7D2FE]',
+          visualIndicator: 'sparkline' as const,
+          dataSourceKey: 'voice_queries_today',
+        },
+        {
+          title: t('history.schemeStatus'),
+          primaryValue: stats.scheme_status.primaryValue,
+          secondaryLabel: stats.scheme_status.secondaryLabel,
+          backgroundColorClass: 'bg-gradient-to-br from-[#ECFDF5] to-[#D1FAE5] border-[#A7F3D0]',
+          visualIndicator: 'trendUp' as const,
+          dataSourceKey: 'scheme_status',
+        },
+        {
+          title: t('history.lastSchemeCheck'),
+          primaryValue: stats.last_scheme_check.primaryValue,
+          secondaryLabel: stats.last_scheme_check.secondaryLabel,
+          backgroundColorClass: 'bg-gradient-to-br from-[#FFFBEB] to-[#FEF3C7] border-[#FDE68A]',
+          visualIndicator: 'calendarCheck' as const,
+          dataSourceKey: 'last_scheme_check',
+        },
+        {
+          title: t('history.nearestPdsCentre'),
+          primaryValue: pdsCardValue(),
+          secondaryLabel: pdsCardSub(),
+          backgroundColorClass: 'bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] border-[#CBD5E1]',
+          visualIndicator: 'mapPin' as const,
+          dataSourceKey: 'nearest_pds_centre',
+          onTap: pds.status !== 'loading' && pds.status !== 'found' ? handlePdsTap : undefined,
+        },
+        {
+          title: t('history.activeAlerts'),
+          primaryValue: stats.active_alerts.primaryValue,
+          secondaryLabel: stats.active_alerts.secondaryLabel,
+          backgroundColorClass: 'bg-gradient-to-br from-[#FFF1F2] to-[#FFE4E6] border-[#FECDD3]',
+          visualIndicator: 'pulseLine' as const,
+          dataSourceKey: 'active_alerts',
+        },
+        {
+          title: t('history.familyConnected'),
+          primaryValue: stats.family_connected_status.primaryValue,
+          secondaryLabel: stats.family_connected_status.secondaryLabel,
+          backgroundColorClass: 'bg-gradient-to-br from-[#FAF5FF] to-[#F3E8FF] border-[#E9D5FF]',
+          visualIndicator: 'networkNodes' as const,
+          dataSourceKey: 'family_connected_status',
+        },
+      ]
     : [];
 
   return (
     <div className="w-full bg-[#F5F6FA] flex-1 flex flex-col py-3 px-3 sm:px-4">
       <div className="max-w-lg mx-auto space-y-3 w-full flex-1 flex flex-col">
 
-        {/* ── 1. GREETING HERO CARD (Responsive & Collision-Free) ───────────────────── */}
+        {/* ── 1. GREETING HERO CARD ───────────────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
@@ -104,7 +159,7 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
           <div className="relative z-10" style={{ overflowWrap: 'anywhere' }}>
             <div className="flex items-start justify-between gap-2">
               <h2 className="text-base sm:text-lg font-black tracking-tight text-white leading-snug flex-1 min-w-0 break-words" style={{ overflowWrap: 'anywhere' }}>
-                {t('history.greeting', { name: currentUser?.username || 'sriharini' })}
+                {t('history.greeting', { name: currentUser?.username || 'User' })}
               </h2>
               <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-teal-500/20 text-teal-300 text-[10.5px] font-semibold border border-teal-400/20 shrink-0 mt-0.5">
                 <Sparkles className="w-3 h-3" />
@@ -118,12 +173,12 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
 
             <div className="inline-flex items-center gap-1.5 mt-2.5 px-3 py-1 rounded-full bg-white/10 text-teal-200 text-xs font-medium backdrop-blur-xs border border-white/10">
               <MapPin className="w-3.5 h-3.5 shrink-0 text-teal-300" />
-              <span className="capitalize">{currentUser?.village_district || 'kanchipuram'}</span>
+              <span className="capitalize">{currentUser?.village_district || 'India'}</span>
             </div>
           </div>
         </motion.div>
 
-        {/* ── 2 & 3. 2-COLUMN STAT CARDS GRID (Content-Aware, Equal Row Heights) ──── */}
+        {/* ── 2 & 3. STAT CARDS GRID ─────────────────────────────────────── */}
         {isLoading ? (
           <div className="grid grid-cols-2 gap-2.5 sm:gap-3 items-stretch w-full">
             {Array.from({ length: 6 }).map((_, i) => (
@@ -145,12 +200,40 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
                 visualIndicator={card.visualIndicator}
                 dataSourceKey={card.dataSourceKey}
                 animationDelay={0.02 + idx * 0.035}
+                onTap={'onTap' in card ? card.onTap : undefined}
               />
             ))}
           </div>
         )}
 
-        {/* ── 4. EMERGENCY SOS CARD (Proper Self-Contained Flex Layout) ───────────── */}
+        {/* PDS loading indicator (shown below cards when GPS is running) */}
+        {pds.status === 'loading' && (
+          <motion.div
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-500 text-xs font-medium"
+          >
+            <Navigation className="w-3.5 h-3.5 animate-spin text-teal-500" />
+            <span>Finding nearest PDS centre…</span>
+          </motion.div>
+        )}
+
+        {/* PDS directions shortcut (shown after found) */}
+        {pds.status === 'found' && pds.mapsUrl && (
+          <motion.a
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            href={pds.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-teal-50 border border-teal-200 text-teal-700 text-xs font-semibold hover:bg-teal-100 transition-colors"
+          >
+            <Navigation className="w-3.5 h-3.5 text-teal-600" />
+            <span>Get directions to nearest PDS centre</span>
+          </motion.a>
+        )}
+
+        {/* ── 4. EMERGENCY SOS CARD ─────────────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -161,7 +244,7 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
           {/* Subtle radial sheen */}
           <div className="absolute -top-12 -left-12 w-36 h-36 rounded-full bg-white/10 blur-xl pointer-events-none" />
 
-          {/* ZONE 1: TOP (Title & Subtitle) */}
+          {/* ZONE 1: TOP */}
           <div className="text-center relative z-10 px-1 w-full" style={{ overflowWrap: 'anywhere' }}>
             <h3 className="text-white font-black text-sm sm:text-base tracking-tight leading-snug break-words">
               {t('history.emergencySos')}
@@ -171,7 +254,7 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
             </p>
           </div>
 
-          {/* ZONE 2: CENTER (Prominent Circular SOS Button with Pulse Ripples) */}
+          {/* ZONE 2: CENTER – Pulsing SOS button */}
           <div className="relative flex items-center justify-center py-1.5 z-10">
             <motion.span
               className="absolute w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-white/20"
@@ -196,14 +279,14 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
             </button>
           </div>
 
-          {/* ZONE 3: BOTTOM (Warning / Help Text) */}
+          {/* ZONE 3: BOTTOM */}
           <div className="flex items-center justify-center gap-1.5 text-red-100 text-[11px] sm:text-xs font-medium text-center relative z-10 px-1 max-w-full" style={{ overflowWrap: 'anywhere' }}>
             <AlertTriangle className="w-3.5 h-3.5 shrink-0 text-red-200" />
             <span className="leading-snug break-words">{t('history.callsNearestAsha')}</span>
           </div>
         </motion.div>
 
-        {/* ── 5. INTENTIONAL BOTTOM CLEARANCE SPACER ───────────────────────────────── */}
+        {/* ── 5. BOTTOM CLEARANCE SPACER ────────────────────────────────── */}
         <div className="h-6 sm:h-8 w-full shrink-0" aria-hidden="true" />
 
       </div>

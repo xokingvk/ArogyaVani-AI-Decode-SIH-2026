@@ -70,6 +70,28 @@ def get_nearby_phc(latitude: float, longitude: float, radius: int = 5000):
     )
 
 
+@app.get("/nearby-pds")
+def get_nearby_pds(latitude: float, longitude: float, radius: int = 10000):
+    """Nearest Public Distribution System (PDS / Fair Price Shop) finder:
+    1. Validates device GPS coordinates.
+    2. Searches the offline local PDS centres dataset.
+    3. Calculates Haversine distance and returns the single nearest PDS centre.
+    4. GPS coordinates are NOT stored — used only for distance calculation.
+    """
+    from services.pds_service import fetch_nearest_pds
+
+    result = fetch_nearest_pds(latitude=latitude, longitude=longitude, radius=radius)
+    if not result.get("success", False):
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST if "Invalid coordinates" in result.get("error", "") else status.HTTP_503_SERVICE_UNAVAILABLE,
+            content=result,
+        )
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content=result,
+    )
+
+
 @app.post("/voice-query")
 async def voice_query(
     audio: Optional[UploadFile] = File(None),

@@ -32,6 +32,7 @@ import {
 } from '../utils/audioUtils';
 import { sendVoiceQuery, sendTextQuery } from '../../../services/voiceService';
 import { incrementAIQuestionCount } from '../../../services/authService';
+import { logSchemeCheck } from '../../../services/schemeCheckService';
 
 export interface UseVoiceRecorderReturn {
   voiceState: VoiceState;
@@ -248,6 +249,13 @@ export function useVoiceRecorder(options?: UseVoiceRecorderOptions): UseVoiceRec
                   console.warn('[useVoiceRecorder] Could not increment AI question count:', err);
                 }
               });
+            } else {
+              const matchedSchemes = (result.schemes || []).map((s) => s.schemeName || s.schemeId);
+              logSchemeCheck(result.transcript, matchedSchemes).catch((err) => {
+                if (import.meta.env.DEV) {
+                  console.warn('[useVoiceRecorder] logSchemeCheck error:', err);
+                }
+              });
             }
 
             if (result.audio_base64) {
@@ -369,6 +377,13 @@ export function useVoiceRecorder(options?: UseVoiceRecorderOptions): UseVoiceRec
           incrementAIQuestionCount().catch((err) => {
             if (import.meta.env.DEV) {
               console.warn('[useVoiceRecorder] incrementAIQuestionCount warning:', err);
+            }
+          });
+        } else if (result.mode === 'scheme_rag' || (result.schemes && result.schemes.length > 0)) {
+          const matchedSchemes = (result.schemes || []).map((s) => s.schemeName || s.schemeId);
+          logSchemeCheck(trimmed, matchedSchemes).catch((err) => {
+            if (import.meta.env.DEV) {
+              console.warn('[useVoiceRecorder] logSchemeCheck error:', err);
             }
           });
         }
