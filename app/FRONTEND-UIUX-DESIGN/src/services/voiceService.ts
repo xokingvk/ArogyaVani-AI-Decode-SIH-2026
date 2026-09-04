@@ -38,11 +38,11 @@ export function getApiBaseUrl(): string {
   return apiBaseUrl;
 }
 
-// Development environment logging
+// Diagnostic logging in development
 if (import.meta.env.DEV) {
   console.log('[voiceService] MODE:', import.meta.env.MODE);
   console.log('[voiceService] VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
-  console.log('[voiceService] RESOLVED API BASE URL:', getApiBaseUrl());
+  console.log('[voiceService] API base URL:', getApiBaseUrl());
 }
 
 // ── Extension helper ───────────────────────────────────────────────────────

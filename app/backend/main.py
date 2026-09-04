@@ -46,6 +46,30 @@ def health_check():
     return {"status": "ok"}
 
 
+@app.get("/nearby-phc")
+def get_nearby_phc(latitude: float, longitude: float, radius: int = 5000):
+    """Real-time location-based Primary Health Centre (PHC) & government healthcare facility search:
+    1. Validates device GPS coordinates.
+    2. Queries OpenStreetMap Overpass API for healthcare facilities.
+    3. Calculates geodesic Haversine distance in meters and kilometers.
+    4. Categorizes into Primary Health Centre, Government Health Facility, or Healthcare Facility.
+    5. Deduplicates and sorts nearest-first.
+    6. Returns structured facilities with Google Maps directions link and verified phone (if available).
+    """
+    from services.location_service import fetch_nearby_phc
+
+    result = fetch_nearby_phc(latitude=latitude, longitude=longitude, radius=radius)
+    if not result.get("success", False):
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST if "Invalid coordinates" in result.get("error", "") else status.HTTP_503_SERVICE_UNAVAILABLE,
+            content=result,
+        )
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content=result,
+    )
+
+
 @app.post("/voice-query")
 async def voice_query(
     audio: Optional[UploadFile] = File(None),

@@ -6,16 +6,15 @@ import {
   Landmark,
   ShieldAlert,
   ChevronRight,
-  Phone,
-  MapPin,
-  X,
 } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { useVoiceRecorder } from '../../features/voice/hooks/useVoiceRecorder';
 import { VoiceAssistantCard } from '../../features/voice/components/VoiceAssistantCard';
 import { QuickAction } from '../../features/voice/types/voiceTypes';
 import { EmergencyContactsModal } from '../../components/emergency/EmergencyContactsModal';
+import { NearbyPHCModal } from '../../features/location/components/NearbyPHCModal';
 
 interface HomeScreenProps {
   onNavigateToSchemes?: () => void;
@@ -103,7 +102,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
     },
     {
       id: 'hospital',
-      label: t('home.hospitalTitle'),
+      label: t('home.nearbyPhc.title'),
       subLabel: t('home.hospitalDesc'),
       Icon: Hospital,
       gradientFrom: '#ECFDF5',
@@ -275,62 +274,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
         </div>
       )}
 
-      {/* 2. Find Hospital */}
-      {activeModal === 'hospital' && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-          <div className="w-full max-w-md bg-white rounded-3xl p-5 shadow-xl border border-slate-100 relative">
-            <button
-              type="button"
-              onClick={() => setActiveModal(null)}
-              aria-label={t('common.close')}
-              className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                <Hospital className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-extrabold text-base text-slate-900">{t('home.modals.hospitalTitle')}</h3>
-                <p className="text-xs text-slate-500">{t('home.modals.hospitalSubtitle')}</p>
-              </div>
-            </div>
-            <div className="space-y-2.5 mb-4 text-xs">
-              <div className="p-3 rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-between">
-                <div>
-                  <p className="font-bold text-slate-900">{t('home.modals.mainPhcTitle')}</p>
-                  <p className="text-slate-500 text-[11px]">{t('home.modals.mainPhcSub')}</p>
-                  <p className="text-emerald-700 font-semibold text-[10px] mt-0.5">{t('home.modals.kmAway', { km: '1.2' })}</p>
-                </div>
-                <button
-                  type="button"
-                  aria-label={t('common.call')}
-                  onClick={() => { window.location.href = 'tel:104'; }}
-                  className="p-2 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition-colors cursor-pointer"
-                >
-                  <Phone className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="p-3 rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-between">
-                <div>
-                  <p className="font-bold text-slate-900">{t('home.modals.distHospitalTitle')}</p>
-                  <p className="text-slate-500 text-[11px]">{t('home.modals.distHospitalSub')}</p>
-                  <p className="text-emerald-700 font-semibold text-[10px] mt-0.5">{t('home.modals.kmAway', { km: '4.8' })}</p>
-                </div>
-                <button
-                  type="button"
-                  aria-label={t('common.search')}
-                  onClick={() => { window.location.href = 'tel:108'; }}
-                  className="p-2 rounded-xl bg-slate-800 text-white hover:bg-slate-900 transition-colors cursor-pointer"
-                >
-                  <MapPin className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+
+      {/* 2. Find Nearby PHC Modal */}
+      <NearbyPHCModal
+        isOpen={activeModal === 'hospital'}
+        onClose={() => setActiveModal(null)}
+      />
 
       {/* 3. Emergency Contacts Management Modal */}
       <EmergencyContactsModal
