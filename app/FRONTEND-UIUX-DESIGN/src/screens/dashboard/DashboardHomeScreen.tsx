@@ -5,8 +5,9 @@ import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { DashboardStatFlashCard } from '../../components/dashboard/DashboardStatFlashCard';
 import { getDashboardStats } from '../../services/dashboardService';
-import { getNearestPDS } from '../../services/pdsService';
 import { DashboardStatsData } from '../../types/dashboardTypes';
+import { useNearbyPHC } from '../../features/location/hooks/useNearbyPHC';
+import { NearbyPHCFacility } from '../../features/location/types/locationTypes';
 
 interface DashboardHomeScreenProps {
   isActive?: boolean;
@@ -15,13 +16,14 @@ interface DashboardHomeScreenProps {
 }
 
 // ──────────────────────────────────────────────────────────────
-// PDS card state machine
+// Distance formatting — mirrors NearbyPHCCard logic
 // ──────────────────────────────────────────────────────────────
-type PdsState =
-  | { status: 'idle' }
-  | { status: 'loading' }
-  | { status: 'found'; name: string; distanceLabel: string; subLabel: string; mapsUrl: string | null }
-  | { status: 'error'; message: string };
+function formatPhcDistance(facility: NearbyPHCFacility): string {
+  if (facility.distance_m < 1000) {
+    return `${facility.distance_m} m away`;
+  }
+  return `${facility.distance_km} km away`;
+}
 
 export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
   isActive = true,
@@ -31,10 +33,16 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
   const { t } = useTranslation();
   const [stats, setStats] = useState<DashboardStatsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [pds, setPds] = useState<PdsState>({ status: 'loading' });
-  const isPdsFetchingRef = useRef(false);
   const loadRequestIdRef = useRef(0);
 
+  // ── Reuse the existing PHC hook (same as Home screen) ────────
+  const {
+    state: phcState,
+    facilities: phcFacilities,
+    findNearbyPHC,
+  } = useNearbyPHC();
+
+  // ── Load dashboard stats (AI questions + family connected) ───
   const loadStats = useCallback(async () => {
     const requestId = ++loadRequestIdRef.current;
     try {
@@ -50,85 +58,77 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
     }
   }, [currentUser]);
 
-  // ── Auto-fetch PDS centre (one-shot GPS on tab activation) ───
-  const fetchPds = useCallback(async (_force: boolean = false) => {
-    if (isPdsFetchingRef.current) return;
-    isPdsFetchingRef.current = true;
-    setPds({ status: 'loading' });
-
-    try {
-      const result = await getNearestPDS();
-      if (result.centre) {
-        setPds({
-          status: 'found',
-          name: result.centre.name || 'Fair Price Shop',
-          distanceLabel: `${result.centre.distance_km} km`,
-          subLabel: result.subLabel,
-          mapsUrl: result.mapsUrl,
-        });
-      } else {
-        setPds({ status: 'error', message: 'No nearby PDS found' });
-      }
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Location lookup failed';
-      setPds({ status: 'error', message: msg });
-    } finally {
-      isPdsFetchingRef.current = false;
-    }
-  }, []);
-
-  // ── Load stats & trigger PDS lookup whenever screen is active ──
+  // ── Load everything when History tab becomes active ──────────
   useEffect(() => {
     if (isActive) {
       loadStats();
-      fetchPds();
+      findNearbyPHC();
     }
 
     const handleContactsUpdated = () => {
       loadStats();
     };
-    const handleSchemeLogged = () => {
-      loadStats();
-    };
 
     window.addEventListener('arogya:emergency_contacts_updated', handleContactsUpdated);
-    window.addEventListener('arogya:scheme_check_logged', handleSchemeLogged);
 
     return () => {
       window.removeEventListener('arogya:emergency_contacts_updated', handleContactsUpdated);
-      window.removeEventListener('arogya:scheme_check_logged', handleSchemeLogged);
     };
-  }, [isActive, loadStats, fetchPds]);
+  }, [isActive, loadStats, findNearbyPHC]);
 
-  // ── Card click handler (Open Maps when found, or retry if error) ──
-  const handlePdsTap = useCallback(() => {
-    if (pds.status === 'found' && pds.mapsUrl) {
-      window.open(pds.mapsUrl, '_blank', 'noopener,noreferrer');
-    } else if (pds.status === 'error' || pds.status === 'idle') {
-      fetchPds(true);
+  // ── Nearest PHC: pick the top result ────────────────────────
+  const nearestPhc: NearbyPHCFacility | null =
+    phcState === 'results' && phcFacilities.length > 0 ? phcFacilities[0] : null;
+
+  // ── PHC card tap: open Google Maps ──────────────────────────
+  const handlePhcTap = useCallback(() => {
+    if (nearestPhc?.maps_url) {
+      window.open(nearestPhc.maps_url, '_blank', 'noopener,noreferrer');
+    } else if (phcState === 'error' || phcState === 'empty' || phcState === 'idle') {
+      findNearbyPHC();
     }
-  }, [pds, fetchPds]);
+  }, [nearestPhc, phcState, findNearbyPHC]);
 
-  // ── Derive PDS card display values ───────────────────────────
-  const pdsCardValue = (): string => {
-    switch (pds.status) {
+  // ── PHC card display values ──────────────────────────────────
+  const phcCardPrimary = (): string => {
+    switch (phcState) {
       case 'idle':
-      case 'loading': return t('common.locating', 'Locating…');
-      case 'found':   return pds.name;
-      case 'error':   return t('common.unavailable', 'Location unavailable');
+      case 'locating':
+      case 'searching':
+        return t('common.locating', 'Locating…');
+      case 'results':
+        return nearestPhc ? nearestPhc.name : 'PHC found';
+      case 'empty':
+        return 'No nearby PHC found';
+      case 'permission_denied':
+        return 'Location unavailable';
+      case 'error':
+        return 'Unable to find nearby PHC';
     }
   };
 
-  const pdsCardSub = (): string => {
-    switch (pds.status) {
+  const phcCardSecondary = (): string => {
+    switch (phcState) {
       case 'idle':
-      case 'loading': return 'Finding nearest PDS…';
-      case 'found':   return `${pds.distanceLabel} away • Tap for maps`;
-      case 'error':   return pds.message || 'No nearby PDS found';
+      case 'locating':
+      case 'searching':
+        return 'Finding nearby PHC…';
+      case 'results':
+        return nearestPhc ? `${formatPhcDistance(nearestPhc)} • Tap for directions` : '';
+      case 'empty':
+        return 'No facilities found in your area';
+      case 'permission_denied':
+        return 'Enable location permission';
+      case 'error':
+        return 'Tap to retry';
     }
   };
+
+  const isPhcLoading =
+    phcState === 'idle' || phcState === 'locating' || phcState === 'searching';
 
   // ── Card definitions ─────────────────────────────────────────
+  // Order: AI Questions | Scheme Status | Last Scheme Check | Nearest PHC | Active Alerts | Family Connected
   const cardDefs = stats
     ? [
         {
@@ -156,13 +156,13 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
           dataSourceKey: 'last_scheme_check',
         },
         {
-          title: t('history.nearestPdsCentre'),
-          primaryValue: pdsCardValue(),
-          secondaryLabel: pdsCardSub(),
-          backgroundColorClass: 'bg-gradient-to-br from-[#F8FAFC] to-[#F1F5F9] border-[#CBD5E1]',
+          title: t('history.nearestPhcCentre', 'Nearest PHC Centre'),
+          primaryValue: phcCardPrimary(),
+          secondaryLabel: phcCardSecondary(),
+          backgroundColorClass: 'bg-gradient-to-br from-[#ECFDF5] to-[#D1FAE5] border-[#6EE7B7]',
           visualIndicator: 'mapPin' as const,
-          dataSourceKey: 'nearest_pds_centre',
-          onTap: pds.status !== 'loading' ? handlePdsTap : undefined,
+          dataSourceKey: 'nearest_phc_centre',
+          onTap: !isPhcLoading ? handlePhcTap : undefined,
         },
         {
           title: t('history.activeAlerts'),
@@ -248,30 +248,30 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
           </div>
         )}
 
-        {/* PDS loading indicator (shown below cards when GPS is running) */}
-        {pds.status === 'loading' && (
+        {/* PHC loading indicator */}
+        {isPhcLoading && !isLoading && (
           <motion.div
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-500 text-xs font-medium"
           >
             <Navigation className="w-3.5 h-3.5 animate-spin text-teal-500" />
-            <span>Finding nearest PDS centre…</span>
+            <span>Finding nearest PHC centre…</span>
           </motion.div>
         )}
 
-        {/* PDS directions shortcut (shown after found) */}
-        {pds.status === 'found' && pds.mapsUrl && (
+        {/* PHC directions shortcut (shown after result found) */}
+        {nearestPhc && nearestPhc.maps_url && (
           <motion.a
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            href={pds.mapsUrl}
+            href={nearestPhc.maps_url}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-3 py-2 rounded-xl bg-teal-50 border border-teal-200 text-teal-700 text-xs font-semibold hover:bg-teal-100 transition-colors"
           >
             <Navigation className="w-3.5 h-3.5 text-teal-600" />
-            <span>Get directions to nearest PDS centre</span>
+            <span>Get directions to nearest PHC centre</span>
           </motion.a>
         )}
 

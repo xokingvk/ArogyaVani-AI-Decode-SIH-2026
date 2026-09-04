@@ -16,10 +16,6 @@ export interface DashboardStatsData {
     primaryValue: string;
     secondaryLabel: string;
   };
-  nearest_pds_centre: {
-    primaryValue: string;
-    secondaryLabel: string;
-  };
   active_alerts: {
     primaryValue: string;
     secondaryLabel: string;
