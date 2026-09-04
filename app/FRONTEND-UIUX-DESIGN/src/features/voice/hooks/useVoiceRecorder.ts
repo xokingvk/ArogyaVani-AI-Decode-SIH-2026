@@ -379,7 +379,7 @@ export function useVoiceRecorder(options?: UseVoiceRecorderOptions): UseVoiceRec
               console.warn('[useVoiceRecorder] incrementAIQuestionCount warning:', err);
             }
           });
-        } else if (result.mode === 'scheme_rag' || (result.schemes && result.schemes.length > 0)) {
+        } else if (result.mode === 'scheme_rag') {
           const matchedSchemes = (result.schemes || []).map((s) => s.schemeName || s.schemeId);
           logSchemeCheck(trimmed, matchedSchemes).catch((err) => {
             if (import.meta.env.DEV) {

@@ -33,12 +33,21 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [pds, setPds] = useState<PdsState>({ status: 'loading' });
   const isPdsFetchingRef = useRef(false);
+  const loadRequestIdRef = useRef(0);
 
-  const loadStats = useCallback(() => {
-    getDashboardStats(currentUser).then((data) => {
-      setStats(data);
-      setIsLoading(false);
-    });
+  const loadStats = useCallback(async () => {
+    const requestId = ++loadRequestIdRef.current;
+    try {
+      const data = await getDashboardStats(currentUser);
+      if (requestId === loadRequestIdRef.current) {
+        setStats(data);
+        setIsLoading(false);
+      }
+    } catch {
+      if (requestId === loadRequestIdRef.current) {
+        setIsLoading(false);
+      }
+    }
   }, [currentUser]);
 
   // ── Auto-fetch PDS centre (one-shot GPS on tab activation) ───

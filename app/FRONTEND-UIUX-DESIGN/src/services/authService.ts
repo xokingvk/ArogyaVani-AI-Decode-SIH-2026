@@ -2,7 +2,7 @@ import { Session } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabaseClient';
 import { UserProfile, AuthResult } from '../types/authTypes';
 
-const isSupabaseConfigured = Boolean(
+export const isSupabaseConfigured = Boolean(
   import.meta.env.VITE_SUPABASE_URL &&
   import.meta.env.VITE_SUPABASE_ANON_KEY &&
   !import.meta.env.VITE_SUPABASE_URL.includes('your-supabase-project-url-here') &&

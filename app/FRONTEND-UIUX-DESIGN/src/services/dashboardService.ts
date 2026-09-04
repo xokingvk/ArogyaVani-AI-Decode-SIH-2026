@@ -24,21 +24,33 @@ import { DashboardStatsData } from '../types/dashboardTypes';
 import { UserProfile } from '../types/authTypes';
 import { getSchemeCheckSummary } from './schemeCheckService';
 import { getEmergencyContactCount } from './emergencyContactService';
+import { getCurrentSession, isSupabaseConfigured } from './authService';
 
 // ──────────────────────────────────────────────────────────────
 // Helpers
 // ──────────────────────────────────────────────────────────────
 
-async function getAuthUser() {
-  const { data } = await supabase.auth.getSession();
-  return data?.session?.user ?? null;
+async function getEffectiveUserId(userProfile?: UserProfile | null): Promise<string> {
+  if (userProfile?.id) return userProfile.id;
+  const session = await getCurrentSession();
+  if (session?.user?.id) return session.user.id;
+  return 'demo-user';
 }
 
 function getLocalSchemeChecks(userId: string): any[] {
   try {
-    const raw = localStorage.getItem(`arogya_scheme_checks_${userId}`);
-    const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed : [];
+    if (typeof localStorage === 'undefined') return [];
+    const keys = [`arogya_scheme_checks_${userId}`, 'arogya_scheme_checks_demo-user'];
+    for (const key of keys) {
+      const raw = localStorage.getItem(key);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    }
+    return [];
   } catch {
     return [];
   }
@@ -51,35 +63,33 @@ function getLocalSchemeChecks(userId: string): any[] {
 /**
  * Calculates the number of distinct matched schemes across recent scheme RAG queries.
  */
-async function fetchSchemeStatus(): Promise<{ primaryValue: string; secondaryLabel: string }> {
+async function fetchSchemeStatus(userProfile?: UserProfile | null): Promise<{ primaryValue: string; secondaryLabel: string }> {
   try {
-    const user = await getAuthUser();
-    if (!user) {
-      return { primaryValue: '0', secondaryLabel: 'No matches yet' };
-    }
+    const effectiveUserId = await getEffectiveUserId(userProfile);
+    let rows: any[] = [];
 
-    const { data, error } = await supabase
-      .from('scheme_checks')
-      .select('schemes')
-      .eq('user_id', user.id)
-      .order('checked_at', { ascending: false })
-      .limit(20);
+    if (isSupabaseConfigured && !effectiveUserId.startsWith('mock-') && !effectiveUserId.startsWith('demo-')) {
+      const { data, error } = await supabase
+        .from('scheme_checks')
+        .select('schemes')
+        .eq('user_id', effectiveUserId)
+        .order('checked_at', { ascending: false })
+        .limit(30);
 
-    let rows: any[] = (data as any[]) || [];
-    if (error || rows.length === 0) {
-      if (error && import.meta.env.DEV) {
+      if (!error && data) {
+        rows = data;
+      } else if (error && import.meta.env.DEV) {
         console.warn('[dashboardService] fetchSchemeStatus query failed:', error.message);
       }
-      const localRows = getLocalSchemeChecks(user.id);
-      if (localRows.length === 0) {
-        return { primaryValue: '0', secondaryLabel: 'No matches yet' };
-      }
-      rows = localRows;
+    }
+
+    if (rows.length === 0) {
+      rows = getLocalSchemeChecks(effectiveUserId);
     }
 
     const distinctSchemes = new Set<string>();
     for (const row of rows) {
-      if (!row.schemes) continue;
+      if (!row || !row.schemes) continue;
       let list = row.schemes;
       if (typeof list === 'string') {
         try {
@@ -138,10 +148,13 @@ async function fetchLastSchemeCheck(): Promise<{ primaryValue: string; secondary
 /**
  * Counts unread health alerts relevant to the current user (user_id = user.id OR user_id IS NULL).
  */
-async function fetchActiveAlerts(): Promise<{ primaryValue: string; secondaryLabel: string }> {
+async function fetchActiveAlerts(userProfile?: UserProfile | null): Promise<{ primaryValue: string; secondaryLabel: string }> {
   try {
-    const user = await getAuthUser();
-    if (!user) {
+    const session = await getCurrentSession();
+    const user = session?.user;
+    const effectiveUserId = user?.id || userProfile?.id;
+
+    if (!isSupabaseConfigured || !effectiveUserId || effectiveUserId.startsWith('mock-') || effectiveUserId.startsWith('demo-')) {
       return { primaryValue: '0', secondaryLabel: 'No active alerts' };
     }
 
@@ -149,7 +162,7 @@ async function fetchActiveAlerts(): Promise<{ primaryValue: string; secondaryLab
       .from('health_alerts')
       .select('id', { count: 'exact', head: true })
       .eq('is_read', false)
-      .or(`user_id.eq.${user.id},user_id.is.null`);
+      .or(`user_id.eq.${effectiveUserId},user_id.is.null`);
 
     if (error) {
       if (import.meta.env.DEV) {
@@ -200,14 +213,27 @@ async function fetchFamilyConnected(): Promise<{ primaryValue: string; secondary
 export const getDashboardStats = async (
   userProfile?: UserProfile | null,
 ): Promise<DashboardStatsData> => {
+  if (import.meta.env.DEV) {
+    console.log('[dashboard] loading stats');
+  }
+
   // Run all independent fetches in parallel for speed.
   // One failure will never block or break the other cards.
   const [schemeStatus, lastSchemeCheck, activeAlerts, familyConnected] = await Promise.all([
-    fetchSchemeStatus(),
+    fetchSchemeStatus(userProfile),
     fetchLastSchemeCheck(),
-    fetchActiveAlerts(),
+    fetchActiveAlerts(userProfile),
     fetchFamilyConnected(),
   ]);
+
+  if (import.meta.env.DEV) {
+    console.log('[dashboard] Supabase configured:', isSupabaseConfigured);
+    console.log(
+      '[dashboard] lastSchemeCheck:',
+      lastSchemeCheck.primaryValue !== '—' ? lastSchemeCheck.primaryValue : null
+    );
+    console.log('[dashboard] schemeStatus:', schemeStatus.primaryValue);
+  }
 
   const totalQuestions = userProfile?.ai_question_count ?? 0;
 
@@ -227,3 +253,4 @@ export const getDashboardStats = async (
     family_connected_status: familyConnected,
   };
 };
+

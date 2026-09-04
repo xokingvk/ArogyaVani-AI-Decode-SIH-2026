@@ -10,6 +10,7 @@
  */
 
 import { supabase } from '../lib/supabaseClient';
+import { getCurrentSession, isSupabaseConfigured } from './authService';
 
 // ──────────────────────────────────────────────────────────────
 // Types
@@ -26,10 +27,26 @@ export interface SchemeCheckSummary {
 
 const LOCAL_SCHEME_CHECKS_KEY = 'arogya_scheme_checks_';
 
-// ──────────────────────────────────────────────────────────────
 export interface LogSchemeCheckResult {
   success: boolean;
   checkedAt: string | null;
+}
+
+/**
+ * Normalizes input schemes to clean array of string names/IDs
+ */
+export function normalizeSchemes(
+  schemes: (string | { schemeId?: string; schemeName?: string; name?: string; id?: string })[] = []
+): string[] {
+  return schemes
+    .map((s) => {
+      if (typeof s === 'string') return s.trim();
+      if (s && typeof s === 'object') {
+        return (s.schemeName || s.schemeId || s.name || s.id || '').trim();
+      }
+      return '';
+    })
+    .filter(Boolean);
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -38,88 +55,159 @@ export interface LogSchemeCheckResult {
 
 /**
  * Atomically inserts a new scheme_checks row via the DB-side RPC.
- * Falls back to direct table insert and local storage if offline.
+ * Falls back to direct table insert and local storage if offline or failed.
  */
 export const logSchemeCheck = async (
   queryText: string,
-  schemes: (string | { schemeId?: string; schemeName?: string })[] = [],
+  schemes: (string | { schemeId?: string; schemeName?: string; name?: string; id?: string })[] = [],
 ): Promise<LogSchemeCheckResult> => {
-  const timestamp = new Date().toISOString();
+  const localTimestamp = new Date().toISOString();
+  const normalizedSchemes = normalizeSchemes(schemes);
+
+  if (import.meta.env.DEV) {
+    console.log('[scheme-history] Scheme RAG result received');
+    console.log('[dashboard] Supabase configured:', isSupabaseConfigured);
+  }
+
   try {
-    const { data: sessionData } = await supabase.auth.getSession();
-    const user = sessionData?.session?.user;
-    if (!user) {
-      // In demo/guest mode, save locally so UI still functions
-      saveLocalSchemeCheck('demo-user', queryText, schemes);
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('arogya:scheme_check_logged'));
+    const session = await getCurrentSession();
+    const user = session?.user;
+    const effectiveUserId = user?.id || 'demo-user';
+
+    // ──────────────────────────────────────────────────────────
+    // 1. AUTHENTICATED SUPABASE PATH (if Supabase session exists)
+    // ──────────────────────────────────────────────────────────
+    if (isSupabaseConfigured && user && !user.id.startsWith('mock-') && !user.id.startsWith('demo-')) {
+      // Step A: Call RPC
+      let rpcSuccess = false;
+      let returnedId: string | null = null;
+
+      try {
+        const { data: rpcData, error: rpcError } = await supabase.rpc('log_scheme_check', {
+          p_query_text: queryText.slice(0, 500),
+          p_schemes: normalizedSchemes,
+        });
+
+        if (!rpcError && rpcData) {
+          rpcSuccess = true;
+          returnedId = String(rpcData);
+        } else if (rpcError && import.meta.env.DEV) {
+          console.warn('[scheme-history] RPC failed:', rpcError.message);
+        }
+      } catch (rpcErr) {
+        if (import.meta.env.DEV) {
+          console.warn('[scheme-history] RPC invocation exception:', rpcErr);
+        }
       }
-      return { success: true, checkedAt: timestamp };
+
+      // Step B: If RPC succeeded, immediately read the created row
+      if (rpcSuccess && returnedId) {
+        try {
+          const { data: row, error: readError } = await supabase
+            .from('scheme_checks')
+            .select('id, checked_at, query_text, schemes')
+            .eq('id', returnedId)
+            .single();
+
+          if (!readError && row?.checked_at) {
+            if (import.meta.env.DEV) {
+              console.log('[scheme-history] persistence: rpc');
+              console.log('[scheme-history] savedAt:', row.checked_at);
+            }
+
+            saveLocalSchemeCheck(effectiveUserId, queryText, normalizedSchemes, row.checked_at);
+
+            if (typeof window !== 'undefined') {
+              window.dispatchEvent(
+                new CustomEvent('arogya:scheme_check_logged', {
+                  detail: { id: row.id, checkedAt: row.checked_at, source: 'rpc' },
+                })
+              );
+            }
+
+            return { success: true, checkedAt: row.checked_at };
+          }
+        } catch {
+          // Fall through to direct insert or local fallback
+        }
+      }
+
+      // Step C: If RPC failed, try direct table insert
+      try {
+        const { data: insertRow, error: insertError } = await supabase
+          .from('scheme_checks')
+          .insert({
+            user_id: user.id,
+            query_text: queryText.slice(0, 500),
+            schemes: normalizedSchemes,
+          })
+          .select('id, checked_at')
+          .single();
+
+        if (!insertError && insertRow?.checked_at) {
+          if (import.meta.env.DEV) {
+            console.log('[scheme-history] persistence: direct');
+            console.log('[scheme-history] savedAt:', insertRow.checked_at);
+          }
+
+          saveLocalSchemeCheck(effectiveUserId, queryText, normalizedSchemes, insertRow.checked_at);
+
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(
+              new CustomEvent('arogya:scheme_check_logged', {
+                detail: { id: insertRow.id, checkedAt: insertRow.checked_at, source: 'direct' },
+              })
+            );
+          }
+
+          return { success: true, checkedAt: insertRow.checked_at };
+        } else if (insertError && import.meta.env.DEV) {
+          console.warn('[scheme-history] Direct insert failed:', insertError.message);
+        }
+      } catch (insertErr) {
+        if (import.meta.env.DEV) {
+          console.warn('[scheme-history] Direct insert exception:', insertErr);
+        }
+      }
     }
 
-    // Normalize schemes to clean array of names/IDs
-    const normalizedSchemes: string[] = schemes.map((s) => {
-      if (typeof s === 'string') return s.trim();
-      return (s.schemeName || s.schemeId || '').trim();
-    }).filter(Boolean);
-
-    // 1. Try Supabase RPC first (passes array directly as JSONB)
-    const { error: rpcError } = await supabase.rpc('log_scheme_check', {
-      p_query_text: queryText.slice(0, 500),
-      p_schemes: normalizedSchemes,
-    });
-
-    if (!rpcError) {
-      if (import.meta.env.DEV) {
-        console.log('[schemeCheckService] Scheme check logged successfully via RPC');
-      }
-      saveLocalSchemeCheck(user.id, queryText, normalizedSchemes);
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('arogya:scheme_check_logged'));
-      }
-      return { success: true, checkedAt: timestamp };
-    }
+    // ──────────────────────────────────────────────────────────
+    // 2. LOCAL FALLBACK (Offline / Demo Mode / Both DB paths failed)
+    // ──────────────────────────────────────────────────────────
+    saveLocalSchemeCheck(effectiveUserId, queryText, normalizedSchemes, localTimestamp);
 
     if (import.meta.env.DEV) {
-      console.warn('[schemeCheckService] RPC failed:\n' + rpcError.message);
+      console.log('[scheme-history] persistence: local');
+      console.log('[scheme-history] savedAt:', localTimestamp);
     }
 
-    // 2. Direct table insert fallback
-    const { error: insertError } = await supabase.from('scheme_checks').insert({
-      user_id: user.id,
-      query_text: queryText.slice(0, 500),
-      schemes: normalizedSchemes,
-      checked_at: timestamp,
-    });
-
-    if (insertError) {
-      if (import.meta.env.DEV) {
-        console.warn('[schemeCheckService] Scheme check persistence failed:\n' + insertError.message);
-      }
-      saveLocalSchemeCheck(user.id, queryText, normalizedSchemes);
-      return { success: false, checkedAt: null };
-    } else {
-      if (import.meta.env.DEV) {
-        console.log('[schemeCheckService] Scheme check logged successfully via direct insert');
-      }
-      saveLocalSchemeCheck(user.id, queryText, normalizedSchemes);
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('arogya:scheme_check_logged'));
-      }
-      return { success: true, checkedAt: timestamp };
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('arogya:scheme_check_logged', {
+          detail: { source: 'local', checkedAt: localTimestamp },
+        })
+      );
     }
+
+    // If we're in demo/local auth mode, local storage is the primary storage mechanism
+    if (!isSupabaseConfigured || effectiveUserId.startsWith('mock-') || effectiveUserId.startsWith('demo-')) {
+      return { success: true, checkedAt: localTimestamp };
+    }
+
+    return { success: false, checkedAt: null };
   } catch (err: any) {
     if (import.meta.env.DEV) {
-      console.warn('[schemeCheckService] Scheme check persistence failed:\n' + (err?.message || String(err)));
+      console.warn('[scheme-history] Scheme check persistence failed:\n' + (err?.message || String(err)));
     }
     return { success: false, checkedAt: null };
   }
 };
 
-function saveLocalSchemeCheck(
+export function saveLocalSchemeCheck(
   userId: string,
   queryText: string,
-  schemes: string[] | (string | { schemeId?: string; schemeName?: string })[],
+  schemes: string[] | (string | { schemeId?: string; schemeName?: string; name?: string; id?: string })[],
+  checkedAt?: string,
 ) {
   try {
     if (typeof localStorage === 'undefined') return;
@@ -128,8 +216,8 @@ function saveLocalSchemeCheck(
     const existing = raw ? JSON.parse(raw) : [];
     existing.unshift({
       query_text: queryText.slice(0, 500),
-      schemes,
-      checked_at: new Date().toISOString(),
+      schemes: normalizeSchemes(schemes),
+      checked_at: checkedAt || new Date().toISOString(),
     });
     localStorage.setItem(key, JSON.stringify(existing.slice(0, 30)));
   } catch {
@@ -141,14 +229,23 @@ function saveLocalSchemeCheck(
 // Read the most recent scheme check for the dashboard card
 // ──────────────────────────────────────────────────────────────
 
-function formatDate(isoString: string): string {
+export function formatDate(isoString: string): string {
   const d = new Date(isoString);
+  if (isNaN(d.getTime())) return '—';
   return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-function daysSince(isoString: string): number {
+export function daysSince(isoString: string): number {
   const msPerDay = 86400000;
   return Math.floor((Date.now() - new Date(isoString).getTime()) / msPerDay);
+}
+
+export function formatSubLabel(isoString: string): string {
+  const days = daysSince(isoString);
+  if (days === 0) return 'Checked today';
+  if (days === 1) return 'Checked yesterday';
+  if (days > 1) return `${days} days ago`;
+  return 'Checked today';
 }
 
 /**
@@ -163,99 +260,62 @@ export const getSchemeCheckSummary = async (): Promise<SchemeCheckSummary> => {
   };
 
   try {
-    const { data: sessionData } = await supabase.auth.getSession();
-    const user = sessionData?.session?.user;
-    if (!user) {
-      // Check local cache
-      if (typeof localStorage !== 'undefined') {
-        const raw = localStorage.getItem(`${LOCAL_SCHEME_CHECKS_KEY}demo-user`);
-        if (raw) {
-          const list = JSON.parse(raw);
-          if (list && list.length > 0 && list[0].checked_at) {
-            const days = daysSince(list[0].checked_at);
-            const subLabel =
-              days === 0 ? 'Checked today' : days === 1 ? 'Checked yesterday' : `${days} days ago`;
-            return {
-              lastCheckedAt: list[0].checked_at,
-              lastCheckedLabel: formatDate(list[0].checked_at),
-              subLabel,
-            };
-          }
-        }
+    const session = await getCurrentSession();
+    const user = session?.user;
+    const effectiveUserId = user?.id || 'demo-user';
+
+    // Check Supabase if configured and user is real
+    if (isSupabaseConfigured && user && !user.id.startsWith('mock-') && !user.id.startsWith('demo-')) {
+      const { data, error } = await supabase
+        .from('scheme_checks')
+        .select('checked_at')
+        .eq('user_id', user.id)
+        .order('checked_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (!error && data?.checked_at) {
+        return {
+          lastCheckedAt: data.checked_at,
+          lastCheckedLabel: formatDate(data.checked_at),
+          subLabel: formatSubLabel(data.checked_at),
+        };
       }
-      return empty;
+
+      if (error && import.meta.env.DEV) {
+        console.warn('[scheme-history] Failed to fetch last scheme check from Supabase:', error.message);
+      }
     }
 
-    const { data, error } = await supabase
-      .from('scheme_checks')
-      .select('checked_at')
-      .eq('user_id', user.id)
-      .order('checked_at', { ascending: false })
-      .limit(1)
-      .maybeSingle();
-
-    if (error) {
-      if (import.meta.env.DEV) {
-        console.warn('[schemeCheckService] Failed to fetch last scheme check from Supabase:', error.message);
-      }
-      // Check local cache
-      if (typeof localStorage !== 'undefined') {
-        const raw = localStorage.getItem(`${LOCAL_SCHEME_CHECKS_KEY}${user.id}`);
+    // Check local storage for the effective user
+    if (typeof localStorage !== 'undefined') {
+      const userKeys = [`${LOCAL_SCHEME_CHECKS_KEY}${effectiveUserId}`, `${LOCAL_SCHEME_CHECKS_KEY}demo-user`];
+      for (const key of userKeys) {
+        const raw = localStorage.getItem(key);
         if (raw) {
-          const list = JSON.parse(raw);
-          if (list && list.length > 0 && list[0].checked_at) {
-            const days = daysSince(list[0].checked_at);
-            const subLabel =
-              days === 0 ? 'Checked today' : days === 1 ? 'Checked yesterday' : `${days} days ago`;
-            return {
-              lastCheckedAt: list[0].checked_at,
-              lastCheckedLabel: formatDate(list[0].checked_at),
-              subLabel,
-            };
-          }
-        }
-      }
-      return empty;
-    }
-
-    if (!data?.checked_at) {
-      // DB is reachable but may be empty (e.g. RPC/insert unavailable).
-      // Fall back to the locally persisted successful Scheme RAG record so
-      // the dashboard remains accurate in demo/offline mode.
-      if (typeof localStorage !== 'undefined') {
-        try {
-          const raw = localStorage.getItem(`${LOCAL_SCHEME_CHECKS_KEY}${user.id}`);
-          if (raw) {
+          try {
             const list = JSON.parse(raw);
-            if (Array.isArray(list) && list[0]?.checked_at) {
-              const days = daysSince(list[0].checked_at);
+            if (Array.isArray(list) && list.length > 0 && list[0]?.checked_at) {
+              const checkedAt = list[0].checked_at;
               return {
-                lastCheckedAt: list[0].checked_at,
-                lastCheckedLabel: formatDate(list[0].checked_at),
-                subLabel: days === 0 ? 'Checked today' : days === 1 ? 'Checked yesterday' : `${days} days ago`,
+                lastCheckedAt: checkedAt,
+                lastCheckedLabel: formatDate(checkedAt),
+                subLabel: formatSubLabel(checkedAt),
               };
             }
+          } catch {
+            // Ignore parse error
           }
-        } catch {
-          // Ignore local cache parse failures.
         }
       }
-      return empty;
     }
 
-    const days = daysSince(data.checked_at);
-    const subLabel =
-      days === 0 ? 'Checked today' : days === 1 ? 'Checked yesterday' : `${days} days ago`;
-
-    return {
-      lastCheckedAt: data.checked_at,
-      lastCheckedLabel: formatDate(data.checked_at),
-      subLabel,
-    };
+    return empty;
   } catch (err) {
     if (import.meta.env.DEV) {
-      console.warn('[schemeCheckService] Unexpected error in getSchemeCheckSummary:', err);
+      console.warn('[scheme-history] Unexpected error in getSchemeCheckSummary:', err);
     }
     return empty;
   }
 };
+
