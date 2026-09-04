@@ -273,7 +273,7 @@ def is_rag_enabled() -> bool:
 
 def is_doc_eligibility_enabled() -> bool:
     """Returns whether the document extraction & scheme eligibility flow is enabled."""
-    return os.getenv("ENABLE_DOCUMENT_ELIGIBILITY", "false").strip().lower() in ("true", "1", "yes")
+    return os.getenv("ENABLE_DOCUMENT_ELIGIBILITY", "true").strip().lower() in ("true", "1", "yes")
 
 
 def is_document_rag_enabled() -> bool:
@@ -383,7 +383,7 @@ async def scheme_document(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             content={
                 "success": False,
-                "error": "Document scheme verification is temporarily unavailable in prototype mode. Please check back soon.",
+                "error": "Document scheme verification is temporarily unavailable. Please try again later.",
                 "temporary_unavailable": True,
             },
         )
@@ -488,7 +488,7 @@ async def scheme_eligibility(payload: SchemeEligibilityRequest):
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             content={
                 "success": False,
-                "error": "Scheme eligibility evaluation is temporarily unavailable in prototype mode. Please check back soon.",
+                "error": "Scheme eligibility evaluation is temporarily unavailable. Please try again later.",
                 "temporary_unavailable": True,
             },
         )

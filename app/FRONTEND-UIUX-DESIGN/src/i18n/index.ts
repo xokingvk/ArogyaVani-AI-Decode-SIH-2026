@@ -208,6 +208,7 @@ export const resources = {
           errUnsupported: 'Unsupported file type ({{type}}). Please upload a JPG, PNG, or PDF.',
           errEmpty: 'The selected file appears to be empty. Please choose another file.',
           errTooLarge: 'File is too large ({{size}} MB). Maximum allowed size is 10 MB.',
+          errorTitle: 'Document Processing Error',
         },
         documentRag: {
           title: 'Ask About This Document',
@@ -715,6 +716,7 @@ export const resources = {
           errUnsupported: 'ஆதரிக்கப்படாத கோப்பு வடிவம் ({{type}}). JPG, PNG அல்லது PDF பதிவேற்றவும்.',
           errEmpty: 'தேர்ந்தெடுக்கப்பட்ட கோப்பு காலியாக உள்ளது. வேறு கோப்பைத் தேர்ந்தெடுக்கவும்.',
           errTooLarge: 'கோப்பு மிகவும் பெரியது ({{size}} MB). அதிகபட்ச அளவு 10 MB.',
+          errorTitle: 'ஆவண செயலாக்க பிழை',
         },
         documentRag: {
           title: 'இந்த ஆவணத்தைப் பற்றி கேளுங்கள்',
@@ -1222,6 +1224,7 @@ export const resources = {
           errUnsupported: 'असमर्थित फ़ाइल प्रारूप ({{type}})। कृपया JPG, PNG या PDF अपलोड करें।',
           errEmpty: 'चयनित फ़ाइल खाली है। कृपया दूसरी फ़ाइल चुनें।',
           errTooLarge: 'फ़ाइल बहुत बड़ी है ({{size}} MB)। अधिकतम आकार 10 MB है।',
+          errorTitle: 'दस्तावेज़ प्रसंस्करण त्रुटि',
         },
         documentRag: {
           title: 'इस दस्तावेज़ के बारे में पूछें',
@@ -1729,6 +1732,7 @@ export const resources = {
           errUnsupported: 'మద్దతు లేని ఫైల్ ఫార్మాట్ ({{type}}). దయచేసి JPG, PNG లేదా PDF అప్‌లోడ్ చేయండి.',
           errEmpty: 'ఎంచుకున్న ఫైల్ ఖాళీగా ఉంది. దయచేసి వేరొక ఫైల్‌ను ఎంచుకోండి.',
           errTooLarge: 'ఫైల్ చాలా పెద్దది ({{size}} MB). గరిష్ట పరిమాణం 10 MB.',
+          errorTitle: 'పత్రం ప్రాసెసింగ్ లోపం',
         },
         documentRag: {
           title: 'ఈ పత్రం గురించి అడగండి',

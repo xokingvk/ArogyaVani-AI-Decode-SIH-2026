@@ -254,7 +254,7 @@ export const SchemeDocumentUpload: React.FC<SchemeDocumentUploadProps> = ({
             >
               <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
               <div>
-                <p className="font-bold">{t('schemes.errorState')}</p>
+                <p className="font-bold">{t('schemes.documentUpload.errorTitle', 'Document Processing Error')}</p>
                 <p className="mt-0.5 font-normal">{validationError ?? errorMessage}</p>
               </div>
               <button

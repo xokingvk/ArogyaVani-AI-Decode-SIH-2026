@@ -12,7 +12,7 @@ services:
       - key: ENABLE_RAG
         value: "false"
       - key: ENABLE_DOCUMENT_ELIGIBILITY
-        value: "false"
+        value: "true"
       - key: ENABLE_DOCUMENT_RAG
         value: "true"
 
