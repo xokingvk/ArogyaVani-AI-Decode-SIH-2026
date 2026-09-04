@@ -13,3 +13,6 @@ services:
         value: "false"
       - key: ENABLE_DOCUMENT_ELIGIBILITY
         value: "false"
+      - key: ENABLE_DOCUMENT_RAG
+        value: "true"
+

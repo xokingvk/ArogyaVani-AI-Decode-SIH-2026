@@ -36,9 +36,11 @@ import { SchemeFilterChips } from '../components/SchemeFilterChips';
 import { SchemeRagAnswerCard } from '../components/SchemeRagAnswerCard';
 import { SchemeRecommendationList } from '../components/SchemeRecommendationList';
 import { SchemeDetailsScreen } from './SchemeDetailsScreen';
+import { DocumentRagChat } from '../components/DocumentRagChat';
 import { useVoiceRecorder } from '../../voice/hooks/useVoiceRecorder';
 import { VoiceQuerySuccessResponse } from '../../voice/types/voiceTypes';
 import { uploadSchemeDocument, evaluateSchemeEligibility } from '../../../services/voiceService';
+import { uploadDocumentForRag } from '../../../services/documentRagService';
 
 export interface SchemesScreenProps {
   initialSelectedSchemeId?: string;
@@ -120,13 +122,15 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
     return localizedAllSchemes.filter((s) => matchedIds.has(s.id.toLowerCase()));
   }, [isRagRecommendation, ragResult, localizedAllSchemes]);
 
-  // ── Document Eligibility State ───────────────────────────────────────────
+  // ── Document Eligibility & RAG State ─────────────────────────────────────
   const [docUploadState, setDocUploadState] = useState<DocumentUploadState>('idle');
   const [docErrorMessage, setDocErrorMessage] = useState<string>('');
   const [documentResponse, setDocumentResponse] = useState<DocumentEligibilityResponse | null>(null);
   const [isReviewingProfile, setIsReviewingProfile] = useState<boolean>(false);
   const [previewProfile, setPreviewProfile] = useState<UserProfile | null>(null);
   const [previewMissingFields, setPreviewMissingFields] = useState<string[]>([]);
+  const [documentSessionId, setDocumentSessionId] = useState<string | null>(null);
+  const [uploadedFileName, setUploadedFileName] = useState<string>('');
 
   const handleDocumentSelected = useCallback((_file: File) => {
     setDocUploadState('selected');
@@ -136,21 +140,36 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
   const handleDocumentUpload = useCallback(async (file: File) => {
     setDocUploadState('uploading');
     setDocErrorMessage('');
+    setUploadedFileName(file.name);
 
     try {
-      const result = await uploadSchemeDocument(file);
+      // Step 1: Initialize eligibility and document RAG in parallel (one user upload)
+      const [eligibilityResult, ragResult] = await Promise.allSettled([
+        uploadSchemeDocument(file),
+        uploadDocumentForRag(file),
+      ]);
 
-      if (!result.success) {
+      if (eligibilityResult.status === 'fulfilled' && eligibilityResult.value.success) {
+        const result = eligibilityResult.value;
+        setDocUploadState('success');
+        setPreviewProfile(result.profile);
+        setPreviewMissingFields(result.missing_fields || []);
+        setDocumentResponse(result);
+        setIsReviewingProfile(true);
+      } else {
+        const err =
+          eligibilityResult.status === 'fulfilled' && !eligibilityResult.value.success
+            ? eligibilityResult.value.error
+            : t('schemes.documentUpload.errUnsupported', { type: file.type });
         setDocUploadState('error');
-        setDocErrorMessage(result.error || t('schemes.documentUpload.errUnsupported', { type: file.type }));
+        setDocErrorMessage(err);
         return;
       }
 
-      setDocUploadState('success');
-      setPreviewProfile(result.profile);
-      setPreviewMissingFields(result.missing_fields || []);
-      setDocumentResponse(result);
-      setIsReviewingProfile(true);
+      // Store Document RAG session ID if indexing succeeded
+      if (ragResult.status === 'fulfilled' && ragResult.value.success && ragResult.value.document_session_id) {
+        setDocumentSessionId(ragResult.value.document_session_id);
+      }
     } catch {
       setDocUploadState('error');
       setDocErrorMessage(t('schemes.errorState'));
@@ -164,6 +183,8 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
     setIsReviewingProfile(false);
     setPreviewProfile(null);
     setPreviewMissingFields([]);
+    setDocumentSessionId(null);
+    setUploadedFileName('');
   }, []);
 
   const handleConfirmProfile = useCallback(
@@ -309,6 +330,17 @@ export const SchemesScreen: React.FC<SchemesScreenProps> = ({
             data={documentResponse}
             onClear={handleClearDocument}
             onViewSchemeDetails={(scheme) => setSelectedScheme(scheme)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* ── 6b. Document Grounded Q&A Assistant (Document RAG) ──────────── */}
+      <AnimatePresence>
+        {documentSessionId && !isReviewingProfile && (
+          <DocumentRagChat
+            documentSessionId={documentSessionId}
+            fileName={uploadedFileName}
+            onClear={handleClearDocument}
           />
         )}
       </AnimatePresence>

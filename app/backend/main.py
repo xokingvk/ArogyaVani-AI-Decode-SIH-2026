@@ -276,6 +276,11 @@ def is_doc_eligibility_enabled() -> bool:
     return os.getenv("ENABLE_DOCUMENT_ELIGIBILITY", "false").strip().lower() in ("true", "1", "yes")
 
 
+def is_document_rag_enabled() -> bool:
+    """Returns whether the in-memory Gemini Document RAG feature is enabled."""
+    return os.getenv("ENABLE_DOCUMENT_RAG", "true").strip().lower() in ("true", "1", "yes")
+
+
 class SchemeEligibilityRequest(BaseModel):
     profile: dict[str, Any]
 
@@ -518,8 +523,191 @@ async def scheme_eligibility(payload: SchemeEligibilityRequest):
         )
 
 
+
+class DocumentRagQueryRequest(BaseModel):
+    document_session_id: str
+    question: str
+    language_code: Optional[str] = "en-IN"
+
+
+@app.post("/document-rag/upload")
+async def document_rag_upload(
+    file: UploadFile = File(...),
+):
+    """Document RAG upload and indexing endpoint:
+    1. Validates document format and size (up to 10 MB).
+    2. Extracts page texts preserving page metadata.
+    3. Chunks text with page numbers.
+    4. Generates embeddings using Gemini Embeddings API (gemini-embedding-001).
+    5. Creates a temporary in-memory session (TTL 25 mins, max 20 sessions).
+    6. Returns document_session_id without storing raw file.
+    """
+    if not is_document_rag_enabled():
+        return JSONResponse(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            content={
+                "success": False,
+                "error": "Document Q&A is currently disabled.",
+            },
+        )
+
+    if not file:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "success": False,
+                "error": "No document provided. Please upload a PDF or image.",
+            },
+        )
+
+    try:
+        file_bytes = await file.read()
+        if not file_bytes or len(file_bytes) == 0:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={
+                    "success": False,
+                    "error": "The uploaded document is empty. Please select a valid file.",
+                },
+            )
+
+        if len(file_bytes) > 10 * 1024 * 1024:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={
+                    "success": False,
+                    "error": "File exceeds the 10 MB limit. Please upload a smaller document.",
+                },
+            )
+
+        ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".pdf"}
+        filename = file.filename or "document.pdf"
+        ext = ("." + filename.rsplit(".", 1)[-1].lower()) if "." in filename else ""
+        if ext not in ALLOWED_EXTENSIONS:
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={
+                    "success": False,
+                    "error": "Unsupported file format. Please upload a JPG, PNG, WEBP, or PDF document.",
+                },
+            )
+
+        content_type = (file.content_type or "").lower().strip()
+        from services.document_rag_service import process_document_upload
+
+        session = process_document_upload(
+            file_bytes=file_bytes,
+            filename=filename,
+            mime_type=content_type,
+        )
+
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={
+                "success": True,
+                "document_session_id": session.document_session_id,
+                "filename": session.filename,
+                "page_count": session.page_count,
+                "chunk_count": session.chunk_count,
+            },
+        )
+    except ValueError as ve:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "success": False,
+                "error": str(ve),
+            },
+        )
+    except Exception as exc:
+        logger.exception(f"Error while processing document for RAG: {exc}")
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={
+                "success": False,
+                "error": "Unable to process document for question answering. Please try again.",
+            },
+        )
+
+
+@app.post("/document-rag/query")
+async def document_rag_query(payload: DocumentRagQueryRequest):
+    """Document RAG query endpoint:
+    1. Validates session ID and question length (<= 1000 chars).
+    2. Retrieves active in-memory document session.
+    3. Retrieves top-k matching chunks via cosine similarity.
+    4. Generates strictly grounded plain-text response with source citations.
+    """
+    if not is_document_rag_enabled():
+        return JSONResponse(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            content={
+                "success": False,
+                "error": "Document Q&A is currently disabled.",
+            },
+        )
+
+    question = (payload.question or "").strip()
+    if not question:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "success": False,
+                "error": "Please enter a valid question about your document.",
+            },
+        )
+
+    if len(question) > 1000:
+        return JSONResponse(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            content={
+                "success": False,
+                "error": "Question is too long (maximum 1000 characters).",
+            },
+        )
+
+    from services.document_rag_service import get_document_session, answer_document_question
+
+    session = get_document_session(payload.document_session_id)
+    if not session:
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND,
+            content={
+                "success": False,
+                "error": "Document session expired. Please upload the document again.",
+                "session_expired": True,
+            },
+        )
+
+    try:
+        result = answer_document_question(
+            session=session,
+            question=question,
+            language_code=payload.language_code,
+        )
+
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={
+                "success": True,
+                "answer": result["answer"],
+                "sources": result["sources"],
+            },
+        )
+    except Exception as exc:
+        logger.exception(f"Error while answering document question: {exc}")
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={
+                "success": False,
+                "error": "Unable to answer question based on document context. Please try again.",
+            },
+        )
+
+
 if __name__ == "__main__":
     import uvicorn
 
     port = int(os.getenv("PORT", "8000"))
     uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
+
