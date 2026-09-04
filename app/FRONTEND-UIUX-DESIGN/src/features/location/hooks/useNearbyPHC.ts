@@ -2,7 +2,7 @@
  * useNearbyPHC hook
  * Manages the lifecycle of one-time GPS location lookup and nearby PHC searching.
  */
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import {
   LocationState,
   NearbyPHCFacility,
@@ -30,59 +30,68 @@ export function useNearbyPHC(): UseNearbyPHCReturn {
   const [hasPhcMatch, setHasPhcMatch] = useState<boolean>(false);
   const [userLocation, setUserLocation] = useState<UserCoordinates | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const isSearchingRef = useRef<boolean>(false);
 
   const findNearbyPHC = useCallback(async () => {
+    if (isSearchingRef.current) {
+      return;
+    }
+    isSearchingRef.current = true;
     setErrorMessage('');
     setState('locating');
 
-    let coords: UserCoordinates;
     try {
-      coords = await getCurrentDeviceLocation();
-      setUserLocation(coords);
-    } catch (locErr: any) {
-      if (locErr && locErr.code === 1) {
-        // GeolocationPositionError.PERMISSION_DENIED
-        setState('permission_denied');
-        setErrorMessage('Location permission is required to find nearby Primary Health Centres.');
-        return;
-      }
-      if (locErr && locErr.code === 3) {
-        // GeolocationPositionError.TIMEOUT
+      let coords: UserCoordinates;
+      try {
+        coords = await getCurrentDeviceLocation();
+        setUserLocation(coords);
+      } catch (locErr: any) {
+        if (locErr && locErr.code === 1) {
+          // GeolocationPositionError.PERMISSION_DENIED
+          setState('permission_denied');
+          setErrorMessage('Location permission is required to find nearby Primary Health Centres.');
+          return;
+        }
+        if (locErr && locErr.code === 3) {
+          // GeolocationPositionError.TIMEOUT
+          setState('error');
+          setErrorMessage('Location request timed out. Please check your GPS signal and try again.');
+          return;
+        }
         setState('error');
-        setErrorMessage('Location request timed out. Please check your GPS signal and try again.');
+        setErrorMessage(
+          locErr?.message || 'Unable to get your current location. Please enable GPS and try again.'
+        );
         return;
       }
-      setState('error');
-      setErrorMessage(
-        locErr?.message || 'Unable to get your current location. Please enable GPS and try again.'
-      );
-      return;
-    }
 
-    setState('searching');
+      setState('searching');
 
-    try {
-      const response = await fetchNearbyPHCFacilities(coords.latitude, coords.longitude);
+      try {
+        const response = await fetchNearbyPHCFacilities(coords.latitude, coords.longitude);
 
-      if (!response.success) {
+        if (!response.success) {
+          setState('error');
+          setErrorMessage(response.error || 'Failed to search for nearby health facilities.');
+          return;
+        }
+
+        if (!response.facilities || response.facilities.length === 0) {
+          setFacilities([]);
+          setHasPhcMatch(false);
+          setState('empty');
+          return;
+        }
+
+        setFacilities(response.facilities);
+        setHasPhcMatch(response.has_phc_match);
+        setState('results');
+      } catch {
         setState('error');
-        setErrorMessage(response.error || 'Failed to search for nearby health facilities.');
-        return;
+        setErrorMessage('Nearby facility search is temporarily unavailable. Please try again.');
       }
-
-      if (!response.facilities || response.facilities.length === 0) {
-        setFacilities([]);
-        setHasPhcMatch(false);
-        setState('empty');
-        return;
-      }
-
-      setFacilities(response.facilities);
-      setHasPhcMatch(response.has_phc_match);
-      setState('results');
-    } catch {
-      setState('error');
-      setErrorMessage('Nearby facility search is temporarily unavailable. Please try again.');
+    } finally {
+      isSearchingRef.current = false;
     }
   }, []);
 

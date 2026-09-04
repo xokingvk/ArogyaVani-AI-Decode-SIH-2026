@@ -1,17 +1,77 @@
-import math
 import logging
+import math
+import os
 import re
-import urllib.parse
+import time
 from typing import Any, Optional
 import requests
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_OVERPASS_URL = "https://overpass-api.de/api/interpreter"
-FALLBACK_OVERPASS_URL = "https://overpass.kumi.systems/api/interpreter"
+# Ordered list of reliable Overpass API interpreter endpoints
+DEFAULT_OVERPASS_ENDPOINTS = [
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.private.coffee/api/interpreter",
+    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+    "https://lz4.overpass-api.de/api/interpreter",
+]
 
-# Earth radius in meters for Haversine formula
+# Timeouts in seconds: (connect_timeout, read_timeout)
+OVERPASS_CONNECT_TIMEOUT = 5
+OVERPASS_READ_TIMEOUT = 12
+
+# HTTP status codes that should trigger an immediate failover to the next endpoint
+FAILOVER_HTTP_STATUSES = {408, 429, 500, 502, 503, 504}
+
+# Standard descriptive User-Agent header
+USER_AGENT = "ArogyaVaniAI/1.0 (healthcare-location-feature)"
+
+# Earth radius in meters for Haversine geodesic calculations
 EARTH_RADIUS_METERS = 6371000.0
+
+# In-memory facility search cache: (lat_rounded, lon_rounded, radius) -> (timestamp, raw_elements)
+_facility_cache: dict[tuple[float, float, int], tuple[float, list[dict[str, Any]]]] = {}
+CACHE_TTL_SECONDS = 300  # 5 minutes
+
+
+def get_overpass_endpoints() -> list[str]:
+    """Returns the list of Overpass API endpoints from environment variable or defaults."""
+    env_endpoints = os.getenv("OVERPASS_ENDPOINTS")
+    if env_endpoints:
+        parsed = [ep.strip() for ep in env_endpoints.split(",") if ep.strip()]
+        if parsed:
+            return parsed
+    return list(DEFAULT_OVERPASS_ENDPOINTS)
+
+
+def _get_cache_key(latitude: float, longitude: float, radius: int) -> tuple[float, float, int]:
+    """Generates an anonymized grid cache key rounded to 3 decimal places (~110m)."""
+    return (round(latitude, 3), round(longitude, 3), radius)
+
+
+def _get_cached_elements(latitude: float, longitude: float, radius: int) -> Optional[list[dict[str, Any]]]:
+    """Retrieves cached raw elements if present and within TTL."""
+    key = _get_cache_key(latitude, longitude, radius)
+    if key in _facility_cache:
+        timestamp, elements = _facility_cache[key]
+        if time.time() - timestamp < CACHE_TTL_SECONDS:
+            return elements
+        else:
+            del _facility_cache[key]
+    return None
+
+
+def _set_cached_elements(latitude: float, longitude: float, radius: int, elements: list[dict[str, Any]]) -> None:
+    """Caches raw elements with timestamp, maintaining a bounded cache size."""
+    if len(_facility_cache) > 200:
+        now = time.time()
+        expired = [k for k, (ts, _) in _facility_cache.items() if now - ts >= CACHE_TTL_SECONDS]
+        for k in expired:
+            _facility_cache.pop(k, None)
+        if len(_facility_cache) > 200:
+            _facility_cache.clear()
+    key = _get_cache_key(latitude, longitude, radius)
+    _facility_cache[key] = (time.time(), elements)
 
 
 def validate_coordinates(latitude: float, longitude: float) -> tuple[bool, Optional[str]]:
@@ -64,7 +124,7 @@ def calculate_haversine_distance(
 
 
 def build_overpass_query(latitude: float, longitude: float, radius: int) -> str:
-    """Builds a focused Overpass QL query around the specified coordinates and radius."""
+    """Builds a lightweight Overpass QL query returning coordinates and tags without heavy geometry."""
     return f"""
     [out:json][timeout:12];
     (
@@ -298,10 +358,8 @@ def sort_and_rank_facilities(facilities: list[dict[str, Any]], limit: int = 6) -
     2. Government Health Facilities (priority_rank 2), sorted nearest-first
     3. General Healthcare Facilities (priority_rank 3), sorted nearest-first
     """
-    # Sort by (priority_rank ascending, distance_m ascending)
     sorted_facs = sorted(facilities, key=lambda f: (f["priority_rank"], f["distance_m"]))
 
-    # Clean out internal sorting key before returning to client
     result = []
     for f in sorted_facs[:limit]:
         item = dict(f)
@@ -311,74 +369,144 @@ def sort_and_rank_facilities(facilities: list[dict[str, Any]], limit: int = 6) -
     return result
 
 
+def query_overpass_with_failover(
+    query_str: str,
+    endpoints: Optional[list[str]] = None,
+    session: Optional[requests.Session] = None,
+) -> tuple[bool, list[dict[str, Any]], Optional[str]]:
+    """Queries Overpass API endpoints sequentially with true failover and timeout protection.
+    Returns (success: bool, raw_elements: list[dict], successful_endpoint: Optional[str]).
+    """
+    if endpoints is None:
+        endpoints = get_overpass_endpoints()
+
+    http = session or requests.Session()
+    headers = {"User-Agent": USER_AGENT}
+    total_endpoints = len(endpoints)
+
+    for idx, endpoint in enumerate(endpoints, start=1):
+        logger.info(f"[location_service] Trying Overpass endpoint {idx}/{total_endpoints}: {endpoint}")
+        try:
+            resp = http.post(
+                endpoint,
+                data={"data": query_str},
+                headers=headers,
+                timeout=(OVERPASS_CONNECT_TIMEOUT, OVERPASS_READ_TIMEOUT),
+            )
+            if resp.status_code == 200:
+                try:
+                    data = resp.json()
+                    elements = data.get("elements", [])
+                    logger.info(
+                        f"[location_service] Overpass attempt {idx} succeeded ({endpoint}). Found {len(elements)} raw elements."
+                    )
+                    return True, elements, endpoint
+                except Exception as json_err:
+                    logger.warning(
+                        f"[location_service] Overpass attempt {idx} failed at {endpoint}: Malformed JSON ({json_err})"
+                    )
+            elif resp.status_code in FAILOVER_HTTP_STATUSES:
+                logger.warning(
+                    f"[location_service] Overpass attempt {idx} failed at {endpoint}: HTTP status {resp.status_code}"
+                )
+            else:
+                logger.warning(
+                    f"[location_service] Overpass attempt {idx} returned unexpected HTTP status {resp.status_code} at {endpoint}"
+                )
+        except requests.exceptions.ConnectTimeout as err:
+            logger.warning(f"[location_service] Overpass attempt {idx} failed: timeout ({err})")
+        except requests.exceptions.ReadTimeout as err:
+            logger.warning(f"[location_service] Overpass attempt {idx} failed: read timeout ({err})")
+        except requests.exceptions.ConnectionError as err:
+            logger.warning(f"[location_service] Overpass attempt {idx} failed: connection error ({err})")
+        except requests.exceptions.RequestException as err:
+            logger.warning(f"[location_service] Overpass attempt {idx} failed: request exception ({err})")
+        except Exception as exc:
+            logger.warning(f"[location_service] Overpass attempt {idx} failed: unexpected error ({exc})")
+
+        if idx < total_endpoints:
+            logger.info(f"[location_service] Trying fallback endpoint {idx + 1}/{total_endpoints}...")
+
+    logger.error("[location_service] All Overpass API endpoints failed.")
+    return False, [], None
+
+
+def check_overpass_connectivity() -> dict[str, Any]:
+    """Diagnostic helper to test connectivity against configured Overpass endpoints with a minimal query."""
+    test_query = "[out:json][timeout:5]; node(around:500,12.9716,77.5946)[\"amenity\"=\"hospital\"]; out 1;"
+    success, _, active_ep = query_overpass_with_failover(test_query)
+    return {
+        "connected": success,
+        "active_endpoint": active_ep,
+        "configured_endpoints": get_overpass_endpoints(),
+    }
+
+
 def fetch_nearby_phc(
     latitude: float,
     longitude: float,
     radius: int = 5000,
-    overpass_url: str = DEFAULT_OVERPASS_URL,
+    overpass_endpoints: Optional[list[str]] = None,
+    session: Optional[requests.Session] = None,
 ) -> dict[str, Any]:
-    """Queries OpenStreetMap Overpass API for healthcare facilities near coordinates,
-    calculates real Haversine distances, ranks nearest PHCs first, and returns clean structured data.
+    """Queries OpenStreetMap Overpass API with multi-endpoint failover for healthcare facilities near coordinates,
+    calculates geodesic Haversine distances, ranks nearest PHCs first, and returns clean structured data.
     """
-    valid, err_msg = validate_coordinates(latitude, longitude)
-    if not valid:
-        return {
-            "success": False,
-            "error": err_msg or "Invalid coordinates provided.",
-        }
+    try:
+        valid, err_msg = validate_coordinates(latitude, longitude)
+        if not valid:
+            return {
+                "success": False,
+                "error": err_msg or "Invalid coordinates provided.",
+            }
 
-    clamped_radius = validate_radius(radius)
-    query_str = build_overpass_query(latitude, longitude, clamped_radius)
+        clamped_radius = validate_radius(radius)
+        logger.info(f"[location_service] Searching nearby facilities within {clamped_radius}m")
 
-    raw_elements: list[dict[str, Any]] = []
-    endpoints = [overpass_url, FALLBACK_OVERPASS_URL] if overpass_url == DEFAULT_OVERPASS_URL else [overpass_url]
-
-    query_success = False
-    for endpoint in endpoints:
-        try:
-            logger.info(f"Querying Overpass API at {endpoint} for radius {clamped_radius}m")
-            resp = requests.post(
-                endpoint,
-                data={"data": query_str},
-                headers={"User-Agent": "ArogyaVani-AI-PHC-Finder/1.0"},
-                timeout=12,
+        # Check in-memory grid cache first
+        cached_elements = _get_cached_elements(latitude, longitude, clamped_radius)
+        if cached_elements is not None:
+            logger.info(f"[location_service] Using cached facility search ({len(cached_elements)} raw elements)")
+            raw_elements = cached_elements
+        else:
+            query_str = build_overpass_query(latitude, longitude, clamped_radius)
+            success, raw_elements, _ = query_overpass_with_failover(
+                query_str, endpoints=overpass_endpoints, session=session
             )
-            if resp.status_code == 200:
-                data = resp.json()
-                raw_elements = data.get("elements", [])
-                query_success = True
-                break
-            else:
-                logger.warning(f"Overpass endpoint {endpoint} returned HTTP status {resp.status_code}")
-        except Exception as exc:
-            logger.warning(f"Failed to query Overpass endpoint {endpoint}: {exc}")
+            if not success:
+                return {
+                    "success": False,
+                    "error": "Nearby facility search is temporarily unavailable. Please try again later.",
+                }
+            # Cache raw elements for this geographic grid cell
+            _set_cached_elements(latitude, longitude, clamped_radius, raw_elements)
 
-    if not query_success:
-        logger.error("All Overpass API endpoints failed.")
+        # Parse and extract facilities relative to exact user coordinates
+        parsed = parse_overpass_elements(raw_elements, latitude, longitude)
+
+        # Deduplicate
+        deduped = deduplicate_facilities(parsed)
+
+        # Sort & Rank (PHC > Govt Facility > General Clinic, nearest-first)
+        final_facilities = sort_and_rank_facilities(deduped, limit=6)
+        logger.info(f"[location_service] Found {len(deduped)} unique facilities, returning {len(final_facilities)} nearest")
+
+        has_phc_match = any(f["facility_type"] == "Primary Health Centre" for f in final_facilities)
+
+        return {
+            "success": True,
+            "user_location": {
+                "latitude": latitude,
+                "longitude": longitude,
+            },
+            "radius_m": clamped_radius,
+            "has_phc_match": has_phc_match,
+            "facilities": final_facilities,
+            "total_found": len(final_facilities),
+        }
+    except Exception as exc:
+        logger.error(f"[location_service] Unexpected error processing nearby PHC: {exc}")
         return {
             "success": False,
             "error": "Nearby facility search is temporarily unavailable. Please try again later.",
         }
-
-    # Parse and extract facilities
-    parsed = parse_overpass_elements(raw_elements, latitude, longitude)
-
-    # Deduplicate
-    deduped = deduplicate_facilities(parsed)
-
-    # Sort & Rank (PHC > Govt Facility > General Clinic, nearest-first)
-    final_facilities = sort_and_rank_facilities(deduped, limit=6)
-
-    has_phc_match = any(f["facility_type"] == "Primary Health Centre" for f in final_facilities)
-
-    return {
-        "success": True,
-        "user_location": {
-            "latitude": latitude,
-            "longitude": longitude,
-        },
-        "radius_m": clamped_radius,
-        "has_phc_match": has_phc_match,
-        "facilities": final_facilities,
-        "total_found": len(final_facilities),
-    }
