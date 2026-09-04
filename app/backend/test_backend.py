@@ -37,15 +37,25 @@ intent_loc = detect_intent(q_loc)
 print(f"Query: '{q_loc}' -> Intent: {intent_loc}")
 assert intent_loc == "location"
 
+q_scheme = "which scheme helps pregnant women?"
+intent_scheme = detect_intent(q_scheme)
+print(f"Query: '{q_scheme}' -> Intent: {intent_scheme}")
+assert intent_scheme == "scheme"
+
+q_conv = "Good morning"
+intent_conv = detect_intent(q_conv)
+print(f"Query: '{q_conv}' -> Intent: {intent_conv}")
+assert intent_conv == "conversational"
+
+q_malaria = "I have malaria"
+intent_malaria = detect_intent(q_malaria)
+print(f"Query: '{q_malaria}' -> Intent: {intent_malaria}")
+assert intent_malaria == "healthcare"
+
 q_health = "what are common symptoms of cold and flu?"
 intent_health = detect_intent(q_health)
 print(f"Query: '{q_health}' -> Intent: {intent_health}")
 assert intent_health == "healthcare"
-
-q_out = "how do I change a tire on my car?"
-intent_out = detect_intent(q_out)
-print(f"Query: '{q_out}' -> Intent: {intent_out}")
-assert intent_out == "out_of_scope"
 print("Intent detection tests passed! [OK]\n")
 
 print("=" * 60)

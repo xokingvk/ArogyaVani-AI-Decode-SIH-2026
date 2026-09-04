@@ -54,15 +54,45 @@ export function playAudioResponse(
   onStart: () => void,
   onEnd: () => void,
 ): HTMLAudioElement {
+  if (!blob || blob.size === 0) {
+    if (import.meta.env.DEV) {
+      console.warn('[audioUtils] playAudioResponse: Blob is empty, skipping playback.');
+    }
+    onEnd();
+    return new Audio();
+  }
+
   const url = URL.createObjectURL(blob);
   const audio = new Audio(url);
 
+  if (import.meta.env.DEV) {
+    console.log('[audioUtils] Initializing audio playback:', {
+      blobSize: blob.size,
+      blobType: blob.type,
+    });
+  }
+
+  let isCleanedUp = false;
   const cleanup = () => {
+    if (isCleanedUp) return;
+    isCleanedUp = true;
     onEnd();
     URL.revokeObjectURL(url);
   };
 
-  audio.onended = cleanup;
+  audio.onloadedmetadata = () => {
+    if (import.meta.env.DEV) {
+      console.log('[audioUtils] Audio metadata loaded: duration =', audio.duration, 'seconds');
+    }
+  };
+
+  audio.onended = () => {
+    if (import.meta.env.DEV) {
+      console.log('[audioUtils] Audio playback ended naturally.');
+    }
+    cleanup();
+  };
+
   audio.onerror = (e) => {
     if (import.meta.env.DEV) {
       console.warn('[audioUtils] Audio playback error:', e);
@@ -71,7 +101,12 @@ export function playAudioResponse(
   };
 
   audio.play()
-    .then(() => onStart())
+    .then(() => {
+      if (import.meta.env.DEV) {
+        console.log('[audioUtils] Audio playback started successfully.');
+      }
+      onStart();
+    })
     .catch((err) => {
       if (import.meta.env.DEV) {
         console.warn('[audioUtils] Autoplay blocked or playback failed:', err);
@@ -87,7 +122,12 @@ export function playAudioResponse(
  */
 export function stopAudioElement(audio: HTMLAudioElement | null): void {
   if (audio) {
-    audio.pause();
+    try {
+      audio.pause();
+      audio.currentTime = 0;
+    } catch {
+      /* ignore */
+    }
   }
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();

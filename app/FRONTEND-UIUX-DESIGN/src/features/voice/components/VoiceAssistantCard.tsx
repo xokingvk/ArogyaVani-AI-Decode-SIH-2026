@@ -41,6 +41,51 @@ interface VoiceAssistantCardProps {
   onTextSubmit: (e: React.FormEvent) => void;
 }
 
+// ── Safe clean response formatter without dangerouslySetInnerHTML ─────────
+
+function formatCleanAnswer(text: string): React.ReactNode {
+  if (!text) return null;
+  const cleaned = text
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/^#{1,6}\s*(.+)$/gm, '$1')
+    .replace(/\*{2,}([^*]+)\*{2,}/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/_{2,}([^_]+)_{2,}/g, '$1')
+    .replace(/_([^_]+)_/g, '$1')
+    .replace(/~~([^~]+)~~/g, '$1')
+    .replace(/^\s*[-*_=\s]{3,}\s*$/gm, '')
+    .replace(/[*#`~]/g, '')
+    .trim();
+
+  const paragraphs = cleaned.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+  if (paragraphs.length <= 1) {
+    const lines = cleaned.split('\n').map((l) => l.trim()).filter(Boolean);
+    if (lines.length > 1) {
+      return (
+        <div className="space-y-1.5 text-white leading-relaxed font-medium">
+          {lines.map((line, idx) => (
+            <p key={idx} className="text-white">
+              {line}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return <p className="text-white leading-relaxed font-medium">{cleaned}</p>;
+  }
+
+  return (
+    <div className="space-y-2 text-white leading-relaxed font-medium">
+      {paragraphs.map((para, idx) => (
+        <p key={idx} className="text-white">
+          {para}
+        </p>
+      ))}
+    </div>
+  );
+}
+
 export const VoiceAssistantCard: React.FC<VoiceAssistantCardProps> = ({
   voiceState,
   transcription,
@@ -233,7 +278,7 @@ export const VoiceAssistantCard: React.FC<VoiceAssistantCardProps> = ({
                     <span>{isSpeakingTts ? t('home.reading') : t('home.listen')}</span>
                   </button>
                 </div>
-                <p className="text-white leading-relaxed font-medium">{aiAnswer}</p>
+                {formatCleanAnswer(aiAnswer)}
               </div>
             )}
           </motion.div>

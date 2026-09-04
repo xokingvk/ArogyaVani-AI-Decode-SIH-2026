@@ -74,27 +74,12 @@ SCHEME_KEYWORDS = [
     "documents needed for",
     "how to apply",
     "how to access",
-]
-
-HEALTHCARE_KEYWORDS = [
-    "health",
-    "healthcare",
-    "hospital",
-    "clinic",
-    "doctor",
-    "medical",
-    "medicine",
-    "symptom",
-    "cold",
-    "fever",
-    "cough",
-    "headache",
-    "stomach",
-    "dizzy",
-    "pain",
-    "phc",
-    "health facility",
-    "healthcare facility",
+    "which scheme helps",
+    "which scheme is for",
+    "scheme for pregnant",
+    "schemes for pregnant",
+    "scheme for children",
+    "schemes for children",
 ]
 
 LOCATION_KEYWORDS = [
@@ -119,11 +104,23 @@ LOCATION_KEYWORDS = [
     "healthcare nearby",
     "health facility near",
     "health facility nearby",
+    "find a nearby",
+    "find a hospital",
+    "find a phc",
+    "find a clinic",
+    "locate a hospital",
+    "locate a phc",
+    "locate a clinic",
 ]
 
 MEDICAL_ADVICE_KEYWORDS = [
     "diagnose me",
     "diagnose this",
+    "diagnose my symptoms",
+    "diagnose my disease",
+    "diagnose whether",
+    "diagnose if",
+    "do i have",
     "what disease do i have",
     "which disease do i have",
     "tell me my disease",
@@ -131,22 +128,35 @@ MEDICAL_ADVICE_KEYWORDS = [
     "which medicine should i take",
     "what tablet should i take",
     "which tablet should i take",
+    "what pill should i take",
+    "what drug should i take",
+    "which drug should i take",
     "what dosage should i take",
     "what dose should i take",
-    "how much medicine should i take",
+    "how much paracetamol",
+    "how much medicine",
+    "how much tablet",
+    "give me the dosage",
     "prescribe medicine",
     "give me a prescription",
+    "prescribe me",
+    "write a prescription",
     "what treatment should i take",
     "which treatment should i take",
     "what should i take for",
     "what medicine can i take",
+    "what tablet can i take",
+    "which antibiotic should i take",
+    "what antibiotic should i take",
+    "tell me exactly what treatment i need",
+    "exact treatment for",
 ]
 
 MEDICAL_SAFETY_RESPONSE = (
-    "I'm sorry, but I cannot provide a diagnosis, prescribe medicines, "
-    "or recommend medical treatments. I can help you with healthcare "
-    "services, government health schemes, and healthcare facilities. "
-    "For medical advice, please consult a qualified healthcare professional."
+    "I am sorry, but I cannot provide a medical diagnosis, prescribe medicines, "
+    "or recommend specific drug dosages. I can help you with general healthcare information, "
+    "government health schemes, and finding healthcare facilities. "
+    "For medical advice and prescriptions, please consult a qualified healthcare professional."
 )
 
 LOCATION_RESPONSE = (
@@ -156,9 +166,9 @@ LOCATION_RESPONSE = (
 )
 
 OUT_OF_SCOPE_RESPONSE = (
-    "I'm sorry, I can only assist with healthcare access, government "
+    "I'm sorry, I can only assist with healthcare access, health guidance, government "
     "health schemes, and healthcare facilities. Please ask me something "
-    "related to healthcare services or schemes."
+    "related to health services or schemes."
 )
 
 # ── Conversational & Greeting Intent Keywords ────────────────────────────────
@@ -244,7 +254,7 @@ GOODBYE_KEYWORDS = [
 
 GREETING_MORNING_RESPONSE = (
     "Good morning! I am ArogyaVani AI, your healthcare voice assistant. "
-    "How can I help you with your health or government schemes today?"
+    "How can I help you with your health questions or government schemes today?"
 )
 
 GREETING_AFTERNOON_RESPONSE = (
@@ -321,6 +331,50 @@ def contains_keyword(text: str, keywords: list[str]) -> bool:
     return False
 
 
+def is_pure_conversational(english_text: str) -> bool:
+    """Checks if the text is purely a conversational greeting, identity, capability,
+    casual check-in, thanks, or goodbye query WITHOUT any additional health condition,
+    symptom, or scheme inquiry.
+    Example:
+      'Good morning' -> True
+      'Hello' -> True
+      'How are you?' -> True
+      'Good morning, I have fever' -> False (contains 'fever', routes to healthcare)
+      'Hi, what is malaria?' -> False (contains 'malaria', routes to healthcare)
+    """
+    all_conv_lists = [
+        GREETING_MORNING_KEYWORDS,
+        GREETING_AFTERNOON_KEYWORDS,
+        GREETING_EVENING_KEYWORDS,
+        GREETING_NIGHT_KEYWORDS,
+        GREETING_GENERAL_KEYWORDS,
+        IDENTITY_KEYWORDS,
+        CAPABILITY_KEYWORDS,
+        CASUAL_KEYWORDS,
+        THANKS_KEYWORDS,
+        GOODBYE_KEYWORDS,
+    ]
+
+    has_conv = any(contains_keyword(english_text, kw_list) for kw_list in all_conv_lists)
+    if not has_conv:
+        return False
+
+    # Strip out conversational phrases to check if significant substantive text remains
+    cleaned = english_text.lower()
+    for kw_list in all_conv_lists:
+        for kw in sorted(kw_list, key=len, reverse=True):
+            # Replace whole phrase
+            pattern = r"\b" + re.escape(kw) + r"\b"
+            cleaned = re.sub(pattern, " ", cleaned)
+
+    # Clean punctuation and non-alphanumeric characters
+    cleaned = re.sub(r"[^\w\s]", " ", cleaned)
+    tokens = [w for w in cleaned.split() if w not in {"and", "then", "please", "there", "a", "an", "the", "to", "you", "me", "i", "my", "is", "it", "for"}]
+
+    # If no substantive tokens remain, it is purely conversational
+    return len(tokens) == 0
+
+
 def get_conversational_response(english_text: str) -> str:
     """Returns the appropriate conversational reply based on sub-intent."""
     if contains_keyword(english_text, GREETING_MORNING_KEYWORDS):
@@ -344,114 +398,209 @@ def get_conversational_response(english_text: str) -> str:
     return GREETING_GENERAL_RESPONSE
 
 
-def is_conversational_query(english_text: str) -> bool:
-    """Checks if the text contains conversational or greeting patterns."""
-    return any(
-        contains_keyword(english_text, kw_list)
-        for kw_list in [
-            GREETING_MORNING_KEYWORDS,
-            GREETING_AFTERNOON_KEYWORDS,
-            GREETING_EVENING_KEYWORDS,
-            GREETING_NIGHT_KEYWORDS,
-            GREETING_GENERAL_KEYWORDS,
-            IDENTITY_KEYWORDS,
-            CAPABILITY_KEYWORDS,
-            CASUAL_KEYWORDS,
-            THANKS_KEYWORDS,
-            GOODBYE_KEYWORDS,
-        ]
-    )
-
-
 def detect_intent(english_text: str) -> str:
-    """Detect the user intent following the strict ArogyaVani routing hierarchy:
-    1. medical_advice (highest safety priority)
-    2. location
-    3. scheme (routes to grounded FAISS RAG)
-    4. healthcare (routes to general Gemini health flow)
-    5. conversational / greeting (routes to friendly conversational response)
-    6. out_of_scope
+    """Detect user intent following the strict ArogyaVani routing hierarchy:
+    1. medical_advice (highest safety priority — refuses diagnoses, prescriptions, dosage)
+    2. location (routes to facility/PHC locator)
+    3. scheme (routes to grounded FAISS RAG / scheme catalog)
+    4. conversational (pure greetings / identity / capability checks ONLY)
+    5. healthcare (broad fallback — routes all health questions, symptoms, conditions to Gemini)
+    6. out_of_scope (only if genuinely empty or rejected)
     """
+    if not english_text or not english_text.strip():
+        return "out_of_scope"
+
+    # Priority 1: Medical advice / prescription / diagnosis check (STRICT SAFETY)
     if contains_keyword(english_text, MEDICAL_ADVICE_KEYWORDS):
         return "medical_advice"
 
+    # Priority 2: Location queries (hospitals, PHCs, clinics near me)
     if contains_keyword(english_text, LOCATION_KEYWORDS):
         return "location"
 
+    # Priority 3: Government health scheme queries
     if contains_keyword(english_text, SCHEME_KEYWORDS):
         return "scheme"
 
-    if contains_keyword(english_text, HEALTHCARE_KEYWORDS):
-        return "healthcare"
-
-    if is_conversational_query(english_text):
+    # Priority 4: Pure conversational / greeting queries
+    if is_pure_conversational(english_text):
         return "conversational"
 
-    return "out_of_scope"
+    # Priority 5: Broad Healthcare fallback
+    # Routes all valid health conditions (malaria, dengue, typhoid, asthma, diabetes, fever,
+    # sore throat, stomach pain, dizziness, weakness, rashes, general health inquiries, etc.)
+    # to Gemini 3.5 Flash-Lite with the ArogyaVani safety system prompt.
+    return "healthcare"
 
 
+# ── Shared Response Normalization Pipeline ──────────────────────────────────
 
-# ── Clean text helpers for Display and Natural TTS ──────────────────────────
 
-
-def clean_for_speech(text: str) -> str:
-    """Strips Markdown symbols, raw URLs, and formatting artifacts for clean,
-    natural-sounding Text-To-Speech (Sarvam Bulbul TTS).
-    Never speaks 'asterisk asterisk', 'hash', 'bullet', or raw URL characters.
+def normalize_response_text(text: str) -> str:
+    """Shared core normalization pipeline for cleaning AI-generated response text:
+    - Converts markdown links [Title](url) -> Title
+    - Strips naked URLs (https://..., http://..., www....)
+    - Strips markdown headings (###, ##, #) and converts heading lines to plain titles
+    - Strips horizontal rules (---, ***, ___)
+    - Strips bold/italic markers (***bold italic***, **bold**, *italic*, __bold__, _italic_)
+    - Strips inline code (`code`) and code blocks (```code```)
+    - Strips strikethrough (~~text~~)
+    - Strips stray markdown asterisks (*, **, ***), hashes (#, ##, ###), and backticks
+    - Converts markdown bullet markers (-, *, +, •) at line start into clean lines
+    - Preserves normal grammatical punctuation (. , ? ! : ; ( ) % -)
+    - Cleans excessive whitespace while preserving natural paragraph structure.
     """
     if not text:
         return ""
 
     t = text
 
-    # 1. Markdown links: [Title](url) -> Title (FIRST, before URL stripping)
+    # 1. Convert markdown links [Title](url) -> Title
     t = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", t)
 
-    # 2. Strip remaining naked URLs (https://..., http://..., www....)
+    # 2. Strip naked URLs
     t = re.sub(r"https?://\S+|www\.\S+", "", t)
 
-    # 3. Headings: ### Heading -> Heading.
-    t = re.sub(r"^#{1,6}\s*(.+)$", r"\1.", t, flags=re.MULTILINE)
-
-    # 4. Bold / Italic / Strike / Code markers
-    t = re.sub(r"\*\*([^*]+)\*\*", r"\1", t)
-    t = re.sub(r"\*([^*]+)\*", r"\1", t)
-    t = re.sub(r"__([^_]+)__", r"\1", t)
-    t = re.sub(r"_([^_]+)_", r"\1", t)
-    t = re.sub(r"~~([^~]+)~~", r"\1", t)
+    # 3. Strip code blocks ```...``` and inline code `...`
+    t = re.sub(r"```[\s\S]*?```", "", t)
     t = re.sub(r"`([^`]+)`", r"\1", t)
+    t = re.sub(r"`+", "", t)
 
-    # 5. Bullet markers (- item, * item, + item, • item)
-    t = re.sub(r"^\s*[-*+•]\s+", "", t, flags=re.MULTILINE)
+    # 4. Strip horizontal rules on their own lines (---, ***, ___, ===)
+    t = re.sub(r"^\s*[-*_=\s]{3,}\s*$", "", t, flags=re.MULTILINE)
 
-    # 6. Numbered lists (1. item -> item)
-    t = re.sub(r"^\s*\d+\.\s+", "", t, flags=re.MULTILINE)
+    # 5. Convert markdown headings:
+    # '### 1. Title' -> '1. Title' or '### Heading' -> 'Heading'
+    # Isolated lines of just '###' or '##' or '#' -> removed
+    t = re.sub(r"^\s*#{1,6}\s*$", "", t, flags=re.MULTILINE)
+    t = re.sub(r"^\s*#{1,6}\s+(.+)$", r"\1", t, flags=re.MULTILINE)
 
-    # 7. Clean punctuation & excessive whitespace
-    t = re.sub(r"\.{2,}", ".", t)
-    t = re.sub(r"\s+", " ", t)
+    # 6. Strip bold, italic, bold-italic, and strikethrough markdown delimiters
+    # ***text*** or ___text___ -> text
+    t = re.sub(r"\*{3}([^*]+)\*{3}", r"\1", t)
+    t = re.sub(r"_{3}([^_]+)_{3}", r"\1", t)
+    # **text** or __text__ -> text
+    t = re.sub(r"\*{2}([^*]+)\*{2}", r"\1", t)
+    t = re.sub(r"_{2}([^_]+)_{2}", r"\1", t)
+    # *text* or _text_ -> text
+    t = re.sub(r"\*([^*]+)\*", r"\1", t)
+    t = re.sub(r"(?<!\w)_([^_]+)_(?!\w)", r"\1", t)
+    # ~~text~~ -> text
+    t = re.sub(r"~~([^~]+)~~", r"\1", t)
 
-    return t.strip()
+    # 7. Strip any remaining stray formatting asterisks, hashes, underscores, or tildes
+    t = re.sub(r"\*{2,}", "", t)
+    t = re.sub(r"(?<=\s)\*(?=\s)", "", t)
+    t = re.sub(r"^#{1,6}\s*", "", t, flags=re.MULTILINE)
+
+    # 8. Clean trailing markdown symbols or orphaned asterisks at word boundaries
+    t = re.sub(r"\*+", "", t)
+    t = re.sub(r"~+", "", t)
+
+    # 9. Clean excessive blank lines (more than 2 consecutive newlines)
+    t = re.sub(r"\n{3,}", "\n\n", t)
+
+    # 10. Clean horizontal whitespace per line while preserving line breaks
+    lines = [re.sub(r"[ \t]+", " ", line).strip() for line in t.split("\n")]
+    # Remove empty lines at start and end
+    t = "\n".join(lines).strip()
+
+    return t
+
+
+def ensure_sentence_completeness(text: str) -> str:
+    """Ensures that the text does not end on a broken, unfinished clause.
+    If the text was truncated mid-sentence by token bounds, trims back to the
+    last complete sentence terminating with '.', '!', or '?'.
+    """
+    if not text:
+        return ""
+
+    t = text.strip()
+    # If it already ends with standard sentence punctuation, return it
+    if t.endswith((".", "!", "?")):
+        return t
+
+    # Search for the last complete sentence boundary
+    last_punct = max(t.rfind("."), t.rfind("!"), t.rfind("?"))
+    if last_punct != -1 and last_punct >= len(t) * 0.4:
+        # Trim back to the complete sentence
+        return t[: last_punct + 1].strip()
+
+    # If no sentence boundary found in the latter half, append a period cleanly
+    return t + "."
 
 
 def clean_for_display(text: str) -> str:
-    """Prepares text for clean UI display:
-    - Converts markdown links [Title](url) -> Title
-    - Strips naked URLs to prevent uncurated links
-    - Preserves headings and bullets for visual structure
+    """Prepares text for clean, elegant UI presentation:
+    - Removes all markdown symbols (**, ***, ###, ##, #, ---, `, ~~)
+    - Converts markdown links to plain text
+    - Strips naked URLs
+    - Normalizes list bullet points to clean indentation / readable lines
+    - Preserves readable paragraph breaks
     """
     if not text:
         return ""
 
-    t = text
-    # 1. Convert [Title](url) -> Title
-    t = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", t)
-    # 2. Strip naked URLs
-    t = re.sub(r"https?://\S+|www\.\S+", "", t)
-    # 3. Clean whitespace while preserving linebreaks
-    t = re.sub(r"[ \t]+", " ", t)
+    t = normalize_response_text(text)
 
+    # Clean bullet markers at line starts (- , * , + , • ) -> clean plain line
+    lines = t.split("\n")
+    cleaned_lines = []
+    for line in lines:
+        l = line.strip()
+        if not l:
+            cleaned_lines.append("")
+            continue
+        # Remove bullet symbols at start of line
+        l = re.sub(r"^[-*+•]\s+", "", l)
+        cleaned_lines.append(l)
+
+    t = "\n".join(cleaned_lines)
+    t = re.sub(r"\n{3,}", "\n\n", t)
     return t.strip()
+
+
+def clean_for_speech(text: str) -> str:
+    """Produces natural spoken text suitable for Sarvam Bulbul TTS ('priya'):
+    - Strips all markdown symbols, headings, and formatting artifacts
+    - Converts bullet/item lists into natural spoken flow
+    - Strips list numbers (1. item -> item)
+    - Cleans punctuation for natural spoken cadence
+    - Ensures sentence completeness without random truncation
+    """
+    if not text:
+        return ""
+
+    t = normalize_response_text(text)
+
+    # Split into lines to convert bullet lists into smooth spoken sentences
+    lines = [l.strip() for l in t.split("\n") if l.strip()]
+    spoken_segments = []
+
+    for line in lines:
+        # Strip bullet prefixes (- item, * item, + item, • item)
+        l = re.sub(r"^[-*+•]\s+", "", line)
+        # Strip leading numbers (1. item -> item, 1) item -> item)
+        l = re.sub(r"^\d+[\.\)]\s*", "", l)
+        l = l.strip()
+        if l:
+            # Ensure line ends with punctuation if it is a complete thought
+            if not l.endswith((".", "!", "?", ":", ";", ",")):
+                l = l + "."
+            spoken_segments.append(l)
+
+    spoken_text = " ".join(spoken_segments)
+
+    # Clean multiple consecutive punctuation marks (e.g. '..', '...', ':.')
+    spoken_text = re.sub(r"\.{2,}", ".", spoken_text)
+    spoken_text = re.sub(r"([!?,;])\1+", r"\1", spoken_text)
+    spoken_text = re.sub(r"\s+", " ", spoken_text).strip()
+
+    # Ensure sentence completeness
+    spoken_text = ensure_sentence_completeness(spoken_text)
+
+    return spoken_text
 
 
 # ── Translation & Speech Pipeline ───────────────────────────────────────────
@@ -504,11 +653,19 @@ def transcribe_audio(audio_file_path: str) -> tuple[str, str]:
 
 
 def generate_tts_base64(text: str, language_code: str) -> str:
-    """Generate audio via Sarvam Bulbul v3 with speaker 'priya' and return Base64 WAV data."""
-    # Ensure TTS input is clean of markdown artifacts
+    """Generate audio via Sarvam Bulbul v3 with speaker 'priya' and return Base64 WAV data.
+    Ensures input is thoroughly cleaned for natural, complete speech without markdown artifacts.
+    Includes diagnostic logging for character counts, audio size, and language code.
+    """
     speech_text = clean_for_speech(text)
     if not speech_text:
-        speech_text = "I am ready to assist you."
+        speech_text = "I am ready to assist you with healthcare guidance and government schemes."
+
+    char_count = len(speech_text)
+    logger.info(
+        f"[SarvamTTS] Starting TTS synthesis: model='{TTS_MODEL}', speaker='{TTS_SPEAKER}', "
+        f"lang='{language_code}', input_chars={char_count}"
+    )
 
     client = get_sarvam_client()
     tts_response = client.text_to_speech.convert(
@@ -518,10 +675,18 @@ def generate_tts_base64(text: str, language_code: str) -> str:
         speaker=TTS_SPEAKER,
     )
 
-    if not tts_response.audios:
+    if not tts_response.audios or len(tts_response.audios) == 0:
+        logger.error("[SarvamTTS] Bulbul v3 returned no audio data in response.")
         raise RuntimeError("Sarvam Bulbul returned no audio data.")
 
-    return tts_response.audios[0]
+    audio_base64 = tts_response.audios[0]
+    base64_len = len(audio_base64)
+    logger.info(
+        f"[SarvamTTS] TTS synthesis successful: output_base64_len={base64_len}, "
+        f"approx_audio_bytes={int(base64_len * 0.75)}"
+    )
+
+    return audio_base64
 
 
 def process_text_query(
@@ -535,9 +700,8 @@ def process_text_query(
        - medical_advice -> Safety disclaimer (General mode)
        - location -> Location prompt (General mode)
        - scheme -> FAISS RAG Retrieval + Grounded Gemini (Scheme RAG mode)
-       - healthcare -> Gemini 3.5 Flash-Lite (General mode)
-       - conversational -> Polite conversational greeting/response
-       - out_of_scope -> Scope boundary
+       - conversational -> Pure greeting / identity / capability response
+       - healthcare -> Gemini 3.5 Flash-Lite broad health flow
     3. Cleans text for UI display.
     4. Translates response back to user's specified language.
     5. Optionally generates TTS audio if requested.
@@ -575,19 +739,21 @@ def process_text_query(
             raw_response_text = ask_gemini(english_text)
             schemes = []
             sources = []
-    elif intent == "healthcare":
-        raw_response_text = ask_gemini(english_text)
     elif intent == "conversational":
         raw_response_text = get_conversational_response(english_text)
+    elif intent == "healthcare":
+        raw_response_text = ask_gemini(english_text)
     else:
         raw_response_text = OUT_OF_SCOPE_RESPONSE
 
-    # Step 4: Clean text for UI display
+    # Step 4: Clean text for UI display (strips markdown garbage, bold, hashes, naked URLs)
     display_response_text = clean_for_display(raw_response_text)
 
     # Step 5: Translate back to target language if needed and not already in that language
     if language_code != "en-IN" and mode != "scheme_rag":
         final_response = translate_from_english(display_response_text, language_code)
+        # Re-clean translated text in case translation introduced artifacts
+        final_response = clean_for_display(final_response)
     else:
         final_response = display_response_text
 
@@ -615,3 +781,4 @@ def process_arogyavani_pipeline(
         language_code=detected_language,
         generate_tts=True,
     )
+

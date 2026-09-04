@@ -251,6 +251,14 @@ export function useVoiceRecorder(options?: UseVoiceRecorderOptions): UseVoiceRec
             }
 
             if (result.audio_base64) {
+              if (import.meta.env.DEV) {
+                console.log('[useVoiceRecorder] Received audio_base64:', {
+                  base64Length: result.audio_base64.length,
+                  textLength: result.response_text?.length,
+                  languageCode: result.language_code,
+                  mode: result.mode,
+                });
+              }
               // Decode and play via audioUtils — hook only tracks playback state
               const audioBlob = base64ToAudioBlob(result.audio_base64);
               audioBlobRef.current = audioBlob;
@@ -260,7 +268,10 @@ export function useVoiceRecorder(options?: UseVoiceRecorderOptions): UseVoiceRec
             setVoiceState('idle');
             setErrorMessage(result.error || VOICE_ERROR_MESSAGES.NetworkError);
           }
-        } catch {
+        } catch (dispatchErr) {
+          if (import.meta.env.DEV) {
+            console.error('[useVoiceRecorder] Dispatch error:', dispatchErr);
+          }
           setVoiceState('idle');
           setErrorMessage(VOICE_ERROR_MESSAGES.NetworkError);
         }
