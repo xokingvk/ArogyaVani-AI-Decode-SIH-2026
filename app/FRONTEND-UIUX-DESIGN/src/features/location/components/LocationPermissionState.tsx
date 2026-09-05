@@ -42,16 +42,28 @@ export const LocationPermissionState: React.FC<LocationPermissionStateProps> = (
     );
   }
 
-  if (state === 'locating' || state === 'searching') {
+  if (
+    state === 'checking_permission' ||
+    state === 'requesting_permission' ||
+    state === 'locating' ||
+    state === 'searching'
+  ) {
+    let titleText = t('home.nearbyPhc.gettingLocation');
+    if (state === 'checking_permission') {
+      titleText = t('home.nearbyPhc.checkingLocation');
+    } else if (state === 'requesting_permission') {
+      titleText = t('home.nearbyPhc.requestingPermission');
+    } else if (state === 'searching') {
+      titleText = t('home.nearbyPhc.findingFacilities');
+    }
+
     return (
       <div className="text-center py-10 px-4">
         <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-3">
           <Loader2 className="w-6 h-6 animate-spin" />
         </div>
         <p className="font-bold text-slate-900 text-sm mb-1">
-          {state === 'locating'
-            ? t('home.nearbyPhc.gettingLocation')
-            : t('home.nearbyPhc.findingFacilities')}
+          {titleText}
         </p>
         <p className="text-slate-400 text-xs">
           {t('home.nearbyPhc.searchingRadius')}
@@ -71,6 +83,78 @@ export const LocationPermissionState: React.FC<LocationPermissionStateProps> = (
         </h4>
         <p className="text-slate-500 text-xs max-w-xs mx-auto leading-relaxed mb-4">
           {errorMessage || t('home.nearbyPhc.permissionDeniedSub')}
+        </p>
+        <button
+          type="button"
+          onClick={onRetry}
+          className="inline-flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-colors cursor-pointer"
+        >
+          <RefreshCw className="w-3.5 h-3.5" />
+          <span>{t('home.nearbyPhc.tryAgain')}</span>
+        </button>
+      </div>
+    );
+  }
+
+  if (state === 'permission_blocked') {
+    return (
+      <div className="text-center py-6 px-4">
+        <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-3">
+          <MapPinOff className="w-6 h-6" />
+        </div>
+        <h4 className="font-bold text-slate-900 text-sm mb-1">
+          {t('home.nearbyPhc.permissionBlockedTitle')}
+        </h4>
+        <p className="text-slate-500 text-xs max-w-xs mx-auto leading-relaxed mb-4">
+          {errorMessage || t('home.nearbyPhc.permissionBlockedSub')}
+        </p>
+        <button
+          type="button"
+          onClick={onRetry}
+          className="inline-flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-colors cursor-pointer"
+        >
+          <RefreshCw className="w-3.5 h-3.5" />
+          <span>{t('home.nearbyPhc.tryAgain')}</span>
+        </button>
+      </div>
+    );
+  }
+
+  if (state === 'location_disabled') {
+    return (
+      <div className="text-center py-6 px-4">
+        <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-3">
+          <MapPinOff className="w-6 h-6" />
+        </div>
+        <h4 className="font-bold text-slate-900 text-sm mb-1">
+          {t('home.nearbyPhc.locationDisabledTitle')}
+        </h4>
+        <p className="text-slate-500 text-xs max-w-xs mx-auto leading-relaxed mb-4">
+          {errorMessage || t('home.nearbyPhc.locationDisabledSub')}
+        </p>
+        <button
+          type="button"
+          onClick={onRetry}
+          className="inline-flex items-center justify-center gap-1.5 py-2 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-colors cursor-pointer"
+        >
+          <RefreshCw className="w-3.5 h-3.5" />
+          <span>{t('home.nearbyPhc.tryAgain')}</span>
+        </button>
+      </div>
+    );
+  }
+
+  if (state === 'location_unavailable') {
+    return (
+      <div className="text-center py-6 px-4">
+        <div className="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mx-auto mb-3">
+          <AlertCircle className="w-6 h-6" />
+        </div>
+        <h4 className="font-bold text-slate-900 text-sm mb-1">
+          {t('home.nearbyPhc.locationUnavailableTitle')}
+        </h4>
+        <p className="text-slate-500 text-xs max-w-xs mx-auto leading-relaxed mb-4">
+          {errorMessage || t('home.nearbyPhc.locationUnavailableSub')}
         </p>
         <button
           type="button"

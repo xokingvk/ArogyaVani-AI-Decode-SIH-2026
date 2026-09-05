@@ -1,6 +1,7 @@
 /**
  * useNearbyPHC hook
- * Manages the lifecycle of one-time GPS location lookup and nearby PHC searching.
+ * Manages the lifecycle of one-time GPS location lookup and nearby PHC searching
+ * using a robust state machine for Android Capacitor & Browser.
  */
 import { useState, useCallback, useRef } from 'react';
 import {
@@ -9,8 +10,11 @@ import {
   UserCoordinates,
 } from '../types/locationTypes';
 import {
+  checkLocationPermission,
+  requestLocationPermission,
   getCurrentDeviceLocation,
   fetchNearbyPHCFacilities,
+  LocationServiceError,
 } from '../services/locationService';
 
 export interface UseNearbyPHCReturn {
@@ -38,33 +42,71 @@ export function useNearbyPHC(): UseNearbyPHCReturn {
     }
     isSearchingRef.current = true;
     setErrorMessage('');
-    setState('locating');
 
     try {
+      // Step 1: Check existing permission state
+      setState('checking_permission');
+      const permStatus = await checkLocationPermission();
+
+      // Step 2: Handle permission prompt if not yet granted
+      if (permStatus === 'prompt') {
+        setState('requesting_permission');
+        const reqResult = await requestLocationPermission();
+        if (reqResult === 'denied') {
+          setState('permission_denied');
+          setErrorMessage('Location permission is required to find nearby Primary Health Centres.');
+          return;
+        }
+      } else if (permStatus === 'denied') {
+        // Try requesting once in case rationale or settings changed, or set denied
+        setState('requesting_permission');
+        const reqResult = await requestLocationPermission();
+        if (reqResult === 'denied') {
+          setState('permission_denied');
+          setErrorMessage('Location permission is required to find nearby Primary Health Centres.');
+          return;
+        }
+      }
+
+      // Step 3: Permission is GRANTED -> Get Location
+      setState('locating');
       let coords: UserCoordinates;
       try {
         coords = await getCurrentDeviceLocation();
         setUserLocation(coords);
       } catch (locErr: any) {
-        if (locErr && locErr.code === 1) {
-          // GeolocationPositionError.PERMISSION_DENIED
-          setState('permission_denied');
-          setErrorMessage('Location permission is required to find nearby Primary Health Centres.');
-          return;
+        if (locErr instanceof LocationServiceError) {
+          switch (locErr.code) {
+            case 'PERMISSION_DENIED':
+              setState('permission_denied');
+              setErrorMessage('Location permission is required to find nearby Primary Health Centres.');
+              return;
+            case 'PERMISSION_BLOCKED':
+              setState('permission_blocked');
+              setErrorMessage('Location permission is blocked. Please enable it in device settings.');
+              return;
+            case 'LOCATION_DISABLED':
+              setState('location_disabled');
+              setErrorMessage('Location services are turned off. Please enable GPS on your device.');
+              return;
+            case 'TIMEOUT':
+            case 'LOCATION_UNAVAILABLE':
+              setState('location_unavailable');
+              setErrorMessage(locErr.message || "Couldn't get your location. Please check GPS and try again.");
+              return;
+            default:
+              setState('error');
+              setErrorMessage(locErr.message || 'Unable to get your current location.');
+              return;
+          }
         }
-        if (locErr && locErr.code === 3) {
-          // GeolocationPositionError.TIMEOUT
-          setState('error');
-          setErrorMessage('Location request timed out. Please check your GPS signal and try again.');
-          return;
-        }
-        setState('error');
-        setErrorMessage(
-          locErr?.message || 'Unable to get your current location. Please enable GPS and try again.'
-        );
+
+        setState('location_unavailable');
+        setErrorMessage(locErr?.message || "Couldn't get your location. Please try again.");
         return;
       }
 
+      // Step 4: Finding Facilities
       setState('searching');
 
       try {
@@ -90,6 +132,10 @@ export function useNearbyPHC(): UseNearbyPHCReturn {
         setState('error');
         setErrorMessage('Nearby facility search is temporarily unavailable. Please try again.');
       }
+    } catch (unexpectedError: any) {
+      console.error('[Location] Unexpected error:', unexpectedError);
+      setState('error');
+      setErrorMessage(unexpectedError?.message || 'An unexpected error occurred while finding nearby PHCs.');
     } finally {
       isSearchingRef.current = false;
     }

@@ -12,6 +12,7 @@
     "@capacitor/android": "^8.5.1",
     "@capacitor/cli": "^8.5.1",
     "@capacitor/core": "^8.5.1",
+    "@capacitor/geolocation": "^8.2.2",
     "@supabase/supabase-js": "^2.49.1",
     "framer-motion": "^13.1.1",
     "i18next": "^24.2.2",

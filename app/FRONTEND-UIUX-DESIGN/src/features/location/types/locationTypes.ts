@@ -44,12 +44,17 @@ export type NearbyPHCResponse = NearbyPHCSuccessResponse | NearbyPHCErrorRespons
 
 export type LocationState =
   | 'idle'
+  | 'checking_permission'
+  | 'requesting_permission'
   | 'locating'
   | 'searching'
   | 'results'
   | 'empty'
   | 'error'
-  | 'permission_denied';
+  | 'permission_denied'
+  | 'permission_blocked'
+  | 'location_disabled'
+  | 'location_unavailable';
 
 export interface UserCoordinates {
   latitude: number;

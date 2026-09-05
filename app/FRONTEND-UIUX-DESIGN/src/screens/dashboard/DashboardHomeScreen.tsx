@@ -84,7 +84,15 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
   const handlePhcTap = useCallback(() => {
     if (nearestPhc?.maps_url) {
       window.open(nearestPhc.maps_url, '_blank', 'noopener,noreferrer');
-    } else if (phcState === 'error' || phcState === 'empty' || phcState === 'idle') {
+    } else if (
+      phcState === 'error' ||
+      phcState === 'empty' ||
+      phcState === 'idle' ||
+      phcState === 'permission_denied' ||
+      phcState === 'permission_blocked' ||
+      phcState === 'location_disabled' ||
+      phcState === 'location_unavailable'
+    ) {
       findNearbyPHC();
     }
   }, [nearestPhc, phcState, findNearbyPHC]);
@@ -93,6 +101,8 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
   const phcCardPrimary = (): string => {
     switch (phcState) {
       case 'idle':
+      case 'checking_permission':
+      case 'requesting_permission':
       case 'locating':
       case 'searching':
         return t('common.locating', 'Locating…');
@@ -101,8 +111,12 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
       case 'empty':
         return 'No nearby PHC found';
       case 'permission_denied':
+      case 'permission_blocked':
+      case 'location_disabled':
+      case 'location_unavailable':
         return 'Location unavailable';
       case 'error':
+      default:
         return 'Unable to find nearby PHC';
     }
   };
@@ -110,6 +124,8 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
   const phcCardSecondary = (): string => {
     switch (phcState) {
       case 'idle':
+      case 'checking_permission':
+      case 'requesting_permission':
       case 'locating':
       case 'searching':
         return 'Finding nearby PHC…';
@@ -118,14 +134,23 @@ export const DashboardHomeScreen: React.FC<DashboardHomeScreenProps> = ({
       case 'empty':
         return 'No facilities found in your area';
       case 'permission_denied':
+      case 'permission_blocked':
         return 'Enable location permission';
+      case 'location_disabled':
+        return 'Turn on GPS location';
+      case 'location_unavailable':
       case 'error':
+      default:
         return 'Tap to retry';
     }
   };
 
   const isPhcLoading =
-    phcState === 'idle' || phcState === 'locating' || phcState === 'searching';
+    phcState === 'idle' ||
+    phcState === 'checking_permission' ||
+    phcState === 'requesting_permission' ||
+    phcState === 'locating' ||
+    phcState === 'searching';
 
   // ── Card definitions ─────────────────────────────────────────
   // Order: AI Questions | Scheme Status | Last Scheme Check | Nearest PHC | Active Alerts | Family Connected
