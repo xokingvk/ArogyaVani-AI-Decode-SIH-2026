@@ -538,6 +538,7 @@ def clean_for_display(text: str) -> str:
     - Strips naked URLs
     - Normalizes list bullet points to clean indentation / readable lines
     - Preserves readable paragraph breaks
+    - Strictly preserves complete sentences <= 69 words
     """
     if not text:
         return ""
@@ -557,7 +558,27 @@ def clean_for_display(text: str) -> str:
         cleaned_lines.append(l)
 
     t = "\n".join(cleaned_lines)
-    t = re.sub(r"\n{3,}", "\n\n", t)
+    t = re.sub(r"\n{3,}", "\n\n", t).strip()
+
+    # Final safeguard: if word count exceeds 69, preserve complete sentences only
+    words = re.findall(r"\S+", t)
+    if len(words) > 69:
+        sentences = re.split(r"(?<=[.!?])\s+", t)
+        candidate = []
+        curr = 0
+        for s in sentences:
+            s_clean = s.strip()
+            if not s_clean:
+                continue
+            w_count = len(re.findall(r"\S+", s_clean))
+            if curr + w_count <= 69:
+                candidate.append(s_clean)
+                curr += w_count
+            else:
+                break
+        if candidate:
+            t = " ".join(candidate).strip()
+
     return t.strip()
 
 
@@ -567,7 +588,7 @@ def clean_for_speech(text: str) -> str:
     - Converts bullet/item lists into natural spoken flow
     - Strips list numbers (1. item -> item)
     - Cleans punctuation for natural spoken cadence
-    - Ensures sentence completeness without random truncation
+    - Strictly respects <= 69 words and ensures sentence completeness
     """
     if not text:
         return ""
@@ -596,6 +617,25 @@ def clean_for_speech(text: str) -> str:
     spoken_text = re.sub(r"\.{2,}", ".", spoken_text)
     spoken_text = re.sub(r"([!?,;])\1+", r"\1", spoken_text)
     spoken_text = re.sub(r"\s+", " ", spoken_text).strip()
+
+    # Final safeguard: if word count exceeds 69, preserve complete sentences only
+    words = re.findall(r"\S+", spoken_text)
+    if len(words) > 69:
+        sentences = re.split(r"(?<=[.!?])\s+", spoken_text)
+        candidate = []
+        curr = 0
+        for s in sentences:
+            s_clean = s.strip()
+            if not s_clean:
+                continue
+            w_count = len(re.findall(r"\S+", s_clean))
+            if curr + w_count <= 69:
+                candidate.append(s_clean)
+                curr += w_count
+            else:
+                break
+        if candidate:
+            spoken_text = " ".join(candidate).strip()
 
     # Ensure sentence completeness
     spoken_text = ensure_sentence_completeness(spoken_text)

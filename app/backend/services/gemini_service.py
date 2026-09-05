@@ -1,39 +1,43 @@
 import os
+import re
 from google import genai
 from google.genai import types
 
 GEMINI_MODEL = "gemini-3.5-flash-lite"
+MAX_RESPONSE_WORDS = 69
+TARGET_MIN_WORDS = 40
+TARGET_MAX_WORDS = 60
 
 AROGYAVANI_SYSTEM_PROMPT = """
-You are ArogyaVani AI, a healthcare-access assistant for citizens of India.
+You are ArogyaVani AI, a voice-first healthcare assistant for citizens of India.
 
-You can help users with:
-- General healthcare questions, explaining common diseases (such as malaria, dengue, typhoid, asthma, diabetes, fever, etc.), symptoms, and causes
-- Basic low-risk comfort and self-care information
-- General warning signs that may require medical evaluation
-- Guidance about when to visit a Primary Health Centre (PHC), clinic, hospital, or qualified doctor
-- Government healthcare schemes (such as Ayushman Bharat PM-JAY, Janani Suraksha Yojana, etc.) and scheme eligibility
-- Locating healthcare facilities
+RESPONSE PHILOSOPHY & LENGTH LIMIT:
+- VOICE-FIRST: Answers must be spoken naturally, clearly, concisely, and be easy to listen to.
+- STRICT LENGTH LIMIT: Generate a concise spoken response of 40–60 words. ABSOLUTE LIMIT: 69 words maximum. Never exceed 69 words.
+- COMPLETE SENTENCES: Every sentence must be complete and finished with proper punctuation before ending. Never leave a sentence unfinished.
+- STRUCTURE:
+  1. Direct, calm answer or explanation.
+  2. Safe non-medication comfort or self-care guidance (such as rest, hydration, warm fluids, supportive care).
+  3. Short safety statement on when to seek medical care or visit a Primary Health Centre (PHC)/doctor if symptoms worsen or persist.
 
-CRITICAL FORMATTING RULES:
-- Return PLAIN CLEAN TEXT ONLY.
-- Absolutely DO NOT use markdown syntax: NO double asterisks (**), NO triple asterisks (***), NO single asterisks (*), NO hash headings (###, ##, #), NO horizontal lines (---, ___), NO backticks (`), NO strikethroughs (~~), NO markdown bullet prefixes (-, *, +), NO markdown numbered lists (1., 2.), and NO markdown tables or links.
-- Write in natural, complete, well-formed short paragraphs and smooth conversational sentences suitable for Text-To-Speech.
+ABSOLUTE PROHIBITION ON MEDICINES, TABLETS, AND DRUGS:
+- NEVER mention, recommend, suggest, prescribe, or encourage the use of ANY tablets, medicines, drugs, medication names, branded medicines, generic medicine names, OTC medicines, prescription medicines, dosage instructions, or medication combinations.
+- Do NOT suggest that the user "take" any medicine, pill, syrup, or tablet.
+- Do NOT provide ANY medicine name even as an example or general illustration.
+- Provide ONLY safe non-medication guidance such as rest, hydration, monitoring symptoms, and seeking professional medical evaluation.
+- If the user specifically asks for medicine, tablets, prescriptions, or dosages, do NOT provide any medication name. Give a concise response advising the user to consult a qualified doctor or pharmacist.
 
-IMPORTANT MEDICAL SAFETY LIMITATIONS:
-- You MUST NOT diagnose a disease or medical condition. Do NOT state or claim that the user definitely has a disease.
-- You MUST NOT prescribe medicines or antibiotics.
-- You MUST NOT recommend specific prescription drugs or give individualized dosages.
-- You MUST NOT provide prescriptions or personalized medical treatment plans.
-- If the user explicitly asks for a diagnosis, prescription, or specific medicine dosage, politely explain that ArogyaVani cannot prescribe or diagnose, and recommend consulting a qualified healthcare professional.
-- For severe, concerning, or worsening symptoms (such as high fever, difficulty breathing, chest pain, repeated vomiting), recommend seeking prompt medical care.
+CRITICAL VOICE & FORMATTING RULES:
+- Return PLAIN CLEAN NATURAL TEXT ONLY.
+- Absolutely DO NOT use markdown syntax: NO double asterisks (**), NO single asterisks (*), NO hash headings (###, ##, #), NO horizontal rules (---, ___), NO backticks (`), NO strikethroughs (~~), NO markdown bullet prefixes (-, *, +), NO markdown numbered lists (1., 2.), NO tables, and NO URLs or citations.
+- Do not repeat the user's question.
+- Avoid long introductions and repeated disclaimers.
+- End with a complete, natural sentence.
 
-GENERAL HEALTHCARE GUIDANCE:
-- When a user asks about a condition (e.g. 'I have malaria', 'I have dengue', 'My child has fever', 'What is typhoid?'), explain the condition clearly and calmly, mention general comfort measures and warning signs, and advise professional medical evaluation.
-- If the user includes a greeting or casual opening (e.g. 'Good morning, I have fever'), acknowledge it naturally before answering.
-- If the user asks about an entirely unrelated, non-health topic (e.g., automotive repair, computer programming, entertainment, sports, politics), politely explain that ArogyaVani AI only assists with healthcare questions, government health schemes, and healthcare facilities.
-- Keep answers clear, reassuring, natural, and concise enough for a voice assistant.
-- Do NOT attach redundant generic disclaimers to every sentence.
+IMPORTANT SAFETY LIMITATIONS:
+- You MUST NOT diagnose a disease or state that the user definitely has a medical condition.
+- For severe warning signs (e.g., severe difficulty breathing, persistent high fever, chest pain), recommend seeking prompt medical care.
+- If the user asks about an unrelated non-health topic, politely explain in one short sentence that you only assist with healthcare guidance, government schemes, and health facilities.
 """.strip()
 
 _gemini_client = None
@@ -49,20 +53,107 @@ def get_gemini_client() -> genai.Client:
     return _gemini_client
 
 
+def count_words(text: str) -> int:
+    """Predictable whitespace-based word count after normalizing whitespace."""
+    if not text or not text.strip():
+        return 0
+    return len(re.findall(r"\S+", text.strip()))
+
+
+def clean_markdown_artifacts(text: str) -> str:
+    """Strips any markdown artifacts, hashes, asterisks, bullets, and normalizes whitespace."""
+    if not text:
+        return ""
+    t = text
+    t = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", t)
+    t = re.sub(r"https?://\S+|www\.\S+", "", t)
+    t = re.sub(r"```[\s\S]*?```", "", t)
+    t = re.sub(r"`+", "", t)
+    t = re.sub(r"^\s*[-*_=\s]{3,}\s*$", "", t, flags=re.MULTILINE)
+    t = re.sub(r"^\s*#{1,6}\s*", "", t, flags=re.MULTILINE)
+    t = re.sub(r"\*{1,3}([^*]+)\*{1,3}", r"\1", t)
+    t = re.sub(r"_{1,3}([^_]+)_{1,3}", r"\1", t)
+    t = re.sub(r"~~([^~]+)~~", r"\1", t)
+    t = re.sub(r"[*#~`_]+", "", t)
+    t = re.sub(r"^\s*[-*+•]\s+", "", t, flags=re.MULTILINE)
+    t = re.sub(r"^\s*\d+[\.\)]\s*", "", t, flags=re.MULTILINE)
+    t = re.sub(r"\s+", " ", t).strip()
+    return t
+
+
+def enforce_word_limit(
+    text: str,
+    client: genai.Client,
+    fallback_text: str = "Rest and hydration can support recovery from common symptoms. Drink plenty of water and rest well. Please consult a qualified doctor or visit your nearest Primary Health Centre if your symptoms persist or worsen.",
+    max_words: int = MAX_RESPONSE_WORDS,
+) -> str:
+    """Validates response word count. If word count > max_words, performs ONE concise rewrite
+    attempt with Gemini. If still over the limit, safely extracts complete sentences up to max_words or falls back.
+    """
+    cleaned = clean_markdown_artifacts(text)
+    if count_words(cleaned) <= max_words:
+        return cleaned
+
+    # Attempt ONE concise rewrite
+    retry_prompt = (
+        "Rewrite the following answer in 40–55 words. HARD LIMIT: 69 words. "
+        "Preserve the important factual information and safety guidance. "
+        "Never mention any medicines, tablets, or drug names. "
+        "Use complete sentences with proper ending punctuation. Do not use markdown. Return only the final answer.\n\n"
+        f"Original answer:\n{cleaned}"
+    )
+
+    try:
+        retry_res = client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=retry_prompt,
+            config=types.GenerateContentConfig(
+                system_instruction="You are a voice healthcare editor. Generate strictly 40 to 55 words (maximum 69 words). Return plain natural text only with complete sentences. Never include medicine or tablet names.",
+                max_output_tokens=150,
+            ),
+        )
+        retry_text = clean_markdown_artifacts((retry_res.text or "").strip())
+        if retry_text and count_words(retry_text) <= max_words:
+            return retry_text
+    except Exception:
+        pass
+
+    # If retry is still > 69 words or failed, extract complete sentences that fit under max_words
+    sentences = re.split(r"(?<=[.!?])\s+", cleaned)
+    candidate_sentences = []
+    current_count = 0
+    for s in sentences:
+        s_clean = s.strip()
+        if not s_clean:
+            continue
+        s_words = count_words(s_clean)
+        if current_count + s_words <= max_words:
+            candidate_sentences.append(s_clean)
+            current_count += s_words
+        else:
+            break
+
+    if candidate_sentences and current_count >= 15:
+        return " ".join(candidate_sentences).strip()
+
+    return fallback_text
+
+
 def ask_gemini(question: str) -> str:
-    """Send healthcare inquiry to Gemini 3.5 flash-lite using the ArogyaVani system prompt."""
+    """Send healthcare inquiry to Gemini 3.5 flash-lite and enforce <= 69 words hard limit."""
     client = get_gemini_client()
     response = client.models.generate_content(
         model=GEMINI_MODEL,
         contents=question,
         config=types.GenerateContentConfig(
             system_instruction=AROGYAVANI_SYSTEM_PROMPT,
-            max_output_tokens=350,
+            max_output_tokens=160,
         ),
     )
 
     if not response or not response.text:
         raise RuntimeError("Gemini returned an empty response.")
 
-    return response.text.strip()
+    raw_text = response.text.strip()
+    return enforce_word_limit(raw_text, client)
 

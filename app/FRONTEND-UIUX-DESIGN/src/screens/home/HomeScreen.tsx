@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import {
   Stethoscope,
   Hospital,
-  Landmark,
   ShieldAlert,
   ChevronRight,
 } from 'lucide-react';
@@ -22,7 +21,7 @@ interface HomeScreenProps {
 
 type ActiveModal = 'symptoms' | 'hospital' | 'contacts' | null;
 
-export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) => {
+export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes: _onNavigateToSchemes }) => {
   const { currentUser } = useAuth();
   const { t, i18n } = useTranslation();
   const isTamil  = i18n.language?.startsWith('ta');
@@ -112,17 +111,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
       onClick: () => setActiveModal('hospital'),
     },
     {
-      id: 'schemes',
-      label: t('home.schemesTitle'),
-      subLabel: t('home.schemesDesc'),
-      Icon: Landmark,
-      gradientFrom: '#EFF6FF',
-      gradientTo: '#DBEAFE',
-      border: '#93C5FD',
-      iconColor: '#2563EB',
-      onClick: () => { if (onNavigateToSchemes) onNavigateToSchemes(); },
-    },
-    {
       id: 'sos',
       label: t('emergency.contactsTitle', 'Emergency Contacts'),
       subLabel: t('emergency.contactsDesc', 'Configure trusted emergency contacts'),
@@ -186,11 +174,16 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ onNavigateToSchemes }) =
               type="button"
               aria-label={action.label}
               onClick={action.onClick}
-              className="text-left rounded-2xl p-3.5 sm:p-4 border cursor-pointer focus:outline-none active:scale-95 transition-transform flex flex-col justify-between h-full min-h-[120px] sm:min-h-[132px] max-w-full overflow-hidden"
+              className={`text-left rounded-2xl p-3.5 sm:p-4 border cursor-pointer focus:outline-none active:scale-95 transition-transform flex flex-col justify-between h-full min-h-[120px] sm:min-h-[132px] overflow-hidden ${
+                action.id === 'sos'
+                  ? 'col-span-1 min-[340px]:col-span-2 w-full max-w-full mx-auto'
+                  : 'w-full max-w-full'
+              }`}
               style={{
                 background: `linear-gradient(135deg, ${action.gradientFrom}, ${action.gradientTo})`,
                 borderColor: action.border,
                 boxShadow: `0 2px 10px ${action.border}55`,
+                ...(action.id === 'sos' ? { width: '100%', maxWidth: '100%', marginLeft: 'auto', marginRight: 'auto' } : {}),
               }}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}

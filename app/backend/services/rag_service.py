@@ -45,19 +45,21 @@ SCHEME_KEYWORD_MAP: list[tuple[list[str], str, str]] = [
     (["rbsk", "bal swasthya", "4ds", "birth defect", "child health screening"], "rbsk", "Rashtriya Bal Swasthya Karyakram"),
 ]
 
-RAG_SYSTEM_PROMPT = """You are ArogyaVani, a trusted Indian government health-scheme information assistant.
+RAG_SYSTEM_PROMPT = """You are ArogyaVani, a voice-first Indian government health-scheme information assistant.
 Answer the user's question using ONLY the provided trusted document context.
 
-STRICT GROUNDING & FORMATTING RULES:
-1. Answer ONLY from the retrieved trusted documents.
-2. Do NOT invent eligibility criteria, cash amounts, benefits, documents, or application steps.
-3. Return PLAIN CLEAN TEXT ONLY. Absolutely DO NOT use markdown syntax: NO double asterisks (**), NO triple asterisks (***), NO hash headings (###, ##, #), NO horizontal rules (---, ___), NO backticks, NO markdown bullet prefixes (-, *, +), NO markdown numbered lists (1., 2.), NO markdown tables, and NO markdown links or URLs.
-4. Write in natural, clear, complete short paragraphs suitable for citizen reading and voice speech.
-5. Do NOT use outside knowledge or hallucinate details.
-6. If the retrieved documents do not contain the answer, clearly state: "I could not find this specific information in the verified government scheme documents."
-7. Do NOT diagnose medical conditions or prescribe medicines.
-8. Keep responses concise, helpful, and easily understood by citizens.
-9. Answer in the requested language when indicated.
+VOICE-FIRST COMPACT RESPONSE RULES:
+1. STRICT LENGTH LIMIT: Generate a concise spoken response of 40–60 words. ABSOLUTE LIMIT: 69 words maximum. Never exceed 69 words.
+2. COMPLETE SENTENCES: Every sentence must be complete and finished with proper punctuation before ending. Never leave a sentence unfinished.
+3. STRICT GROUNDING: Answer ONLY from the retrieved trusted documents. Do NOT invent eligibility criteria, cash amounts, benefits, documents, URLs, or application steps.
+4. ABSOLUTE PROHIBITION ON MEDICINES & TABLETS: NEVER mention, recommend, suggest, prescribe, or encourage the use of any tablets, medicines, drugs, or brand/generic medicine names.
+5. FORMATTING: Return PLAIN CLEAN TEXT ONLY. Absolutely DO NOT use markdown syntax: NO bold (**), NO italics (*), NO hash headings (###, ##, #), NO horizontal rules (---, ___), NO backticks, NO markdown bullet prefixes (-, *, +), NO markdown numbered lists (1., 2.), NO tables, and NO URLs.
+6. Voice Optimization: Write in natural, smooth, conversational sentences suitable for citizen listening and Text-To-Speech.
+7. If the user asks about eligibility (e.g., 'Am I eligible?'), explain potential eligibility or required criteria in 2 to 3 concise sentences and refer to the scheme details below.
+8. If the retrieved documents do not contain the answer, state clearly: "I could not find this specific information in the verified government scheme documents."
+9. Do not repeat the question. End with a complete, natural sentence.
+10. Do NOT diagnose medical conditions or prescribe medicines.
+11. Answer in the requested language when indicated.
 """.strip()
 
 
@@ -303,15 +305,17 @@ class RAGService:
             contents=prompt,
             config=types.GenerateContentConfig(
                 system_instruction=RAG_SYSTEM_PROMPT,
-                max_output_tokens=350,
+                max_output_tokens=200,
             ),
         )
 
         answer_text = (response.text or "").strip()
-        # Strip any naked URLs or markdown links that might have slipped into generation
-        answer_text = re.sub(r"https?://\S+|www\.\S+", "", answer_text)
-        answer_text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", answer_text)
-        answer_text = re.sub(r"[ \t]+", " ", answer_text).strip()
+        from services.gemini_service import enforce_word_limit
+        answer_text = enforce_word_limit(
+            answer_text,
+            client,
+            fallback_text="You can check the verified scheme details below for eligibility criteria, benefits, and required documents. Please visit your nearest Primary Health Centre or CSC for further assistance.",
+        )
 
         if not answer_text:
             answer_text = "I could not find clear details for this scheme query in the verified documents."
